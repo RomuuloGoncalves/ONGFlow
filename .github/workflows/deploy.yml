@@ -1,0 +1,59 @@
+# Nome do seu workflow, aparecerá na aba "Actions" do GitHub
+name: Deploy React App to GitHub Pages
+
+# Gatilho: Este workflow roda sempre que houver um push na branch 'main'
+on:
+  push:
+    branches:
+      - main
+  # Permite que você rode este workflow manualmente na aba Actions
+  workflow_dispatch:
+
+# Permissões necessárias para que a Action possa publicar na branch gh-pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Define os jobs (tarefas) que serão executados
+jobs:
+  # O único job que temos se chama 'build-and-deploy'
+  build-and-deploy:
+    # O tipo de máquina virtual que o job rodará
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Passo 1: Clona o seu repositório para dentro da máquina virtual
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Passo 2: Configura o ambiente Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22' # Você pode usar a versão do Node que preferir
+          cache: 'npm'
+          cache-dependency-path: 'Frontend/package-lock.json' # Aponta para o local correto do lock file
+
+      # Passo 3: Instala as dependências e faz o build do projeto React
+      - name: Install and Build
+        run: |
+          cd Frontend  # <<<--- ESTE É O PASSO CRUCIAL! Navega para a pasta do frontend
+          npm install
+          npm run build
+
+      # Passo 4: Configura o GitHub Pages para a publicação
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Passo 5: Faz o upload dos artefatos do build para o GitHub Pages
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # O caminho para a pasta de build do Vite, relativo à raiz do repositório
+          path: './Frontend/dist' 
+
+      # Passo 6: Finaliza o deploy no GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
