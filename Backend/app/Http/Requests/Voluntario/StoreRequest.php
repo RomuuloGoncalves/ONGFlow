@@ -59,8 +59,6 @@ class StoreRequest extends FormRequest
             
             'status.required' => 'O campo status é obrigatório.',
             'status.in' => 'O status deve ser "ativo" ou "inativo".',
-            
-            'endereco_id.exists' => 'O endereço informado não existe.',
         ];
     }
 
@@ -77,7 +75,7 @@ class StoreRequest extends FormRequest
         // Isso impede o redirecionamento padrão.
         throw new HttpResponseException(response()->json([
             'success'   => false,
-            'message'   => 'Erro de validação nos dados enviados.',
+            'message'   => 'Dados inválidos',
             'errors'    => $validator->errors()
         ], 422)); 
     }

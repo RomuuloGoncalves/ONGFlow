@@ -2,7 +2,6 @@
 
 set -e
 
-# Verifica se a mensagem de commit foi fornecida como argumento.
 if [ -z "$1" ]; then
   echo "Erro: Você precisa fornecer uma mensagem de commit."
   echo "Uso: $0 \"Sua mensagem de commit\""

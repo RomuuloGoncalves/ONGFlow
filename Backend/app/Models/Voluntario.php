@@ -22,7 +22,6 @@ class Voluntario extends Model
         'telefone',
         'bio', 
         'status',  
-        'endereco_id',
     ];
    
     protected $casts = [

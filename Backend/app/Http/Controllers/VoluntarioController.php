@@ -35,7 +35,6 @@ class VoluntarioController extends Controller
             // O método validated() retorna um array com apenas os dados validados.
             $voluntario = Voluntario::create($request->validated());
 
-            // Retorna a resposta de sucesso
             return response()->json([
                 'success' => true,
                 'message' => 'Voluntário cadastrado com sucesso!',
@@ -43,12 +42,11 @@ class VoluntarioController extends Controller
             ], 201); // 201 Created
 
         } catch (Exception $e) {
-            // Tratamento para qualquer outro erro inesperado (ex: erro no banco de dados)
             return response()->json([
                 'success' => false,
                 'message' => 'Ocorreu um erro no servidor ao salvar o voluntário.',
                 'error' => $e->getMessage(),
-            ], 500); // 500 Internal Server Error
+            ], 500); // Erro interno
         }
     }
 

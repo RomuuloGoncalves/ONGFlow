@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('telefone');
             $table->text('bio')->nullable();
             $table->enum('status', ['ativo', 'inativo']);
-            $table->foreignId('endereco_id')->nullable()->constrained('enderecos')->onDelete('set null');
             $table->timestamps();
         });
     }

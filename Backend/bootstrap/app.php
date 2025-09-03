@@ -15,7 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Specify the routes to exclude from CSRF protection
         $middleware->validateCsrfTokens(
-            except: ['*']
+            except: ['/api/*']
         );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
