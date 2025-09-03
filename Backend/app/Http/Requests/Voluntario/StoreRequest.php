@@ -13,8 +13,6 @@ class StoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // Altere para true para permitir a requisição.
-        // Adicione sua lógica de autorização aqui se necessário.
         return true;
     }
 
@@ -46,16 +44,22 @@ class StoreRequest extends FormRequest
     {
         return [
             'nome.required' => 'O campo nome é obrigatório.',
+
             'email.required' => 'O campo email é obrigatório.',
             'email.email' => 'Por favor, insira um endereço de e-mail válido.',
             'email.unique' => 'Este e-mail já está em uso.',
+            
             'cpf.required' => 'O campo CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
+            
             'data_nascimento.required' => 'A data de nascimento é obrigatória.',
             'data_nascimento.date' => 'Formato de data inválido.',
+            
             'telefone.required' => 'O campo telefone é obrigatório.',
+            
             'status.required' => 'O campo status é obrigatório.',
             'status.in' => 'O status deve ser "ativo" ou "inativo".',
+            
             'endereco_id.exists' => 'O endereço informado não existe.',
         ];
     }
