@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Voluntario extends Authenticatable
 {
-    use HasApiTokens, HasFactory, SoftDeletes;
+    use HasApiTokens, HasFactory;
 
     protected $table = 'voluntarios';
 
@@ -44,9 +44,4 @@ class Voluntario extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-        // IMPORTANTE: Adicione este método para o Auth::attempt() funcionar
-    public function getAuthPassword()
-    {
-        return $this->password;
-    }
 }

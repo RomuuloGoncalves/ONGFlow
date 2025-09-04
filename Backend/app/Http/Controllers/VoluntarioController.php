@@ -15,7 +15,8 @@ class VoluntarioController extends Controller
     {
         $voluntarios = Voluntario::all();
 
-        return response()->json($voluntarios);    }
+        return response()->json($voluntarios);  
+    }
 
     /**
      * Show the form for creating a new resource.

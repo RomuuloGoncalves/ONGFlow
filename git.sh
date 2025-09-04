@@ -8,19 +8,19 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-if [ -z "$1" ]; then
-  echo -e "${RED}Erro: Você precisa fornecer uma mensagem de commit.${NC}"
-  echo "Uso: $0 \"Sua mensagem de commit\""
-  exit 1
-fi
-
-COMMIT_MESSAGE="$1"
-
 echo -e "${CYAN}1. Sincronizando com o repositório remoto (git pull)...${NC}"
 git pull
 
 if [[ -n $(git status --porcelain) ]]; then
   echo -e "\n${YELLOW}Modificações detectadas. Iniciando processo de commit e push...${NC}"
+
+  if [ -z "$1" ]; then
+    echo -e "${RED}Erro: Modificações foram detectadas, você precisa fornecer uma mensagem de commit.${NC}"
+    echo "Uso: $0 \"Sua mensagem de commit\""
+    exit 1
+  fi
+
+  COMMIT_MESSAGE="$1"
 
   echo -e "${CYAN}2. Adicionando todos os arquivos modificados (git add .)...${NC}"
   git add .
