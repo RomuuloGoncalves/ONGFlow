@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'voluntarios' => [ // Nós também criamos este guarda
+            'driver' => 'sanctum', // ou 'session', dependendo do caso
+            'provider' => 'voluntarios', // <-- A CONEXÃO!
+        ],
     ],
 
     /*
@@ -65,6 +70,10 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
+        'voluntarios' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Voluntario::class,
+         ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

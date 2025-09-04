@@ -28,12 +28,9 @@ class VoluntarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request) // Faça a injeção de dependência do StoreRequest
+    public function store(StoreRequest $request) 
     {
         try {
-            // A validação já foi executada pelo StoreRequest.
-            // Se o código chegou até aqui, os dados são válidos.
-            // O método validated() retorna um array com apenas os dados validados.
             $voluntario = Voluntario::create($request->validated());
 
             return response()->json([

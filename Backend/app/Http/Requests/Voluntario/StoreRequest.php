@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             'cpf' => ['required', 'string', 'max:14', 'unique:voluntarios,cpf'],
             'data_nascimento' => ['required', 'date'],
             'telefone' => ['required', 'string', 'max:20'],
-            'senha' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8'],
             'bio' => ['nullable', 'string'],
             'status' => ['required', 'in:ativo,inativo'],
             'endereco_id' => ['nullable', 'integer', 'exists:enderecos,id'],

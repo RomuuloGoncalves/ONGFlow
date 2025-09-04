@@ -16,5 +16,9 @@ Route::prefix('voluntarios')->group(function () {
         Route::get('/', [VoluntarioController::class, 'index']);
         Route::post('/logout', [AuthController::class, 'logout']);
 
+        //apenas para testar a rota
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
     });
 });

@@ -14,6 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Habilitar a autenticação de SPA (baseada em sessão)
+        $middleware->appendToGroup('api', [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+        ]);
+
         // Specify the routes to exclude from CSRF protection
         $middleware->validateCsrfTokens(
             except: ['/api/*']
@@ -32,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Falha de autenticação
         $exceptions->render(function (AuthenticationException $e, $request) {
-            return response()->json(['message' => 'Não autenticado (resposta forçada).'], 401);
+            return response()->json(['message' => 'Não autenticado.'], 401);
         });
 
     })->create();

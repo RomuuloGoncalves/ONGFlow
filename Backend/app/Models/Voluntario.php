@@ -21,7 +21,7 @@ class Voluntario extends Authenticatable
     protected $fillable = [
         'nome',
         'email',
-        'senha',
+        'password',
         'cpf',
         'data_nascimento',
         'telefone',
@@ -30,7 +30,7 @@ class Voluntario extends Authenticatable
     ];
 
     protected $hidden = [
-        // 'senha',
+        'password',
     ];
 
     protected $casts = [
@@ -39,8 +39,14 @@ class Voluntario extends Authenticatable
 
     protected $primaryKey = 'id';
 
-    public function setSenhaAttribute($value)
+    public function setPasswordAttribute($value)
     {
-        $this->attributes['senha'] = bcrypt($value);
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+        // IMPORTANTE: Adicione este método para o Auth::attempt() funcionar
+    public function getAuthPassword()
+    {
+        return $this->password;
     }
 }
