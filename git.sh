@@ -2,32 +2,38 @@
 
 set -e
 
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
 if [ -z "$1" ]; then
-  echo "Erro: Você precisa fornecer uma mensagem de commit."
+  echo -e "${RED}Erro: Você precisa fornecer uma mensagem de commit.${NC}"
   echo "Uso: $0 \"Sua mensagem de commit\""
   exit 1
 fi
 
 COMMIT_MESSAGE="$1"
 
-echo "1. Sincronizando com o repositório remoto (git pull)..."
+echo -e "${CYAN}1. Sincronizando com o repositório remoto (git pull)...${NC}"
 git pull
 
 if [[ -n $(git status --porcelain) ]]; then
-  echo -e "\nModificações detectadas. Iniciando processo de commit e push..."
+  echo -e "\n${YELLOW}Modificações detectadas. Iniciando processo de commit e push...${NC}"
 
-  echo "2. Adicionando todos os arquivos modificados (git add .)..."
+  echo -e "${CYAN}2. Adicionando todos os arquivos modificados (git add .)...${NC}"
   git add .
 
-  echo "3. Fazendo o commit com a mensagem: \"$COMMIT_MESSAGE\"..."
+  echo -e "${CYAN}3. Fazendo o commit com a mensagem: \"$COMMIT_MESSAGE\"...${NC}"
   git commit -m "$COMMIT_MESSAGE"
 
-  echo "4. Enviando as alterações para o repositório remoto (git push)..."
+  echo -e "${CYAN}4. Enviando as alterações para o repositório remoto (git push)...${NC}"
   git push
 
-  echo -e "\nAlterações enviadas com sucesso!"
+  echo -e "\n${GREEN}Alterações enviadas com sucesso!${NC}"
 else
-  echo -e "\nNenhuma alteração detectada. O repositório já está sincronizado."
+  echo -e "\n${GREEN}Nenhuma alteração detectada. O repositório já está sincronizado.${NC}"
 fi
 
-echo -e "\nProcesso concluído!"
+echo -e "\n${GREEN}Processo concluído!${NC}"
