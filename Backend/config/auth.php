@@ -45,6 +45,11 @@ return [
             'driver' => 'sanctum', 
             'provider' => 'voluntarios', 
         ],
+
+        'ongs' => [ 
+            'driver' => 'sanctum', 
+            'provider' => 'ongs', 
+        ],
     ],
 
     /*
@@ -73,6 +78,11 @@ return [
         'voluntarios' => [
             'driver' => 'eloquent',
             'model' => App\Models\Voluntario::class,
+         ],
+
+         'ongs' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Ong::class,
          ],
         // 'users' => [
         //     'driver' => 'database',

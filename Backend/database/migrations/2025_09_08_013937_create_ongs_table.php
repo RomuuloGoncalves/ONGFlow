@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('ongs', function (Blueprint $table) {
             $table->id();
+            $table->string('login')->unique();
+            $table->string('password');
+            $table->string('nome_fantasia');
+            $table->string('cnpj')->unique();
+            $table->string('sigla');
+            $table->date('data_fundacao');
+            // $table->integer('endereco_id')->references('id')->on('endereco');
             $table->timestamps();
         });
     }

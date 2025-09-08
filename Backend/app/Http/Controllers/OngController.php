@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ong;
 use Illuminate\Http\Request;
+use App\Http\Requests\Ong\StoreRequest;
 
 class OngController extends Controller
 {
@@ -26,9 +27,24 @@ class OngController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request) 
     {
-        //
+        try {
+            $ong = Ong::create($request->validated());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Ong cadastrada com sucesso!',
+                'data' => $ong,
+            ], 201); // 201 Created
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao salvar a ong.',
+                'error' => $e->getMessage(),
+            ], 500); // Erro interno
+        }
     }
 
     /**
