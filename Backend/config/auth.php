@@ -41,9 +41,9 @@ return [
             'provider' => 'users',
         ],
 
-        'voluntarios' => [ // Nós também criamos este guarda
-            'driver' => 'sanctum', // ou 'session', dependendo do caso
-            'provider' => 'voluntarios', // <-- A CONEXÃO!
+        'voluntarios' => [ 
+            'driver' => 'sanctum', 
+            'provider' => 'voluntarios', 
         ],
     ],
 
