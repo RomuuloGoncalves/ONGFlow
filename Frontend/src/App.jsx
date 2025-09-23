@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import './App.css';
 
 import Home from './pages/Home/Home.jsx'; 
+import SignUp from './pages/SignUp/SignUp.jsx';
 
 function App() {
   return (
@@ -10,6 +10,7 @@ function App() {
         <Routes>
           {/* Rotas */}
           <Route path="/" element={<Home />} />
+          <Route path="/signUp" element={<SignUp />} />
           <Route path="*" element={<h1>404: Página Não Encontrada</h1>} />
         </Routes>
       </main>
