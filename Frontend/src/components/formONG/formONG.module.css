@@ -144,3 +144,10 @@
 .submitButton:hover {
   background-color: #4a3aff;
 }
+
+.error {
+  color: #e3342f;
+  font-size: 0.75rem; 
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
