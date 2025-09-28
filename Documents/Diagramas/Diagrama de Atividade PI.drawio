@@ -1,0 +1,210 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 OPR/122.0.0.0" version="28.2.5">
+  <diagram name="Página-1" id="9N2kZV_NUljsbeQucKIm">
+    <mxGraphModel dx="2222" dy="1289" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-67" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="369.5" y="666" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-68" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-67" target="ig8G8XQw-2YUYP1ApSzT-69">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384.5" y="756" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-69" value="Usuário insere o login (email) e senha" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="324.5" y="766" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-70" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-69" target="ig8G8XQw-2YUYP1ApSzT-71">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384.5" y="846" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-71" value="Login e senha corretas?" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="322.5" y="856" width="125" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-72" value="no" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-71" target="ig8G8XQw-2YUYP1ApSzT-69">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="524.5" y="876" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="474.5" y="886" />
+              <mxPoint x="474.5" y="786" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-73" value="yes" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-71">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="384.5" y="956" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-74" value="Login executado com sucesso" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="324.5" y="956" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-75" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-74">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384.5" y="1056" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-76" value="Tela inicial é exibida contendo os projetos que está elegível" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="317.5" y="1056" width="135.5" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-77" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-76">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384.5" y="1156" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-78" value="Usuário clica no projeto desejado e é redirecionado para uma página contendo mais detalhes do projeto&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="299.5" y="1156" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-79" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-78">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384.5" y="1256" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-80" value="Usuário clica em voluntariar-se" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="299.5" y="1256" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-81" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384.75" y="1356" as="targetPoint" />
+            <mxPoint x="385.25" y="1296" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-82" value="Usuario redirecionado para a home" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="317.25" y="1356" width="134.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-83" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-82" target="ig8G8XQw-2YUYP1ApSzT-84">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="385.25" y="1456" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-84" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="370.25" y="1441" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-85" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="729.5" y="666" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-86" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-85">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="744.5" y="756" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-87" value="Diagrama de atividade acesso do voluntário e inscrição em projeto" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" vertex="1" parent="1">
+          <mxGeometry x="230" y="610" width="310" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-88" value="Funcionário insere o login (email) e senha" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="681.5" y="756" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-89" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-88" target="ig8G8XQw-2YUYP1ApSzT-90">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="741.5" y="836" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-90" value="Login e senha corretas?" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="679.5" y="846" width="125" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-91" value="no" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-90" target="ig8G8XQw-2YUYP1ApSzT-88">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="881.5" y="866" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="831.5" y="876" />
+              <mxPoint x="831.5" y="776" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-92" value="yes" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=top;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-90">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="741.5" y="946" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-93" value="Login executado com sucesso" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="681.5" y="946" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-94" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-93">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="741.5" y="1046" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-95" value="Tela com os projetos da ONG é exibida" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="681.5" y="1046" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-96" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-95">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="741.5" y="1146" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-97" value="Funcionário abre a tela de voluntários pendentes" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="663.75" y="1146" width="157.5" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-98" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-97">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="742" y="1246" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-99" value="Funcionário analisa o perfil" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="679.5" y="1246" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-100" value="Funcionário redirecionado para tela com os projetos da ONG" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="681.5" y="1586" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-101" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-99">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="739.5" y="1366" as="targetPoint" />
+            <mxPoint x="749.5" y="1416" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-102" value="Diagrama de atividade de conclusão de um pedido" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" vertex="1" parent="1">
+          <mxGeometry x="597.13" y="610" width="294.75" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-103" value="Perfil aceito" style="rhombus;whiteSpace=wrap;html=1;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="677" y="1366" width="125" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-104" value="no" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-103" target="ig8G8XQw-2YUYP1ApSzT-106">
+          <mxGeometry x="-1" relative="1" as="geometry">
+            <mxPoint x="859.5" y="1486" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="859.5" y="1396" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-105" value="yes" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="ig8G8XQw-2YUYP1ApSzT-107">
+          <mxGeometry x="-0.75" relative="1" as="geometry">
+            <mxPoint x="609.5" y="1436" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="619.5" y="1396" />
+            </Array>
+            <mxPoint x="679.5" y="1396" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-106" value="Voluntário sai da lista de voluntário do projeto" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="799.5" y="1446" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-107" value="Voluntário passa a entregar a equipe do projeto" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="559.5" y="1446" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-108" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-107" target="ig8G8XQw-2YUYP1ApSzT-100">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="589.5" y="1646" as="targetPoint" />
+            <mxPoint x="589.5" y="1576" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-109" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-106" target="ig8G8XQw-2YUYP1ApSzT-100">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="849.5" y="1576" as="targetPoint" />
+            <mxPoint x="849.5" y="1506" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-110" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" edge="1" parent="1" source="ig8G8XQw-2YUYP1ApSzT-100" target="ig8G8XQw-2YUYP1ApSzT-111">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="742.5" y="1716" as="targetPoint" />
+            <mxPoint x="741.5" y="1656" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ig8G8XQw-2YUYP1ApSzT-111" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="1">
+          <mxGeometry x="726.5" y="1686" width="30" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
