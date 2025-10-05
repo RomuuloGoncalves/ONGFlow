@@ -1,5 +1,3 @@
-@import "../../style/global.css";
-
 :root {
   --cor-principal: #6a5af9;
   --cor-principal-hover: #4a3aff;
@@ -18,7 +16,7 @@
   background-color: #fff;
 }
 
-.painel-esquerdo {
+.painelEsquerdo {
   width: 50%;
   height: 100vh;
   background-color: var(--cor-principal);
@@ -29,7 +27,7 @@
   overflow: hidden;
 }
 
-.painel-esquerdo::before {
+.painelEsquerdo::before {
   content: "";
   position: absolute;
   top: 0;
@@ -47,7 +45,7 @@
   z-index: 1;
 }
 
-.painel-direito {
+.painelDireito {
   width: 50%;
   height: 100vh;
   background-color: #ffffff;
@@ -58,7 +56,7 @@
   box-sizing: border-box;
 }
 
-.container-formulario {
+.containerFormulario {
   width: 70%;
   max-width: 450px;
   display: flex;
@@ -66,7 +64,7 @@
   gap: 20px;
 }
 
-.cabecalho-formulario {
+.cabecalhoFormulario {
   width: 100%;
   display: flex;
   align-items: center;
@@ -74,20 +72,20 @@
   margin-bottom: 1rem;
 }
 
-.cabecalho-formulario .titulo {
+.cabecalhoFormulario .titulo {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 15px;
 }
 
-.cabecalho-formulario .titulo h1 {
+.cabecalhoFormulario .titulo h1 {
   font-size: 2rem;
   color: var(--cor-texto-escuro);
   margin: 0;
 }
 
-.botao-voltar {
+.botaoVoltar {
   background: none;
   border: none;
   cursor: pointer;
@@ -106,7 +104,7 @@
   margin: 0;
 }
 
-.seletor-tipo {
+.seletorTipo {
   display: flex;
   width: 100%;
   border: 1px solid #e0e0e0;
@@ -114,7 +112,7 @@
   overflow: hidden;
 }
 
-.seletor-tipo button {
+.seletorBotao {
   flex: 1;
   padding: 1rem;
   font-size: 1rem;
@@ -126,21 +124,21 @@
   color: #555;
 }
 
-.seletor-tipo button.ativo {
+.seletorBotao.ativo { 
   background-color: var(--cor-link);
   color: var(--cor-texto-claro);
 }
 
-.container-inputs {
+.containerInputsVoluntario, .containerInputsOng {
   margin-top: 1rem;
 }
 
-.grupo-input {
+.grupoInput {
   position: relative;
   margin-bottom: 1.5rem;
 }
 
-.grupo-input .icone {
+.grupoInput .icone {
   position: absolute;
   left: 15px;
   top: 50%;
@@ -150,7 +148,7 @@
   height: 20px;
 }
 
-.grupo-input input {
+.grupoInput input {
   width: 100%;
   padding: 15px 15px 15px 50px;
   border: none;
@@ -164,29 +162,29 @@
   transition: border-color 0.3s ease;
 }
 
-.grupo-input input:focus {
+.grupoInput input:focus {
   border-color: var(--cor-principal);
 }
 
-.link-login {
+.linkLogin {
   font-size: 0.9rem;
   color: #555;
   text-align: center;
 }
 
-.link-login a {
+.linkLogin a {
   color: var(--cor-link);
   font-weight: 600;
   text-decoration: none;
 }
 
-.container-botao-submit {
+.containerBotaoSubmit {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
 }
 
-.botao-submit {
+.botaoSubmit {
   background-color: var(--cor-link);
   color: var(--cor-texto-claro);
   border: none;
@@ -199,20 +197,20 @@
   width: 100%;
 }
 
-.botao-submit:hover {
+.botaoSubmit:hover {
   background-color: var(--cor-principal-hover);
 }
 
 @media (max-width: 900px) {
-  .painel-esquerdo {
+  .painelEsquerdo {
     display: none;
   }
 
-  .painel-direito {
+  .painelDireito {
     width: 100%;
   }
 
-  .container-formulario {
+  .containerFormulario {
     width: 80%;
     max-width: 500px;
   }
@@ -224,7 +222,7 @@
     min-height: 100vh;
   }
 
-  .painel-direito {
+  .painelDireito {
     padding: 2rem 1.5rem;
   }
 
@@ -232,17 +230,17 @@
     font-size: 3rem;
   }
 
-  .cabecalho-formulario .titulo h1 {
+  .cabecalhoFormulario .titulo h1 {
     font-size: 1.75rem;
   }
 
-  .container-formulario {
+  .containerFormulario {
     width: 100%;
     gap: 15px;
   }
 
-  .seletor-tipo button,
-  .botao-submit {
+  .seletorBotao,
+  .botaoSubmit {
     padding: 0.9rem;
     font-size: 0.95rem;
   }
