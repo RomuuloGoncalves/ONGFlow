@@ -20,9 +20,7 @@ function SignUp() {
 
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
-  const [generalError, setGeneralError] = useState(null);
 
-  const navigate = useNavigate();
   const { showToast } = useToast();
 
   const manipularSubmit = async (evento) => {
