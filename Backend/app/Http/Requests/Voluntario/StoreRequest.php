@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'nome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:voluntarios,email'],
+            'email' => ['required', 'email', 'unique:voluntarios'],
             'cpf' => ['required', 'string', 'max:14', 'unique:voluntarios,cpf'],
             'data_nascimento' => ['required', 'date'],
             'telefone' => ['required', 'string', 'max:20'],
