@@ -5,6 +5,7 @@ import { ToastProvider } from './context/ToastContext';
 import Home from './pages/Home/Home.jsx';
 import SignUp from './pages/SignUp/SignUp.jsx';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage.jsx';
+import Login from './pages/Login/Login'
 
 function App() {
   const location = useLocation();
@@ -16,6 +17,7 @@ function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/signUp" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

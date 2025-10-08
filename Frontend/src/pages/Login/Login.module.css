@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --cor-principal: #868CFF;
+  --cor-principal-hover: #4318FF;
+  --cor-texto-claro: white;
+  --cor-texto-escuro: #1e1e1e;
+  --cor-fundo-input: #f3f4f6;
+  --cor-placeholder: #a0a0a0;
+  --cor-link: #4318FF; /* Adicionado aqui para .seletorBotao.ativo e .link */
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.ladoEsquerdo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-texto-claro);
+  position: relative;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+    linear-gradient(135deg, #868CFF, #4318FF);
+  background-size: cover;
+  background-position: center;
+}
+
+.ladoEsquerdo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../../assets/ONGFlow-Vector.jpeg') center/cover no-repeat;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.ladoDireito {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.seletorTipo {
+  display: flex;
+  width: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.seletorBotao {
+  flex: 1;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #555;
+}
+
+.seletorBotao.ativo {
+  background-color: var(--cor-link);
+  color: var(--cor-texto-claro);
+}
+
+.boxLogin {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cor-texto-escuro);
+  margin-bottom: 0.3rem;
+}
+
+.subtitulo {
+  color: #6b6b6b;
+  margin-bottom: 2rem;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.input {
+  padding: 0.9rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: var(--cor-fundo-input);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--cor-principal);
+}
+
+.botao {
+  background-color: var(--cor-principal);
+  color: var(--cor-texto-claro);
+  padding: 0.9rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao:hover {
+  background-color: var(--cor-principal-hover);
+}
+
+.textoCadastro {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.link {
+  color: var(--cor-link);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+  .ladoEsquerdo {
+    height: 40vh;
+  }
+  .ladoDireito {
+    height: 60vh;
+  }
+  .logo {
+    font-size: 2rem;
+  }
+}
