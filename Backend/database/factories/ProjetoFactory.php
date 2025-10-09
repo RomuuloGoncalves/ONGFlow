@@ -4,20 +4,15 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Projeto>
- */
 class ProjetoFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'descricao' => fake()->text(),
+            'data_inicio' => fake()->date(),
+            'quantidade_maxima_voluntarios' => fake()->numberBetween(1, 100),
+            'status' => 'ativo',
         ];
     }
 }

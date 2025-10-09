@@ -3,21 +3,19 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ong>
- */
 class OngFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'login' => fake()->unique()->userName(),
+            'password' => Hash::make('password'),
+            'nome_fantasia' => fake()->company(),
+            'cnpj' => fake()->unique()->numerify('##.###.###/####-##'),
+            'sigla' => fake()->lexify('???'),
+            'data_fundacao' => fake()->date(),
         ];
     }
 }
