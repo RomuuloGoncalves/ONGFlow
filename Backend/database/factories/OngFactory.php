@@ -12,6 +12,7 @@ class OngFactory extends Factory
         return [
             'login' => fake()->unique()->userName(),
             'password' => Hash::make('password'),
+            'nome' => fake()->company(),
             'nome_fantasia' => fake()->company(),
             'cnpj' => fake()->unique()->numerify('##.###.###/####-##'),
             'sigla' => fake()->lexify('???'),

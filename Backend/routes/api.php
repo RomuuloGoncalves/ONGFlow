@@ -2,8 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\VoluntarioController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VoluntarioController;
+use App\Http\Controllers\OngController;
 
 
 Route::prefix('voluntarios')->group(function () {
@@ -24,9 +25,19 @@ Route::prefix('voluntarios')->group(function () {
 
 Route::prefix('ongs')->group(function () {
 
+    Route::get('/', [OngController::class, 'index']);
+    Route::post('/', [OngController::class, 'store']);
+    Route::get('/{id}', [OngController::class, 'show']);
+    Route::put('/{id}', [OngController::class, 'update']);
+    Route::delete('/{id}', [OngController::class, 'destroy']);
+
+    Route::post('/login', [AuthController::class, 'login']);
+
 });
 
 Route::prefix('')->group(function () {
+
+
 
 });
 

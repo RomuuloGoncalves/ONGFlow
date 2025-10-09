@@ -26,7 +26,8 @@ class StoreRequest extends FormRequest
         return [
             'login' => ['required', 'email', 'unique:ongs,login'],
             'password' => ['required', 'string', 'min:8'],
-            'nome_fantasia' => ['required', 'string', 'max:255'],
+            'nome' => ['required', 'string'],
+            'nome_fantasia' => ['string', 'max:255'],
             'cnpj' => ['required', 'string', 'max:14', 'unique:ongs,cnpj'],
             'data_fundacao' => ['required', 'date'],
             'sigla' => ['required', 'string', 'max:255'],
@@ -44,19 +45,22 @@ class StoreRequest extends FormRequest
         return [
             'login.required' => 'O campo nome login é obrigatório.',
             'login.unique' => 'Este login já está em uso.',
+            'login.email' => 'Por favor, insira um endereço de e-mail válido.',
+
+            'nome.required' => 'O campo nome é obrigatório',
 
             'nome_fantasia.required' => 'O campo nome fantasia é obrigatório.',
 
             'password.required' => 'O campo senha é obrigatório.',
-            
+
             'cnpj.required' => 'O campo CNPJ é obrigatório.',
             'cnpj.unique' => 'Este CNPJ já está cadastrado.',
-            
+
             'data_fundacao.required' => 'A data de fundação é obrigatória.',
             'data_fundacao.date' => 'Formato de data inválido.',
-            
+
             'sigla.required' => 'O campo sigla é obrigatório.',
-            
+
         ];
     }
 
@@ -75,6 +79,6 @@ class StoreRequest extends FormRequest
             'success'   => false,
             'message'   => 'Dados inválidos',
             'errors'    => $validator->errors()
-        ], 422)); 
+        ], 422));
     }
 }

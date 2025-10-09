@@ -22,6 +22,7 @@ class Ong extends Model
     protected $fillable = [
         'login',
         'password',
+        'nome',
         'nome_fantasia',
         'cnpj',
         'sigla',
