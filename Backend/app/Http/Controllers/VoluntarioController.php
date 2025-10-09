@@ -15,21 +15,13 @@ class VoluntarioController extends Controller
     {
         $voluntarios = Voluntario::all();
 
-        return response()->json($voluntarios);  
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json($voluntarios);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request) 
+    public function store(StoreRequest $request)
     {
         try {
             $voluntario = Voluntario::create($request->validated());
@@ -49,21 +41,35 @@ class VoluntarioController extends Controller
         }
     }
 
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
-    }
+        try {
+            $voluntario = Voluntario::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+            if($voluntario){
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Voluntário encontrado com sucesso!',
+                    'data' => $voluntario,
+                ], 200); // 200 OK
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Voluntário não encontrado.',
+                ], 404); // 404 Not Found
+            }
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao excluir o voluntário.',
+                'error' => $e->getMessage(),
+            ], 500); // Erro interno
+        }
     }
 
     /**
@@ -79,6 +85,30 @@ class VoluntarioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $voluntario = Voluntario::find($id);
+
+            if($voluntario){
+                $voluntario->delete();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Voluntário excluído com sucesso!',
+                    'data' => $voluntario,
+                ], 200); // 200 OK
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Voluntário não encontrado.',
+                ], 404); // 404 Not Found
+            }
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao excluir o voluntário.',
+                'error' => $e->getMessage(),
+            ], 500); // Erro interno
+        }
     }
 }
