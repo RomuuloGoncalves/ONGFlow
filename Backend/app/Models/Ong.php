@@ -17,7 +17,7 @@ class Ong extends Model
     /** @use HasFactory<\Database\Factories\OngFactory> */
     use HasApiTokens, HasFactory;
 
-    protected $table = 'ong';
+    protected $table = 'ongs';
 
     protected $fillable = [
         'login',

@@ -9,4 +9,16 @@ class Habilidade extends Model
 {
     /** @use HasFactory<\Database\Factories\HabilidadeFactory> */
     use HasFactory;
+
+    protected $table = 'habilidades';
+
+    protected $fillable = [
+        'descricao',
+    ];
+
+    protected $hidden = [
+        'password',
+    ];
+
+    protected $primaryKey = 'id';
 }
