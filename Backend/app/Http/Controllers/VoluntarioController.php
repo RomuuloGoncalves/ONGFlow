@@ -75,9 +75,25 @@ class VoluntarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreRequest $request, string $id)
     {
-        //
+        try {
+            $voluntario = Voluntario::findOrFail($id);
+            $voluntario->update($request->validated());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Voluntário atualizado com sucesso!',
+                'data' => $voluntario,
+            ], 200); // 200 OK
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao salvar o voluntário.',
+                'error' => $e->getMessage(),
+            ], 500); // Erro interno
+        }
     }
 
     /**

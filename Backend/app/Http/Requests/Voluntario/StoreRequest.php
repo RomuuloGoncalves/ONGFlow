@@ -49,15 +49,15 @@ class StoreRequest extends FormRequest
             'email.required' => 'O campo email é obrigatório.',
             'email.email' => 'Por favor, insira um endereço de e-mail válido.',
             'email.unique' => 'Este e-mail já está em uso.',
-            
+
             'cpf.required' => 'O campo CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
-            
+
             'data_nascimento.required' => 'A data de nascimento é obrigatória.',
             'data_nascimento.date' => 'Formato de data inválido.',
-            
+
             'telefone.required' => 'O campo telefone é obrigatório.',
-            
+
             'status.required' => 'O campo status é obrigatório.',
             'status.in' => 'O status deve ser "ativo" ou "inativo".',
         ];
@@ -78,7 +78,7 @@ class StoreRequest extends FormRequest
             'success'   => false,
             'message'   => 'Dados inválidos',
             'errors'    => $validator->errors()
-        ], 422)); 
+        ], 422));
     }
 }
 

@@ -9,14 +9,15 @@ use App\Http\Controllers\AuthController;
 Route::prefix('voluntarios')->group(function () {
 
     Route::get('/', [VoluntarioController::class, 'index']);
-    Route::get('/{id}', [VoluntarioController::class, 'show']);
     Route::post('/', [VoluntarioController::class, 'store']);
-
     Route::post('/login', [AuthController::class, 'login']);
 
+    //Precisa estar logado como voluntário
     Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/{id}', [VoluntarioController::class, 'show']);
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::delete('/{id}', [VoluntarioController::class, 'destroy']);
+        Route::put('/{id}', [VoluntarioController::class, 'update']);
     });
 });
 
