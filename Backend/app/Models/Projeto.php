@@ -13,6 +13,7 @@ class Projeto extends Model
     protected $table = 'projetos';
 
     protected $fillable = [
+        'nome',
         'descricao',
         'data_inicio',
         'quantidade_maxima_voluntarios',

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VoluntarioController;
 use App\Http\Controllers\OngController;
+use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\HabilidadeController;
 
 
 Route::prefix('voluntarios')->group(function () {
@@ -35,9 +37,15 @@ Route::prefix('ongs')->group(function () {
 
 });
 
-Route::prefix('')->group(function () {
+Route::prefix('projetos')->group(function () {
 
+    Route::get('/', [ProjetoController::class, 'index']);
+    Route::post('/', [ProjetoController::class, 'store']);
+    Route::get('/{id}', [ProjetoController::class, 'show']);
+    Route::put('/{id}', [ProjetoController::class, 'update']);
+    Route::delete('/{id}', [ProjetoController::class, 'destroy']);
 
+    Route::post('/login', [AuthController::class, 'login']);
 
 });
 

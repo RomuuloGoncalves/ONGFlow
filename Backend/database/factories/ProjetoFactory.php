@@ -9,6 +9,7 @@ class ProjetoFactory extends Factory
     public function definition(): array
     {
         return [
+            'nome' => fake()->company(),
             'descricao' => fake()->text(),
             'data_inicio' => fake()->date(),
             'quantidade_maxima_voluntarios' => fake()->numberBetween(1, 100),
