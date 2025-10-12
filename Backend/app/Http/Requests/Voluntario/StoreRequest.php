@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
             'password' => ['required', 'string', 'min:8'],
             'bio' => ['nullable', 'string'],
             'status' => ['required', 'in:ativo,inativo'],
-            'endereco_id' => ['nullable', 'integer', 'exists:enderecos,id'],
+            // 'endereco_id' => ['nullable', 'integer', 'exists:enderecos,id'],
         ];
     }
 

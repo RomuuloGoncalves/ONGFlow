@@ -109,13 +109,13 @@ class ProjetoController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'projeto excluída com sucesso!',
+                    'message' => 'Projeto excluído com sucesso!',
                     'data' => $projeto,
                 ], 200); // 200 OK
             }else{
                 return response()->json([
                     'success' => false,
-                    'message' => 'projeto não encontrado.',
+                    'message' => 'Projeto não encontrado.',
                 ], 404); // 404 Not Found
             }
 

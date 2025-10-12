@@ -17,7 +17,9 @@ class ConviteFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-        ];
+            'mensagem' => fake()->text(),
+            'iniciador' => fake()->randomElement(['pendente', 'aceito', 'recusado']),
+            'data_criacao' => fake()->date(),
+            'data_resposta' => fake()->date(),        ];
     }
 }

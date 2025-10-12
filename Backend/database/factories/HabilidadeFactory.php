@@ -9,7 +9,7 @@ class HabilidadeFactory extends Factory
     public function definition(): array
     {
         return [
-            'descricao' => fake()->word(),
+            'descricao' => fake()->text(),
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Convite;
 use Illuminate\Database\Seeder;
 
 class ConviteSeeder extends Seeder
@@ -12,6 +12,6 @@ class ConviteSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Convite::factory(5)->create();
     }
 }

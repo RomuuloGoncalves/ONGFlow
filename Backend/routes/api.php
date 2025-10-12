@@ -7,6 +7,7 @@ use App\Http\Controllers\VoluntarioController;
 use App\Http\Controllers\OngController;
 use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\HabilidadeController;
+use App\Http\Controllers\ConviteController;
 
 
 Route::prefix('voluntarios')->group(function () {
@@ -45,10 +46,24 @@ Route::prefix('projetos')->group(function () {
     Route::put('/{id}', [ProjetoController::class, 'update']);
     Route::delete('/{id}', [ProjetoController::class, 'destroy']);
 
-    Route::post('/login', [AuthController::class, 'login']);
+});
+
+Route::prefix('habilidades')->group(function () {
+
+    Route::get('/', [HabilidadeController::class, 'index']);
+    Route::post('/', [HabilidadeController::class, 'store']);
+    Route::get('/{id}', [HabilidadeController::class, 'show']);
+    Route::put('/{id}', [HabilidadeController::class, 'update']);
+    Route::delete('/{id}', [HabilidadeController::class, 'destroy']);
 
 });
 
-Route::prefix('')->group(function () {
+Route::prefix('convites')->group(function () {
+
+    Route::get('/', [ConviteController::class, 'index']);
+    Route::post('/', [ConviteController::class, 'store']);
+    Route::get('/{id}', [ConviteController::class, 'show']);
+    Route::put('/{id}', [ConviteController::class, 'update']);
+    Route::delete('/{id}', [ConviteController::class, 'destroy']);
 
 });
