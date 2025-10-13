@@ -28,7 +28,7 @@ class Convite extends Model
 
     protected $casts = [
         'data_criacao' => 'date',
-        'data_respota' => 'date',
+        'data_resposta' => 'date',
     ];
 
     protected $primaryKey = 'id';
