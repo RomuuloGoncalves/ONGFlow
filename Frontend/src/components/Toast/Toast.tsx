@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import styles from './Toast.module.css';
 import IconeSucesso from '../common/IconeSucesso';
 import IconeErro from '../common/IconeErro';
