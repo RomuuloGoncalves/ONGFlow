@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react(),tailwindcss()],
   resolve: {
     alias: {
-       "@": path.resolve( "./src")
+       "@": path.resolve("./src")
     },
   },
   base: '/ONGFlow/'

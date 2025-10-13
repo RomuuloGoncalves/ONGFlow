@@ -1,4 +1,4 @@
-import type { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
+import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
 
 import Logo from "@/components/logo"
 import { cn } from "@/lib/utils"

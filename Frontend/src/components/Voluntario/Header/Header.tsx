@@ -1,8 +1,8 @@
 import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
 
-import Logo from "@/registry/default/components/navbar-components/logo"
+import Logo from "@/components/logo"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/UI/button"
+import { Button } from "@/components/ui/button"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,12 +10,12 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@/components/UI/navigation-menu"
+} from "@/components/ui/navigation-menu"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/UI/popover"
+} from "@/components/ui/popover"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
