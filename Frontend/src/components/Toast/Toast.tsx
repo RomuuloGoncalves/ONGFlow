@@ -1,7 +1,7 @@
 import styles from './Toast.module.css';
 import IconeSucesso from '../common/IconeSucesso';
 import IconeErro from '../common/IconeErro';
-
+import { useEffect } from 'react';
 interface ToastProps {
   message: string;
   type: 'success' | 'error';
