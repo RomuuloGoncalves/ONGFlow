@@ -1,11 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-
 import styles from './Home.module.css';
+import ONGFlowImagem from '../../../assets/ONGFlow.jpeg';
 
-import ONGFlowImagem from '../../assets/ONGFlow.jpeg';
-
-function Home() {
+function PublicHome() {
   return (
     <div className={styles.containerPagina}>
       <header className={styles.cabecalho}>
@@ -37,4 +34,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default PublicHome;

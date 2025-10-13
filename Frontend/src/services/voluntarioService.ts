@@ -1,7 +1,7 @@
 import serverService from './serverService';
 import Cookies from 'js-cookie';
-import { Voluntario, VoluntarioCadastro, VoluntarioLogin } from '../types/voluntario';
-import { AxiosPromise } from 'axios';
+import type { Voluntario, VoluntarioCadastro, VoluntarioLogin } from '../types/voluntario';
+import type { AxiosPromise } from 'axios';
 
 const voluntarioService = {
   /**

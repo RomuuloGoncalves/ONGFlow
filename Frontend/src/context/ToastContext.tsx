@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 import Toast from '../components/Toast/Toast';
 import styles from '../components/Toast/Toast.module.css';
 

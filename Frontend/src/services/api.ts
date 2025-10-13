@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
 const api: AxiosInstance = axios.create({
@@ -18,7 +19,7 @@ api.interceptors.request.use(
 
     return config;
   },
-  (error) => {
+  (error: any) => {
     return Promise.reject(error);
   }
 );

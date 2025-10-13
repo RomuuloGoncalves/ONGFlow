@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import ConnectionIcon from '../../../components/common/ConnectionIcon';
 import styles from './NotFoundPage.module.css';
 
 const NotFoundPage = (): JSX.Element => {
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -13,14 +13,12 @@ const NotFoundPage = (): JSX.Element => {
       <p className={styles.message}>
         Oops! Parece que você se perdeu no caminho da solidariedade. Mas não se preocupe, estamos aqui para te reconectar à causa certa.
       </p>
-      <a
-        href="/"
+      <Link
+        to="/"
         className={styles.button}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
       >
         Voltar para a Home
-      </a>
+      </Link>
     </div>
   );
 };
