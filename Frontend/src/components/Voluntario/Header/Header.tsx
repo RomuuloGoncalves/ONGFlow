@@ -1,6 +1,6 @@
 import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
 
-import Logo from "@/components/logo"
+import Logo from "@/assets/Logo.svg"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,50 +17,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-// Navigation links array to be used in both desktop and mobile menus
+// Links de navegação
 const navigationLinks = [
-  { href: "#", label: "Home" },
+  { href: "#", label: "Convites" },
   {
-    label: "Features",
+    label: "Projetos",
     submenu: true,
     type: "description",
     items: [
       {
         href: "#",
-        label: "Components",
-        description: "Browse all components in the library.",
+        label: "Projeto em Andamento",
+        description: "Veja os projetos que estão em andamento",
       },
       {
         href: "#",
-        label: "Documentation",
-        description: "Learn how to use the library.",
+        label: "Projetos Concluídos",
+        description: "Veja seus projetos realizados com sucesso",
       },
       {
         href: "#",
-        label: "Templates",
-        description: "Pre-built layouts for common use cases.",
+        label: "Projetos Disponíveis",
+        description: "Veja os projetos que estão disponíveis para solicitar participação",
       },
-    ],
-  },
-  {
-    label: "Pricing",
-    submenu: true,
-    type: "simple",
-    items: [
-      { href: "#", label: "Product A" },
-      { href: "#", label: "Product B" },
-      { href: "#", label: "Product C" },
-      { href: "#", label: "Product D" },
-    ],
-  },
-  {
-    label: "About",
-    submenu: true,
-    type: "icon",
-    items: [
-      { href: "#", label: "Getting Started", icon: "BookOpenIcon" },
-      { href: "#", label: "Tutorials", icon: "LifeBuoyIcon" },
-      { href: "#", label: "About Us", icon: "InfoIcon" },
     ],
   },
 ]
@@ -161,7 +140,7 @@ export default function Header() {
           {/* Main nav */}
           <div className="flex items-center gap-6">
             <a href="#" className="text-primary hover:text-primary/90">
-              <Logo />
+              <img src={Logo} alt="Logo" />
             </a>
             {/* Navigation menu */}
             <NavigationMenu viewport={false} className="max-md:hidden">
@@ -256,9 +235,6 @@ export default function Header() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <a href="#">Sign In</a>
-          </Button>
           <Button asChild size="sm" className="text-sm">
             <a href="#">Get Started</a>
           </Button>
