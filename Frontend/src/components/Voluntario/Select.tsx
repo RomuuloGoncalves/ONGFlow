@@ -1,7 +1,8 @@
 import { useId } from "react"
 
 import { Label } from "@/components/ui/label"
-import MultipleSelector, { Option } from "@/components/ui/multiselect"
+import MultipleSelector from "@/components/ui/multiselect"
+import type { Option }  from "@/components/ui/multiselect"
 import { Alvo } from "@/assets/icons/Alvo"
 
 const habilities: Option[] = [
@@ -92,7 +93,6 @@ const habilities: Option[] = [
 
 
 export default function Component() {
-  const id = useId()
   return (
     <div className="*:not-first:mt-2">
       <div className="d-flex">

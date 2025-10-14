@@ -18,7 +18,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Navigate } from "react-router-dom"
 
 // Links de navegação
 const navigationLinks = [
