@@ -1,5 +1,5 @@
 import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
-import { Usuario } from '@/assets/icons/usuario'
+import { Usuario } from '@/assets/icons/Usuario'
 
 import Logo from "@/assets/Logo.svg"
 import { cn } from "@/lib/utils"
