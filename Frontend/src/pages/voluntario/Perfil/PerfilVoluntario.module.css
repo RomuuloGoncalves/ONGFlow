@@ -6,7 +6,7 @@ main {
 
 .container__perfil {
   max-width: 60%;
-  height: 85vh;
+  min-height: 85vh;
   border: 0.5px solid #d6d6d6;
   border-radius: 10px;
   background-color: var(--secondary-primary-white);
