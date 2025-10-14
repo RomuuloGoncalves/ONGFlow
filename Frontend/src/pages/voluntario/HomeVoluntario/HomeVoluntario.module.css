@@ -1,0 +1,96 @@
+/* .suamae{
+    path{
+        color:pink;
+    }
+} */
+
+@import '@/style/global.css';
+
+main{
+    min-height: 100vh;
+    margin-bottom: 10px;
+    background-color: #FCFCFD;
+}
+
+.container__title{
+    width: 80%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px auto;
+    gap: 10px;
+
+    h1{
+        font-size: 32px;
+        font-weight: bold;
+        background: linear-gradient(90deg, #868CFF 0%, #4318FF 100%);
+        -webkit-background-clip: text; /* Safari/Chrome */
+        background-clip: text;
+        -webkit-text-fill-color: transparent; /* Safari/Chrome */
+        color: transparent; /* fallback */
+        /* opcional: melhora contraste em alguns navegadores */
+        display: inline-block;
+    }
+
+    p{
+        color: #7C7C7C;
+        font-size: 18px;
+    }
+}
+
+.container__cards{
+    width: 80%;
+    min-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 0 auto;
+
+    .card{
+        width: 200px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #FFFF;
+        border: .5px solid #D6D6D6;
+        border-radius: 10px;
+        box-shadow: var(--shadow-5);
+
+        .container__icon{
+            width: 75px;
+            height: 75px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--background);
+            color: var(--secondary-primary-white);
+        }
+
+        p{
+            width: 80%;
+            color: #585858;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        button {
+            width:80%;
+            height: 40px;
+            border-radius: 10px;
+            color: var(--secondary-primary-white);
+            background: var(--background);
+            font-weight: 500;
+            box-shadow: var(--shadow-5);
+            cursor: pointer;
+        }
+    }
+}

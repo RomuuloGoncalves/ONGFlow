@@ -1,4 +1,5 @@
 import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
+import { Usuario } from '@/assets/icons/usuario'
 
 import Logo from "@/assets/Logo.svg"
 import { cn } from "@/lib/utils"
@@ -46,7 +47,7 @@ const navigationLinks = [
 
 export default function Header() {
   return (
-    <header className="border-b px-4 md:px-6">
+    <header className="border-b px-4 md:px-6 bg-[#FFFF]">
       <div className="flex h-16 items-center justify-between gap-4">
         {/* Left side */}
         <div className="flex items-center gap-2">
@@ -236,7 +237,7 @@ export default function Header() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <Button asChild size="sm" className="text-sm">
-            <a href="#">Get Started</a>
+            <a href="#"><Usuario/></a>
           </Button>
         </div>
       </div>
