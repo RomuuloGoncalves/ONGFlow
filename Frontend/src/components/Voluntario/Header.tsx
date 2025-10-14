@@ -1,5 +1,6 @@
 import { BookOpenIcon, InfoIcon, LifeBuoyIcon } from "lucide-react"
 import { Usuario } from '@/assets/icons/Usuario'
+import { useNavigate } from "react-router-dom";
 
 import Logo from "@/assets/Logo.svg"
 import { cn } from "@/lib/utils"
@@ -17,6 +18,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { Navigate } from "react-router-dom"
 
 // Links de navegação
 const navigationLinks = [
@@ -46,6 +48,7 @@ const navigationLinks = [
 ]
 
 export default function Header() {
+   const navigate = useNavigate()
   return (
     <header className="border-b px-4 md:px-6 bg-[#FFFF]">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -236,8 +239,12 @@ export default function Header() {
         </div>
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="text-sm">
-            <a href="#"><Usuario/></a>
+          <Button 
+            asChild
+            size="sm" 
+            className="text-sm bg-[linear-gradient(90deg,#868CFF_0%,#4318FF_100%)]" 
+            onClick={() =>  navigate("/perfil/voluntario")}>
+            <a><Usuario/></a>
           </Button>
         </div>
       </div>
