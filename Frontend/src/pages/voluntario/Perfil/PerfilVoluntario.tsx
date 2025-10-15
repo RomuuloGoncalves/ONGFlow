@@ -1,4 +1,4 @@
-import Header from "@/components/Voluntario/Header";
+import Header from "@/components/Voluntario/Header/Header";
 import style from "./PerfilVoluntario.module.css";
 import { useState } from "react";
 import SelectInput from '@/components/Voluntario/Select'

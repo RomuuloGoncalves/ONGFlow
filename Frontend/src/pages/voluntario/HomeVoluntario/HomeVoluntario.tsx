@@ -1,4 +1,4 @@
-import Header from "@/components/Voluntario/Header";
+import Header from "@/components/Voluntario/Header/Header";
 import style from "./HomeVoluntario.module.css";
 import { Info } from "@/assets/icons/Info";
 import { Medalha } from "@/assets/icons/Medalha";
