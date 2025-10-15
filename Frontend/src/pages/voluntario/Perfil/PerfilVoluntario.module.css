@@ -7,6 +7,10 @@ main {
 .container__perfil {
   max-width: 60%;
   min-height: 85vh;
+
+  @media (max-width: 768px) {
+      max-width: 80%;
+  }
   border: 0.5px solid #d6d6d6;
   border-radius: 10px;
   background-color: var(--secondary-primary-white);
