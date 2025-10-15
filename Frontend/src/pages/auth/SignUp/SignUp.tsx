@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FormVoluntario from '../../../components/SignUp/FormVoluntario/FormVoluntario';
 import FormOng from '../../../components/SignUp/FormOng/FormOng';
 import styles from './SignUp.module.css';
@@ -12,6 +12,7 @@ function SignUp() {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
   );
 
+  const navigate = useNavigate();
   const [tipoCadastro, setTipoCadastro] = useState('VOLUNTARIO');
   const [dadosFormulario, setDadosFormulario] = useState({});
   const [errors, setErrors] = useState({});
@@ -25,19 +26,14 @@ function SignUp() {
 
     try {
       if (tipoCadastro === 'VOLUNTARIO') {
-        const response = await serverService.post('/voluntarios', payload);
-        console.log("Resposta do cadastro de voluntário:", response.data);
-
+        await serverService.post('/voluntarios', payload);
         showToast('Voluntário cadastrado com sucesso!', 'success');
-
       } else if (tipoCadastro === 'ONG') {
-        const response = await serverService.post('/ongs', payload);
-        console.log("Resposta do cadastro de ONG:", response.data);
-
+        await serverService.post('/ongs', payload);
         showToast('ONG cadastrada com sucesso!', 'success');
       }
+      navigate('/login');
     } catch (error: any) {
-      // Para tratar problemas com os dados
       if (error.response && error.response.status === 422) {
         setErrors(error.response.data.errors || {});
         showToast('Por favor, corrija os erros no formulário.', 'error');
@@ -75,8 +71,8 @@ function SignUp() {
             </div>
           </div>
           <div className={styles.seletorTipo}>
-            <button type="button" className={seletorClasse('VOLUNTARIO')} onClick={() => {setTipoCadastro('VOLUNTARIO'); setErrors({});}}>Voluntário</button>
-            <button type="button" className={seletorClasse('ONG')} onClick={() => {setTipoCadastro('ONG'); setErrors({});}}>ONG</button>
+            <button type="button" className={seletorClasse('VOLUNTARIO')} onClick={() => { setTipoCadastro('VOLUNTARIO'); setErrors({}); }}>Voluntário</button>
+            <button type="button" className={seletorClasse('ONG')} onClick={() => { setTipoCadastro('ONG'); setErrors({}); }}>ONG</button>
           </div>
 
           {tipoCadastro === 'VOLUNTARIO'

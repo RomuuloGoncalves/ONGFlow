@@ -58,6 +58,9 @@ class StoreRequest extends FormRequest
 
             'telefone.required' => 'O campo telefone é obrigatório.',
 
+            'password.required' => "O campo senha é obrigatório",
+
+
             'status.required' => 'O campo status é obrigatório.',
             'status.in' => 'O status deve ser "ativo" ou "inativo".',
         ];
