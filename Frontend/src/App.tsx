@@ -4,9 +4,8 @@ import SignUp from './pages/auth/SignUp/SignUp';
 import PublicHome from './pages/public/Home/Home';
 import NotFoundPage from './pages/public/NotFoundPage/NotFoundPage';
 import HomeVoluntario from './pages/voluntario/HomeVoluntario/HomeVoluntario';
-import PerfilVoluntario from './pages/voluntario/Perfil/PerfilVoluntario';
-import ConviteVoluntario from './pages/voluntario/Convite/Convite';
-
+import PerfilVoluntario from './pages/voluntario/PerfilVoluntario/PerfilVoluntario';
+import ConviteVoluntario from './pages/voluntario/ConviteVoluntario/Convite';
 import { Layout } from './Layout';
 
 function App() {
