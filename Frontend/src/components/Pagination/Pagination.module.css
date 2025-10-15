@@ -1,0 +1,36 @@
+@import '@/style/global.css';
+
+.container__pagination{
+    min-width: 200px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+    .buttonBefore,.buttonNext,.button{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background-color: var(--secondary-primary-white);
+        border: .5px solid #D6D6D6;
+        cursor: pointer;
+    }
+
+    .activeButton{
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: var(--primary-purple-blue-900);
+        color: var(--secondary-primary-white) ;
+    }
+
+
+}

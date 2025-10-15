@@ -1,4 +1,7 @@
 import React from "react";
+import style from "./Pagination.module.css"
+import { Menor } from "@/assets/icons/Menor"
+import { Maior } from "@/assets/icons/Maior"
 
 type PaginationProps = {
   currentPage: number;
@@ -15,26 +18,30 @@ export function Pagination({ currentPage, totalPages, onPageChange, windowSize =
 
   const pages = Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
 
-  const nextWindow = () => {
-    if ((currentWindow + 1) * windowSize < totalPages) {
+  const handleNext = () => {
+    if (currentPage < endPage) {
+      // Ainda dentro da janela → só vai pra próxima página
+      onPageChange(currentPage + 1);
+    } else if (endPage < totalPages) {
+      // Chegou no fim da janela → avança a janela e vai para o primeiro item dela
       setCurrentWindow(currentWindow + 1);
+      onPageChange(endPage + 1); // vai para a primeira página da nova janela
     }
   };
 
-  const prevWindow = () => {
-    if (currentWindow > 0) {
+  const handlePrev = () => {
+    if (currentPage > startPage) {
+      onPageChange(currentPage - 1);
+    } else if (currentWindow > 0) {
       setCurrentWindow(currentWindow - 1);
+      onPageChange(startPage - 1);
     }
   };
 
   return (
-    <div style={{ display: "flex", gap: "8px" }}>
-      <button disabled={currentPage === 1} onClick={() => onPageChange(currentPage - 1)}>
-        {"<"}
-      </button>
-
-      <button disabled={currentWindow === 0} onClick={prevWindow}>
-        ...
+    <div className={style.container__pagination}>
+      <button disabled={currentPage === 1} onClick={handlePrev} className={style.buttonBefore}>
+        <Menor/>
       </button>
 
       {pages.map((page) => (
@@ -42,18 +49,20 @@ export function Pagination({ currentPage, totalPages, onPageChange, windowSize =
           key={page}
           style={{ fontWeight: page === currentPage ? "bold" : "normal" }}
           onClick={() => onPageChange(page)}
+          className={page === currentPage ? style.activeButton : style.button}
         >
           {page}
         </button>
       ))}
 
-      <button disabled={(currentWindow + 1) * windowSize >= totalPages} onClick={nextWindow}>
-        ...
-      </button>
-
-      <button disabled={currentPage === totalPages} onClick={() => onPageChange(currentPage + 1)}>
-        {">"}
+      <button
+        disabled={currentPage === totalPages}
+        onClick={handleNext}
+        className={style.buttonNext}
+      >
+        <Maior/>
       </button>
     </div>
   );
 }
+
