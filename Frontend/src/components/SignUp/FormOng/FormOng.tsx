@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Definição dos tipos para os ícones e para as props do componente
 interface IconProps {
   className?: string;
 }
@@ -23,7 +22,6 @@ const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => 
     nome: '',
     login: '',
     password: '',
-    // password_confirmation: '',
     nome_fantasia: '',
     cnpj: '',
     sigla: '',
@@ -88,13 +86,6 @@ const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => 
         </div>
         {errors.password && <span className={styles.mensagemErroCampo}>{errors.password}</span>}
       </div>
-
-      {/* <div className={styles.grupoInputContainer}>
-        <div className={styles.grupoInput}>
-          <IconePassword className={styles.icone} />
-          <input type="password" name="password_confirmation" placeholder="Confirme sua Senha" onChange={manipularMudanca} />
-        </div>
-      </div> */}
 
       <div className={styles.grupoInputContainer}>
         <div className={styles.grupoInput}>

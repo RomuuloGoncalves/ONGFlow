@@ -1,22 +1,22 @@
 export interface Voluntario {
   id: number;
-  id_endereco: number;
   nome: string;
   senha: string;
   cpf: string;
   email: string;
   data_nascimento: string;
   telefone?: string;
-  situacao: 'ativo' | 'inativo';
+  status: 'ativo' | 'inativo';
 }
 
 export interface VoluntarioCadastro {
   nome: string;
   email: string;
   password?: string;
-  cpf: string;
+  cpf: number;
   data_nascimento: string;
   telefone?: string;
+  status: 'ativo';
 }
 
 export interface VoluntarioLogin {

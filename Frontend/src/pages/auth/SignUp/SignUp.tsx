@@ -26,15 +26,18 @@ function SignUp() {
 
     try {
       if (tipoCadastro === 'VOLUNTARIO') {
-        await voluntarioService.cadastro(dadosFormulario as VoluntarioCadastro);
+        const payload = { ...dadosFormulario, status: 'ativo' } as VoluntarioCadastro;
+        await voluntarioService.cadastro(payload);
         showToast('Voluntário cadastrado com sucesso!', 'success');
       } else if (tipoCadastro === 'ONG') {
-        await ongService.cadastro(dadosFormulario as OngCadastro);
+        const payload = { ...dadosFormulario } as OngCadastro;
+        await ongService.cadastro(payload);
         showToast('ONG cadastrada com sucesso!', 'success');
       }
       navigate('/login');
     } catch (error: any) {
       if (error.response && error.response.status === 422) {
+        console.log(error.response.data.errors)
         setErrors(error.response.data.errors || {});
         showToast('Por favor, corrija os erros no formulário.', 'error');
       } else { // Para tratar problemas com o servidor
@@ -77,7 +80,7 @@ function SignUp() {
 
           {tipoCadastro === 'VOLUNTARIO'
             ? <FormVoluntario aoAlterar={atualizarDadosFormulario} styles={styles} errors={errors} />
-            : <FormOng aoAlterar={atualizarDadosFormulario} styles={styles} />
+            : <FormOng aoAlterar={atualizarDadosFormulario} styles={styles} errors={errors} />
           }
 
           <p className={styles.linkLogin}>Já tem conta? <Link to="/login">Faça Login</Link></p>
