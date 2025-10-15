@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('data_inicio');
             $table->integer('quantidade_maxima_voluntarios')->nullable();
             $table->enum('status', ['ativo', 'cancelado', 'finalizado']);
-            $table->integer('id_ong')->references('id')->on('ongs');
+            $table->foreignId('id_ong')->constrained('ongs')->onDelete('cascade');
             $table->timestamps();
         });
     }

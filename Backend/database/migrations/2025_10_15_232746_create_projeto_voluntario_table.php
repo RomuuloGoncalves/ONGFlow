@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('projeto_voluntario', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_voluntario')->references('id')->on('voluntario');
-            $table->integer('id_projeto')->references('id')->on('projeto');
-            $table->integer('id_convite')->references('id')->on('convite');
+            $table->foreignId('id_voluntario')->constrained('voluntarios')->onDelete('cascade');
+            $table->foreignId('id_projeto')->constrained('projetos')->onDelete('cascade');
+            $table->foreignId('id_convite')->constrained('convites')->onDelete('cascade');
             $table->timestamps();
         });
     }

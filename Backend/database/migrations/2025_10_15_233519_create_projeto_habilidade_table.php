@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('projeto_habilidade', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_projeto')->references('id')->on('projeto');
-            $table->integer('id_habilidade')->references('id')->on('habilidade');
+            $table->foreignId('id_projeto')->constrained('projetos')->onDelete('cascade');
+            $table->foreignId('id_habilidade')->constrained('habilidades')->onDelete('cascade');
             $table->timestamps();
         });
     }
