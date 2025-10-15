@@ -5,7 +5,10 @@ import FormOng from '../../../components/SignUp/FormOng/FormOng';
 import styles from './SignUp.module.css';
 import useCustomToast from '../../../components/ui/use-toast';
 
-import serverService from '../../../services/serverService';
+import voluntarioService from '../../../services/voluntarioService';
+import ongService from '../../../services/ongService';
+import type { OngCadastro } from '../../../interfaces/ong';
+import type { VoluntarioCadastro } from '../../../interfaces/voluntario';
 
 function SignUp() {
   const IconeSetaEsquerda = () => (
@@ -21,16 +24,12 @@ function SignUp() {
   const manipularSubmit = async (evento: React.FormEvent) => {
     evento.preventDefault();
 
-    // objeto que será enviado
-    
     try {
       if (tipoCadastro === 'VOLUNTARIO') {
-        const payload = { ...dadosFormulario, status: 'ativo' };
-        await serverService.post('/voluntarios', payload);
+        await voluntarioService.cadastro(dadosFormulario as VoluntarioCadastro);
         showToast('Voluntário cadastrado com sucesso!', 'success');
       } else if (tipoCadastro === 'ONG') {
-        const payload = { ...dadosFormulario};
-        await serverService.post('/ongs', payload);
+        await ongService.cadastro(dadosFormulario as OngCadastro);
         showToast('ONG cadastrada com sucesso!', 'success');
       }
       navigate('/login');
@@ -77,7 +76,7 @@ function SignUp() {
           </div>
 
           {tipoCadastro === 'VOLUNTARIO'
-            ? <FormVoluntario aoAlterar={atualizarDadosFormulario} styles={styles} errors={errors} /> // MODIFICADO
+            ? <FormVoluntario aoAlterar={atualizarDadosFormulario} styles={styles} errors={errors} />
             : <FormOng aoAlterar={atualizarDadosFormulario} styles={styles} />
           }
 
