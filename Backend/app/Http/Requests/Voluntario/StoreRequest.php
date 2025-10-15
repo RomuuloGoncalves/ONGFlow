@@ -25,14 +25,14 @@ class StoreRequest extends FormRequest
     {
         return [
             'nome' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:voluntarios'],
-            'cpf' => ['required', 'string', 'max:14', 'unique:voluntarios,cpf'],
-            'data_nascimento' => ['required', 'date'],
-            'telefone' => ['required', 'string', 'max:20'],
+            'email' => ['required', 'email', 'unique:voluntarios', 'max:255'],
+            'cpf' => ['required', 'string', 'digits:11', 'unique:voluntarios,cpf'],
+            'data_nascimento' => ['required', 'date', 'before:today'],
+            'telefone' => ['required', 'string', 'digits_between:10,15'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password' => ['required', 'string', 'min:8'],
             'bio' => ['nullable', 'string'],
             'status' => ['required', 'in:ativo,inativo'],
-            // 'endereco_id' => ['nullable', 'integer', 'exists:enderecos,id'],
         ];
     }
 
@@ -46,23 +46,27 @@ class StoreRequest extends FormRequest
         return [
             'nome.required' => 'O campo nome é obrigatório.',
 
-            'email.required' => 'O campo email é obrigatório.',
+            'email.required' => 'O campo e-mail é obrigatório.',
             'email.email' => 'Por favor, insira um endereço de e-mail válido.',
-            'email.unique' => 'Este e-mail já está em uso.',
+            'email.unique' => 'Este e-mail já está em uso por outro voluntário.',
 
             'cpf.required' => 'O campo CPF é obrigatório.',
-            'cpf.unique' => 'Este CPF já está cadastrado.',
+            'cpf.digits' => 'O CPF deve conter exatamente 11 dígitos, sem pontos ou traços.',
+            'cpf.unique' => 'Este CPF já está cadastrado em nosso sistema.',
 
-            'data_nascimento.required' => 'A data de nascimento é obrigatória.',
-            'data_nascimento.date' => 'Formato de data inválido.',
+            'data_nascimento.required' => 'O campo data de nascimento é obrigatório.',
+            'data_nascimento.date' => 'O formato da data de nascimento é inválido.',
+            'data_nascimento.before' => 'A data de nascimento deve ser uma data anterior a hoje.',
 
             'telefone.required' => 'O campo telefone é obrigatório.',
+            'telefone.digits_between' => 'O telefone deve conter apenas números, incluindo o DDD.',
 
-            'password.required' => "O campo senha é obrigatório",
-
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
+            // 'password.confirmed' => 'A confirmação de senha não corresponde.',
 
             'status.required' => 'O campo status é obrigatório.',
-            'status.in' => 'O status deve ser "ativo" ou "inativo".',
+            'status.in' => 'O status selecionado é inválido. Use "ativo" ou "inativo".',
         ];
     }
 
@@ -76,12 +80,10 @@ class StoreRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        // Isso impede o redirecionamento padrão.
         throw new HttpResponseException(response()->json([
             'success'   => false,
-            'message'   => 'Dados inválidos',
+            'message'   => 'Existem erros de validação no seu formulário.',
             'errors'    => $validator->errors()
         ], 422));
     }
 }
-

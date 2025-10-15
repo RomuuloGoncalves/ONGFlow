@@ -8,6 +8,7 @@ interface IconProps {
 interface FormOngProps {
   aoAlterar: (dados: any) => void;
   styles: { [key: string]: string };
+  errors?: { [key: string]: string };
 }
 
 const IconeUsuario: React.FC<IconProps> = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>);
@@ -17,10 +18,12 @@ const IconeOng: React.FC<IconProps> = ({ className }) => (<svg className={classN
 const IconeCnpj: React.FC<IconProps> = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>);
 const IconeSigla: React.FC<IconProps> = ({ className }) => (<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>);
 
-const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles }) => {
+const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => {
   const [dados, setDados] = useState({
+    nome: '',
     login: '',
     password: '',
+    password_confirmation: '',
     nome_fantasia: '',
     cnpj: '',
     sigla: '',
@@ -38,29 +41,67 @@ const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles }) => {
 
   return (
     <div className={styles.containerInputsOng}>
-      <div className={styles.grupoInput}>
-        <IconeOng className={styles.icone} />
-        <input type="text" name="nome_fantasia" placeholder="Nome Fantasia da ONG" value={dados.nome_fantasia} onChange={manipularMudanca} />
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconeUsuario className={styles.icone} />
+          <input type="text" name="nome" placeholder="Nome da ONG" value={dados.nome} onChange={manipularMudanca} />
+        </div>
+        {errors.nome && <span className={styles.mensagemErroCampo}>{errors.nome}</span>}
       </div>
-      <div className={styles.grupoInput}>
-        <IconeCnpj className={styles.icone} />
-        <input type="text" name="cnpj" placeholder="CNPJ (apenas números)" value={dados.cnpj} onChange={manipularMudanca} />
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconeOng className={styles.icone} />
+          <input type="text" name="nome_fantasia" placeholder="Nome Fantasia da ONG" value={dados.nome_fantasia} onChange={manipularMudanca} />
+        </div>
+        {errors.nome_fantasia && <span className={styles.mensagemErroCampo}>{errors.nome_fantasia}</span>}
       </div>
-      <div className={styles.grupoInput}>
-        <IconeSigla className={styles.icone} />
-        <input type="text" name="sigla" placeholder="Sigla" value={dados.sigla} onChange={manipularMudanca} />
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconeCnpj className={styles.icone} />
+          <input type="text" name="cnpj" placeholder="CNPJ (apenas números)" value={dados.cnpj} onChange={manipularMudanca} />
+        </div>
+        {errors.cnpj && <span className={styles.mensagemErroCampo}>{errors.cnpj}</span>}
       </div>
-      <div className={styles.grupoInput}>
-        <IconeUsuario className={styles.icone} />
-        <input type="text" name="login" placeholder="Login de acesso" value={dados.login} onChange={manipularMudanca} />
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconeSigla className={styles.icone} />
+          <input type="text" name="sigla" placeholder="Sigla" value={dados.sigla} onChange={manipularMudanca} />
+        </div>
+        {errors.sigla && <span className={styles.mensagemErroCampo}>{errors.sigla}</span>}
       </div>
-      <div className={styles.grupoInput}>
-        <IconePassword className={styles.icone} />
-        <input type="password" name="password" placeholder="password" value={dados.password} onChange={manipularMudanca} />
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconeUsuario className={styles.icone} />
+          <input type="text" name="login" placeholder="Email de acesso" value={dados.login} onChange={manipularMudanca} />
+        </div>
+        {errors.login && <span className={styles.mensagemErroCampo}>{errors.login}</span>}
       </div>
-      <div className={styles.grupoInput}>
-        <IconeData className={styles.icone} />
-        <input type="date" name="data_fundacao" value={dados.data_fundacao} onChange={manipularMudanca} />
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconePassword className={styles.icone} />
+          <input type="password" name="password" placeholder="Senha" value={dados.password} onChange={manipularMudanca} />
+        </div>
+        {errors.password && <span className={styles.mensagemErroCampo}>{errors.password}</span>}
+      </div>
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconePassword className={styles.icone} />
+          <input type="password" name="password_confirmation" placeholder="Confirme sua Senha" onChange={manipularMudanca} />
+        </div>
+      </div>
+
+      <div className={styles.grupoInputContainer}>
+        <div className={styles.grupoInput}>
+          <IconeData className={styles.icone} />
+          <input type="date" name="data_fundacao" value={dados.data_fundacao} onChange={manipularMudanca} />
+        </div>
+        {errors.data_fundacao && <span className={styles.mensagemErroCampo}>{errors.data_fundacao}</span>}
       </div>
     </div>
   );

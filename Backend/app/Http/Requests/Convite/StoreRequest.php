@@ -24,13 +24,13 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'iniciador' => ['required', 'in:pendente,aceito,recusado'],
-            'mensagem' => ['required', 'string'],
-            'data_criacao' => ['required', 'date'],
-            'data_resposta' => ['required', 'date'],
-            // 'ongs_id' => ['required', 'integer', 'exists:ong,id'],
-            // 'voluntarios_id' => ['required', 'integer', 'exists:voluntarios,id'],
-            // 'projetos_id' => ['required', 'integer', 'exists:projetos,id'],
+            'iniciador' => ['required', 'in:ong,voluntario'],
+            'status' => ['sometimes', 'in:pendente,aceito,recusado'],
+            'mensagem' => ['required', 'string', 'max:1000'],
+            'data_resposta' => ['nullable', 'date', 'after_or_equal:data_criacao'],
+            'ongs_id' => ['required', 'integer', 'exists:ongs,id'],
+            'voluntarios_id' => ['required', 'integer', 'exists:voluntarios,id'],
+            'projetos_id' => ['required', 'integer', 'exists:projetos,id'],
         ];
     }
 
@@ -42,16 +42,28 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'data_criacao.required' => 'A data de criação é obrigatória.',
-            'data_criacao.date' => 'Formato de data inválido.',
-            
-            'data_resposta.required' => 'A data de reposta é obrigatória.',
-            'data_resposta.date' => 'Formato de data inválido.',
+            'iniciador.required' => 'É necessário especificar quem iniciou o convite (ong ou voluntario).',
+            'iniciador.in' => 'O iniciador do convite deve ser "ong" ou "voluntario".',
 
-            'mesnagem.required' => 'O campo mensagem é obrigatório.',
+            'status.in' => 'O status do convite é inválido. Valores aceitos: pendente, aceito, recusado.',
 
-            'iniciador.required' => 'O campo iniciador é obrigatório.',
-            'iniciador.in' => 'O iniciador deve ser "pendente", "aceito" ou "recusado".',
+            'mensagem.required' => 'O campo mensagem é obrigatório.',
+            'mensagem.max' => 'A mensagem não pode ter mais de 1000 caracteres.',
+
+            'data_resposta.date' => 'O formato da data de resposta é inválido.',
+            'data_resposta.after_or_equal' => 'A data de resposta não pode ser anterior à data de criação.',
+
+            'ongs_id.required' => 'O ID da ONG é obrigatório.',
+            'ongs_id.integer' => 'O ID da ONG deve ser um número inteiro.',
+            'ongs_id.exists' => 'A ONG selecionada não existe.',
+
+            'voluntarios_id.required' => 'O ID do voluntário é obrigatório.',
+            'voluntarios_id.integer' => 'O ID do voluntário deve ser um número inteiro.',
+            'voluntarios_id.exists' => 'O voluntário selecionado não existe.',
+
+            'projetos_id.required' => 'O ID do projeto é obrigatório.',
+            'projetos_id.integer' => 'O ID do projeto deve ser um número inteiro.',
+            'projetos_id.exists' => 'O projeto selecionado não existe.',
         ];
     }
 
@@ -65,10 +77,9 @@ class StoreRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        // Isso impede o redirecionamento padrão.
         throw new HttpResponseException(response()->json([
             'success'   => false,
-            'message'   => 'Dados inválidos',
+            'message'   => 'Erro na validação dos dados do convite.',
             'errors'    => $validator->errors()
         ], 422));
     }
