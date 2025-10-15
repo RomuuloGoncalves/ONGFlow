@@ -45,6 +45,12 @@ class Ong extends Model
         $this->attributes['password'] = bcrypt($value);
     }
 
+    // relações
+    public function projeto()
+    {
+        return $this->hasMany(Projeto::class, 'id_ong', 'id');
+    }
+
     public function endereco()
     {
         return $this->belongsTo(Endereco::class, 'endereco_id');

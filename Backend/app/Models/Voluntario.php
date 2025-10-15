@@ -25,8 +25,8 @@ class Voluntario extends Authenticatable
         'cpf',
         'data_nascimento',
         'telefone',
-        'bio', 
-        'status',  
+        'bio',
+        'status',
     ];
 
     protected $hidden = [
@@ -44,4 +44,9 @@ class Voluntario extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    //RELAÇÕE
+    public function convite()
+    {
+        return $this->hasMany(Convite::class, 'id_voluntario', 'id');
+    }
 }

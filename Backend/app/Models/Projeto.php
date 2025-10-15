@@ -18,6 +18,7 @@ class Projeto extends Model
         'data_inicio',
         'quantidade_maxima_voluntarios',
         'status',
+        'id_ong',
     ];
 
     protected $hidden = [
@@ -28,5 +29,11 @@ class Projeto extends Model
     ];
 
     protected $primaryKey = 'id';
+
+    // relacoes
+    public function ong()
+    {
+        return $this->belongsTo(Ong::class, 'id_ong');
+    }
 
 }

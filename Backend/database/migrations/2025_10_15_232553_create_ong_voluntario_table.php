@@ -11,16 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('convites', function (Blueprint $table) {
+        Schema::create('ong_voluntario', function (Blueprint $table) {
             $table->id();
-            $table->enum('iniciador', ['pendente', 'aceito', 'recusado']);
-            $table->longText('mensagem');
-            $table->date('data_criacao');
-            $table->date('data_resposta');
-            // $table->integer('ong_id')->references('id')->on('ong');
             $table->integer('id_voluntario')->references('id')->on('voluntarios');
-            // $table->integer('projeto_id')->references('id')->on('projeto');
-
+            $table->integer('id_ong')->references('id')->on('ongs');
             $table->timestamps();
         });
     }
@@ -30,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('convites');
+        Schema::dropIfExists('ong_voluntario');
     }
 };

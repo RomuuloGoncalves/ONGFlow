@@ -19,8 +19,8 @@ class Convite extends Model
         'data_criacao',
         'data_resposta',
         // 'ong_id',
-        // 'voluntario_id',
-        // 'projeto_id',
+        'id_voluntario',
+        'projeto_id',
     ];
 
     protected $hidden = [
@@ -38,10 +38,10 @@ class Convite extends Model
     //     return $this->belongsTo(Ong::class, 'ong_id');
     // }
 
-    // public function voluntario()
-    // {
-    //     return $this->belongsTo(Voluntario::class, 'Voluntario_id');
-    // }
+    public function voluntario()
+    {
+        return $this->belongsTo(Voluntario::class, 'id_voluntario');
+    }
 
     // public function projeto()
     // {
