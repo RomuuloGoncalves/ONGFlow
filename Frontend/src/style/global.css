@@ -181,6 +181,35 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+.container__title{
+    width: 80%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px auto;
+    gap: 10px;
+
+    h1{
+        font-size: 32px;
+        font-weight: bold;
+        background: linear-gradient(90deg, #868CFF 0%, #4318FF 100%);
+        -webkit-background-clip: text; /* Safari/Chrome */
+        background-clip: text;
+        -webkit-text-fill-color: transparent; /* Safari/Chrome */
+        color: transparent; /* fallback */
+        /* opcional: melhora contraste em alguns navegadores */
+        display: inline-block;
+    }
+
+    p{
+        color: #7C7C7C;
+        font-size: 18px;
+    }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
