@@ -1,5 +1,3 @@
-"use client"
-
 import { CircleCheckIcon, XIcon } from "lucide-react"
 import { toast } from "sonner"
 

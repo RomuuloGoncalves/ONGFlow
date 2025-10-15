@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import FormVoluntario from '../../../components/SignUp/FormVoluntario/FormVoluntario';
 import FormOng from '../../../components/SignUp/FormOng/FormOng';
 import styles from './SignUp.module.css';
+import useCustomToast from '../../../components/ui/use-toast';
 
 import serverService from '../../../services/serverService';
 
@@ -14,6 +15,7 @@ function SignUp() {
   const [tipoCadastro, setTipoCadastro] = useState('VOLUNTARIO');
   const [dadosFormulario, setDadosFormulario] = useState({});
   const [errors, setErrors] = useState({});
+  const { showToast } = useCustomToast();
 
   const manipularSubmit = async (evento: React.FormEvent) => {
     evento.preventDefault();
@@ -26,20 +28,21 @@ function SignUp() {
         const response = await serverService.post('/voluntarios', payload);
         console.log("Resposta do cadastro de voluntário:", response.data);
 
-        alert('Voluntário cadastrado com sucesso!');
+        showToast('Voluntário cadastrado com sucesso!', 'success');
 
       } else if (tipoCadastro === 'ONG') {
         const response = await serverService.post('/ongs', payload);
         console.log("Resposta do cadastro de ONG:", response.data);
 
-        alert('ONG cadastrada com sucesso!');
+        showToast('ONG cadastrada com sucesso!', 'success');
       }
     } catch (error: any) {
       // Para tratar problemas com os dados
       if (error.response && error.response.status === 422) {
         setErrors(error.response.data.errors || {});
+        showToast('Por favor, corrija os erros no formulário.', 'error');
       } else { // Para tratar problemas com o servidor
-        alert('Ocorreu um erro inesperado. Tente novamente mais tarde.');
+        showToast('Ocorreu um erro inesperado. Tente novamente mais tarde.', 'error');
       }
     }
   };
