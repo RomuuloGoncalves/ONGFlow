@@ -23,7 +23,7 @@ const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => 
     nome: '',
     login: '',
     password: '',
-    password_confirmation: '',
+    // password_confirmation: '',
     nome_fantasia: '',
     cnpj: '',
     sigla: '',
@@ -89,12 +89,12 @@ const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => 
         {errors.password && <span className={styles.mensagemErroCampo}>{errors.password}</span>}
       </div>
 
-      <div className={styles.grupoInputContainer}>
+      {/* <div className={styles.grupoInputContainer}>
         <div className={styles.grupoInput}>
           <IconePassword className={styles.icone} />
           <input type="password" name="password_confirmation" placeholder="Confirme sua Senha" onChange={manipularMudanca} />
         </div>
-      </div>
+      </div> */}
 
       <div className={styles.grupoInputContainer}>
         <div className={styles.grupoInput}>

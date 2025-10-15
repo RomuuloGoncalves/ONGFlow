@@ -25,7 +25,8 @@ class StoreRequest extends FormRequest
     {
         return [
             'login' => ['required', 'email', 'unique:ongs,login', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
             'nome' => ['required', 'string', 'max:255'],
             'nome_fantasia' => ['string', 'max:255'],
             'cnpj' => ['required', 'string', 'digits:14', 'unique:ongs,cnpj'],
@@ -48,7 +49,7 @@ class StoreRequest extends FormRequest
 
             'password.required' => 'O campo senha é obrigatório.',
             'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
-            'password.confirmed' => 'A confirmação de senha não corresponde.',
+            // 'password.confirmed' => 'A confirmação de senha não corresponde.',
 
             'nome.required' => 'O campo nome da ONG é obrigatório.',
 
