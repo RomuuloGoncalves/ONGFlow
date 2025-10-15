@@ -22,13 +22,14 @@ function SignUp() {
     evento.preventDefault();
 
     // objeto que será enviado
-    const payload = { ...dadosFormulario, status: 'ativo' };
-
+    
     try {
       if (tipoCadastro === 'VOLUNTARIO') {
+        const payload = { ...dadosFormulario, status: 'ativo' };
         await serverService.post('/voluntarios', payload);
         showToast('Voluntário cadastrado com sucesso!', 'success');
       } else if (tipoCadastro === 'ONG') {
+        const payload = { ...dadosFormulario};
         await serverService.post('/ongs', payload);
         showToast('ONG cadastrada com sucesso!', 'success');
       }
