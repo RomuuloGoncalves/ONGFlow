@@ -64,6 +64,149 @@ const projetos = [
     telefone: "(31) 94444-6543",
     dataHora: "2025-10-15 14:20"
   },
+  {
+    id: 6,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 7,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 8,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 9,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 10,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 11,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 12,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 13,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 14,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 15,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 16,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 17,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+  {
+    id: 18,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
 ];
 
 

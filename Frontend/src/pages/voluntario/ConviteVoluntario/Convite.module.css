@@ -94,7 +94,7 @@
 
       .card__title {
         width: 100%;
-        min-height: 70px;
+        min-height: 20px;
         display: flex;
         flex-direction: column;
         gap: 5px;
@@ -155,7 +155,7 @@
         gap: 5px;
 
         .badge {
-          width: 100px;
+          min-width: 100px;
           height: 30px;
           display: flex;
           justify-content: center;
@@ -169,7 +169,7 @@
           box-shadow: --shadow-5;
 
           @media (max-width: 425px) {
-            width: 80px;
+            min-width: 80px;
             height: 25px;
             p {
               font-size: 10px;
@@ -193,6 +193,8 @@
         }
         p {
           display: flex;
+          align-items: center;
+          text-align: center;
           gap: 10px;
           @media (max-width: 425px) {
             font-size: 12px;

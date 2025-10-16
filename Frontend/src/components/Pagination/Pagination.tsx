@@ -10,7 +10,7 @@ type PaginationProps = {
   windowSize?: number; // quantos botões de página mostrar por vez
 };
 
-export function Pagination({ currentPage, totalPages, onPageChange, windowSize = 5 }: PaginationProps) {
+export function Pagination({ currentPage, totalPages, onPageChange, windowSize = 3 }: PaginationProps) {
   const [currentWindow, setCurrentWindow] = React.useState(0);
 
   const startPage = currentWindow * windowSize + 1;
