@@ -58,7 +58,7 @@ const projetos = [
     titulo: "Campanha de Adoção de Animais",
     descricao:
       "Apoio em feiras de adoção e cuidados temporários para animais resgatados.",
-    status: "Solicitado",
+    status: "Pendente",
     localizacao: "Porto Alegre - RS",
     habilidades: ["Empatia", "Atendimento ao público", "Organização"],
     ong: "Amigos dos Pets RS",
@@ -80,7 +80,7 @@ const projetos = [
     id: 6,
     titulo: "Oficina de Inclusão Digital para Idosos",
     descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
+    status: "Solicitado",
     localizacao: "Belo Horizonte - MG",
     habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
     ong: "Conectar BH",
@@ -226,7 +226,7 @@ function Convite() {
   const [filtro, setFiltro] = useState("Todos");
   const [textPesquisa, setTextPesquisa] = useState("");
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
 
   // Aplica o filtro
   const projetosFiltrados = projetos.filter((p) => {
