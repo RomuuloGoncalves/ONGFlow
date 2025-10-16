@@ -2,14 +2,87 @@ import Header from "@/components/Voluntario/Header/Header";
 import style from "./Convite.module.css";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Pagination } from "@/components/Pagination/Pagination";
+import { Localizacao } from "@/assets/icons/Localizacao";
+import { Telefone } from "@/assets/icons/Telefone";
+import { Usuario } from "@/assets/icons/Usuario";
 import { useState } from "react";
+import { Relogio } from "@/assets/icons/Relogio";
 
-const items = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
+const projetos = [
+  {
+    id: 1,
+    titulo: "Campanha de Arrecadação de Alimentos",
+    descricao: "Ensinar reutilização de materiais recicláveis,Ensinar reutilização de materiais recicláveis",
+    status: "Aceito",
+    localizacao: "São Paulo - SP",
+    habilidades: ["Organização", "Comunicação", "Logística"],
+    ong: "Instituto Solidário SP",
+    telefone: "(11) 98888-1234",
+    dataHora: "2025-10-15 09:00"
+  },
+  {
+    id: 2,
+    titulo: "Aulas de Reforço Escolar",
+    descricao: "Apoio escolar para crianças do ensino fundamental com foco em matemática e português.",
+    status: "Pendente",
+    localizacao: "Curitiba - PR",
+    habilidades: ["Didática", "Paciência", "Pedagogia"],
+    ong: "Associação Educar Curitiba",
+    telefone: "(41) 97777-4567",
+    dataHora: "2025-10-15 10:15"
+  },
+  {
+    id: 3,
+    titulo: "Mutirão de Limpeza Ambiental",
+    descricao: "Grupo de voluntários para limpeza de rios e parques com conscientização ambiental.",
+    status: "Recusado",
+    localizacao: "Rio de Janeiro - RJ",
+    habilidades: ["Trabalho em equipe", "Esforço físico", "Conscientização ambiental"],
+    ong: "Verde+ RJ",
+    telefone: "(21) 96666-7890",
+    dataHora: "2025-10-15 11:45"
+  },
+  {
+    id: 4,
+    titulo: "Campanha de Adoção de Animais",
+    descricao: "Apoio em feiras de adoção e cuidados temporários para animais resgatados.",
+    status: "Solicitado",
+    localizacao: "Porto Alegre - RS",
+    habilidades: ["Empatia", "Atendimento ao público", "Organização"],
+    ong: "Amigos dos Pets RS",
+    telefone: "(51) 95555-3210",
+    dataHora: "2025-10-15 13:00"
+  },
+  {
+    id: 5,
+    titulo: "Oficina de Inclusão Digital para Idosos",
+    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
+    status: "Pendente",
+    localizacao: "Belo Horizonte - MG",
+    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
+    ong: "Conectar BH",
+    telefone: "(31) 94444-6543",
+    dataHora: "2025-10-15 14:20"
+  },
+];
+
+
+const items = projetos.map((projeto, index) => ({
+  id: projeto.id ?? index + 1,
+  titulo: projeto.titulo,
+  descricao: projeto.descricao,
+  status: projeto.status,
+  localizacao: projeto.localizacao,
+  habilidades: projeto.habilidades,
+  telefone: projeto.telefone,
+  ong: projeto.ong,
+  dataHora: projeto.dataHora
+}));
 
 function Convite() {
   // Número da página atual e a quantidade de itens por página
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 1;
 
   // índice do primeiro item da página atual
   const start = (currentPage - 1) * itemsPerPage;
@@ -46,11 +119,37 @@ function Convite() {
           </div>
         </div>
         <div className={style.container__table_body}>
-          <ul>
-            {paginatedItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          {paginatedItems.map((item) => (
+            <div key={item.id} className={style.card}>
+              <div className={style.card__title}>
+                <div className={style.card__title_tag}>
+                  <p>{item.status}</p>
+                </div>
+                <h1>{item.titulo}</h1>
+              </div>
+              <div className={style.card__descricao}>
+                <p>{item.descricao}</p>
+              </div>
+              <div className={style.habilidades}>
+                {item.habilidades.map((hab, i) => (
+                  <div key={i} className={style.badge}>
+                    {hab}
+                  </div>
+                ))}
+              </div>
+              <div className={style.container__details}>
+                <div className={style.card__location_date}>
+                  <p><Localizacao/>{item.localizacao}</p>
+                  <p><Relogio/>{item.dataHora}</p>
+                </div>
+                <div className={style.card__ong_phone}>
+                  <p><Usuario/>{item.ong}</p>
+                  <p><Telefone/> {item.telefone}</p>
+                </div>
+              </div>
+             
+            </div>
+          ))}
         </div>
 
         <div className={style.container__table_footer}>
