@@ -1,7 +1,7 @@
 import Header from "@/components/Voluntario/Header/Header";
 import style from "./PerfilVoluntario.module.css";
 import { useState } from "react";
-import SelectInput from '@/components/Voluntario/Select'
+import SelectInput from '@/components/Voluntario/MultiSelect'
 
 // Icons
 import { Usuario } from "@/assets/icons/Usuario";

@@ -103,7 +103,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Background */
-  --background-color: linear-gradient(90deg, #868CFF 0%, #4318FF 100%);
+  --background-color: linear-gradient(90deg, #868CFF  -20%, #4318FF 100%);
 
   /* Shadow */
   --shadow-5: 4px 4px 4px rgba(0, 0, 0, 0.05);

@@ -7,7 +7,7 @@ type PaginationProps = {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  windowSize?: number; // quantos botões de página mostrar por vez
+  windowSize?: number; 
 };
 
 export function Pagination({ currentPage, totalPages, onPageChange, windowSize = 3 }: PaginationProps) {
