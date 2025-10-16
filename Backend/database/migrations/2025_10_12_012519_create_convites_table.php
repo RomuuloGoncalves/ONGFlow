@@ -13,15 +13,17 @@ return new class extends Migration
     {
         Schema::create('convites', function (Blueprint $table) {
             $table->id();
-            $table->enum('iniciador', ['pendente', 'aceito', 'recusado']);
+            $table->enum('iniciador', ['ong', 'voluntario']);
+            $table->enum('status', ['pendente', 'aceito', 'recusado']);
             $table->longText('mensagem');
-            $table->date('data_criacao');
-            $table->date('data_resposta');
-            // $table->integer('ong_id')->references('id')->on('ong');
-            // $table->integer('voluntario_id')->references('id')->on('voluntario');
-            // $table->integer('projeto_id')->references('id')->on('projeto');
+            $table->date('data_resposta')->nullable(); // A response date might not exist initially
 
-            $table->timestamps();
+            // Foreign keys
+            $table->foreignId('id_ong')->constrained('ongs')->onDelete('cascade');
+            $table->foreignId('id_voluntario')->constrained('voluntarios')->onDelete('cascade');
+            $table->foreignId('id_projeto')->nullable()->constrained('projetos')->onDelete('cascade'); // An invitation might not be for a specific project
+
+            $table->timestamps(); // Handles created_at and updated_at
         });
     }
 

@@ -27,7 +27,6 @@ class Ong extends Model
         'cnpj',
         'sigla',
         'data_fundacao',
-        // 'endereco_id'
     ];
 
     protected $hidden = [
@@ -45,9 +44,20 @@ class Ong extends Model
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function endereco()
+    // relações
+    public function projetos()
     {
-        return $this->belongsTo(Endereco::class, 'endereco_id');
+        return $this->hasMany(Projeto::class, 'id_ong', 'id');
+    }
+
+    public function voluntarios()
+    {
+        return $this->belongsToMany(Voluntario::class, 'ong_voluntario', 'id_ong', 'id_voluntario');
+    }
+
+    public function convites()
+    {
+        return $this->hasMany(Convite::class, 'id_ong', 'id');
     }
 
 }

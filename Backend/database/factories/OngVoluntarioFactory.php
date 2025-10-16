@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Convite>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class ConviteFactory extends Factory
+class OngVoluntarioFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class ConviteFactory extends Factory
     public function definition(): array
     {
         return [
-            'mensagem' => fake()->text(),
-            'iniciador' => fake()->randomElement(['ong', 'voluntario']),
-            'status' => 'pendente',
+            //
         ];
     }
 }

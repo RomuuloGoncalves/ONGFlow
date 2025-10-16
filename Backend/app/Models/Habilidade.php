@@ -21,4 +21,14 @@ class Habilidade extends Model
     ];
 
     protected $primaryKey = 'id';
+
+    public function voluntarios()
+    {
+        return $this->belongsToMany(Voluntario::class, 'voluntario_habilidade', 'id_habilidade', 'id_voluntario');
+    }
+    
+    public function projetos()
+    {
+        return $this->belongsToMany(Projeto::class, 'projeto_habilidade', 'id_habilidade', 'id_projeto');
+    }
 }

@@ -67,3 +67,5 @@ Route::prefix('convites')->group(function () {
     Route::delete('/{id}', [ConviteController::class, 'destroy']);
 
 });
+
+require __DIR__.'/test_routes.php';

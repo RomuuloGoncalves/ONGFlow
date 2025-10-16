@@ -18,9 +18,9 @@ class Convite extends Model
         'mensagem',
         'data_criacao',
         'data_resposta',
-        // 'ong_id',
-        // 'voluntario_id',
-        // 'projeto_id',
+        'id_ong',
+        'id_voluntario',
+        'id_projeto',
     ];
 
     protected $hidden = [
@@ -33,19 +33,19 @@ class Convite extends Model
 
     protected $primaryKey = 'id';
 
-    // public function ong()
-    // {
-    //     return $this->belongsTo(Ong::class, 'ong_id');
-    // }
+    public function ong()
+    {
+        return $this->belongsTo(Ong::class, 'id_ong');
+    }
 
-    // public function voluntario()
-    // {
-    //     return $this->belongsTo(Voluntario::class, 'Voluntario_id');
-    // }
+    public function voluntario()
+    {
+        return $this->belongsTo(Voluntario::class, 'id_voluntario');
+    }
 
-    // public function projeto()
-    // {
-    //     return $this->belongsTo(Projeto::class, 'Projeto_id');
-    // }
+    public function projeto()
+    {
+        return $this->belongsTo(Projeto::class, 'id_projeto');
+    }
 
 }
