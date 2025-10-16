@@ -19,25 +19,25 @@
     padding: 0 20px;
     flex-wrap: wrap;
 
-    @media (max-width: 900px){
-        justify-content: center;
+    @media (max-width: 900px) {
+      justify-content: center;
     }
-    .search{
-        min-width: 100px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
+    .search {
+      min-width: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
 
-        input{
-            width: 300px;
-            height: 50px;
-            border: .5px solid #DDDDDD;
-            background-color: var(--secondary-primary-white);
-            padding: 0 10px;
-            border-radius: 5px;
-            outline: none;
-        }
+      input {
+        width: 300px;
+        height: 50px;
+        border: 0.5px solid #dddddd;
+        background-color: var(--secondary-primary-white);
+        padding: 0 10px;
+        border-radius: 5px;
+        outline: none;
+      }
     }
     .container__tags {
       min-width: 40%;
@@ -47,7 +47,7 @@
       align-items: center;
       flex-wrap: wrap;
 
-      @media (max-width: 570px){
+      @media (max-width: 570px) {
         justify-content: center;
       }
 
@@ -70,7 +70,7 @@
     }
   }
 
-  .container__table_body{
+  .container__table_body {
     width: 100%;
     min-height: 450px;
     display: flex;
@@ -79,8 +79,8 @@
     align-items: center;
     gap: 30px;
     padding: 0 20px;
-    
-    .card{
+
+    .card {
       width: 600px;
       min-height: 250px;
       display: flex;
@@ -88,54 +88,61 @@
       gap: 15px;
       padding: 20px;
       background-color: var(--secondary-primary-white);
-      border: .5px solid #DDDDDD;
+      border: 0.5px solid #dddddd;
       border-radius: 10px;
       box-shadow: --shadow-5;
 
-
-      .card__title{
+      .card__title {
         width: 100%;
         min-height: 70px;
         display: flex;
         flex-direction: column;
         gap: 5px;
 
-        .card__title_tag{
+        .card__title_tag {
           width: 80px;
           height: 30px;
           display: flex;
           justify-content: center;
           align-items: center;
           border-radius: 15px;
-          background-color: #FCFCFD;
+          background-color: #fcfcfd;
           color: var(--primary-purple-blue-900);
           font-weight: 500;
-          border: .5px solid #D6D6D6;
+          border: 0.5px solid #d6d6d6;
           box-shadow: --shadow-5;
         }
 
-        h1{
+        h1 {
           font-size: 1.3rem;
           color: var(--primary-purple-blue-900);
           font-weight: bold;
+
+          @media (max-width: 425px) {
+            font-size: 1.1em;
+          }
         }
       }
-      .card__descricao{
+      .card__descricao {
         width: 100%;
         min-height: 40px;
 
-        p{
-          color: #7C7C7C;
+        p {
+          color: #7c7c7c;
+
+          @media (max-width: 425px) {
+            font-size: 12px;
+          }
         }
       }
-      .habilidades{
+      .habilidades {
         width: 100%;
-        min-height: 50px;
+        min-height: 30px;
         display: flex;
         flex-wrap: wrap;
         gap: 5px;
 
-        .badge{
+        .badge {
           width: 100px;
           height: 30px;
           display: flex;
@@ -148,32 +155,46 @@
           font-weight: 500;
           font-size: 12px;
           box-shadow: --shadow-5;
+
+          @media (max-width: 425px) {
+            width: 80px;
+            height: 25px;
+            p{
+                font-size: 10px;
+            }
+          }
         }
       }
-      
-      .container__details{
+
+      .container__details {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
         gap: 20px;
 
-        .card__location_date,.card__ong_phone{
+        .card__location_date,
+        .card__ong_phone {
           display: flex;
           flex-direction: column;
           gap: 10px;
-          color: #7C7C7C;
+          color: #7c7c7c;
         }
-        p{
+        p {
           display: flex;
           gap: 10px;
+          @media (max-width: 425px) {
+            font-size: 12px;
+            .icon{
+              width: 16px;
+            }
+          }
         }
       }
-
     }
   }
 
-  .container__table_footer{
-    @media (max-width: 540px){
+  .container__table_footer {
+    @media (max-width: 540px) {
       padding-bottom: 20px;
     }
   }

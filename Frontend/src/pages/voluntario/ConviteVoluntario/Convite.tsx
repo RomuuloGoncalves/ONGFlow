@@ -133,18 +133,18 @@ function Convite() {
               <div className={style.habilidades}>
                 {item.habilidades.map((hab, i) => (
                   <div key={i} className={style.badge}>
-                    {hab}
+                    <p>{hab}</p>
                   </div>
                 ))}
               </div>
               <div className={style.container__details}>
                 <div className={style.card__location_date}>
-                  <p><Localizacao/>{item.localizacao}</p>
-                  <p><Relogio/>{item.dataHora}</p>
+                  <p><Localizacao className={style.icon}/>{item.localizacao}</p>
+                  <p><Relogio className={style.icon}/>{item.dataHora}</p>
                 </div>
                 <div className={style.card__ong_phone}>
-                  <p><Usuario/>{item.ong}</p>
-                  <p><Telefone/> {item.telefone}</p>
+                  <p><Usuario className={style.icon}/>{item.ong}</p>
+                  <p><Telefone className={style.icon}/> {item.telefone}</p>
                 </div>
               </div>
              
