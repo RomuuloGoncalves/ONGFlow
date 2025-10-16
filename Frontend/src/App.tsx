@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/auth/Login/Login';
 import SignUp from './pages/auth/SignUp/SignUp';
 import PublicHome from './pages/public/Home/Home';
@@ -10,7 +10,7 @@ import { Layout } from './Layout';
 
 function App() {
   return (
-    <Router basename="/ONGFlow/">
+    <Router>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<PublicHome />} />
