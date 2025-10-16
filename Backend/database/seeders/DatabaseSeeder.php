@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             );
         });
 
-        // Create Projetos, attach Habilidades and Voluntarios
+        // Create Projetos, attach Habilidades and Voluntarios via Convites
         foreach ($ongs as $ong) {
             Projeto::factory(rand(1, 5))->create([
                 'id_ong' => $ong->id,
@@ -39,27 +39,21 @@ class DatabaseSeeder extends Seeder
                 $projeto->habilidades()->attach(
                     $habilidades->random(rand(1, 10))->pluck('id')->toArray()
                 );
-                // Attach Voluntarios to Projeto
-                $projeto->voluntarios()->attach(
-                    $voluntarios->random(rand(1, 10))->pluck('id')->toArray()
-                );
-            });
-        }
 
-        // Create Convites
-        $projetos = Projeto::all();
-        foreach ($projetos as $projeto) {
-            $voluntariosDoProjeto = $projeto->voluntarios;
-            foreach($voluntariosDoProjeto as $voluntario) {
-                 // Create convite only if there are voluntarios in the projeto
-                if ($voluntariosDoProjeto->isNotEmpty()) {
-                    Convite::factory()->create([
-                        'id_ong' => $projeto->ong->id,
+                // Select random volunteers, create convites, and attach them to the project
+                $voluntariosToAttach = $voluntarios->random(rand(1, 10));
+                foreach ($voluntariosToAttach as $voluntario) {
+                    $convite = Convite::factory()->create([
+                        'id_ong' => $projeto->id_ong,
                         'id_voluntario' => $voluntario->id,
                         'id_projeto' => $projeto->id,
+                        'status' => 'aceito', // Assuming the invitation is accepted to create the link
                     ]);
+
+                    // Attach voluntario to projeto with the convite id
+                    $projeto->voluntarios()->attach($voluntario->id, ['id_convite' => $convite->id]);
                 }
-            }
+            });
         }
     }
 }
