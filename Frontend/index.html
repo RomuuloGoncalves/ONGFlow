@@ -21,7 +21,7 @@
           });
           if (q.p) {
             window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + q.p.slice(1) + (q.q ? ('?' + q.q) : '') + l.hash
+              l.pathname.slice(0, -1) + q.p + (q.q ? ('?' + q.q) : '') + l.hash
             );
           }
         }
