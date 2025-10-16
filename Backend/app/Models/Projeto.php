@@ -38,6 +38,16 @@ class Projeto extends Model
 
     public function habilidades()
     {
-        return $this->belongsToMany(Habilidade::class, 'projeto_habilidade', 'projeto_id', 'id_habilidade');
+        return $this->belongsToMany(Habilidade::class, 'projeto_habilidade', 'id_projeto', 'id_habilidade');
+    }
+
+    public function voluntarios()
+    {
+        return $this->belongsToMany(Voluntario::class, 'projeto_voluntario', 'id_projeto', 'id_voluntario');
+    }
+
+    public function convites()
+    {
+        return $this->hasMany(Convite::class, 'id_projeto', 'id');
     }
 }

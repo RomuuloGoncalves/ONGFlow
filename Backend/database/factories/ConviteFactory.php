@@ -18,8 +18,10 @@ class ConviteFactory extends Factory
     {
         return [
             'mensagem' => fake()->text(),
-            'iniciador' => fake()->randomElement(['pendente', 'aceito', 'recusado']),
+            'iniciador' => fake()->randomElement(['ong', 'voluntario']),
+            'status' => 'pendente',
             'data_criacao' => fake()->date(),
-            'data_resposta' => fake()->date(),        ];
+            'data_resposta' => null,
+        ];
     }
 }

@@ -59,4 +59,9 @@ class Voluntario extends Authenticatable
     {
         return $this->belongsToMany(Habilidade::class, 'voluntario_habilidade', 'id_voluntario', 'id_habilidade');
     }
+
+    public function projetos()
+    {
+        return $this->belongsToMany(Projeto::class, 'projeto_voluntario', 'id_voluntario', 'id_projeto');
+    }
 }
