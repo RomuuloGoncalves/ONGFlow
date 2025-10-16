@@ -36,4 +36,8 @@ class Projeto extends Model
         return $this->belongsTo(Ong::class, 'id_ong');
     }
 
+    public function habilidades()
+    {
+        return $this->belongsToMany(Habilidade::class, 'projeto_habilidade', 'projeto_id', 'id_habilidade');
+    }
 }

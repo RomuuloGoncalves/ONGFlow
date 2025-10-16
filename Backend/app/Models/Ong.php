@@ -27,7 +27,7 @@ class Ong extends Model
         'cnpj',
         'sigla',
         'data_fundacao',
-        // 'endereco_id'
+        // 'id_endereco'
     ];
 
     protected $hidden = [
@@ -53,7 +53,12 @@ class Ong extends Model
 
     public function endereco()
     {
-        return $this->belongsTo(Endereco::class, 'endereco_id');
+        return $this->belongsTo(Endereco::class, 'id_endereco');
+    }
+
+    public function voluntarios()
+    {
+        return $this->belongsToMany(Voluntario::class, 'ong_voluntario', 'id_ong', 'id_voluntario');
     }
 
 }
