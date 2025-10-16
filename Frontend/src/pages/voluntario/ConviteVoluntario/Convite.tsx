@@ -13,7 +13,7 @@ const projetos = [
     id: 1,
     titulo: "Campanha de Arrecadação de Alimentos",
     descricao: "Ensinar reutilização de materiais recicláveis,Ensinar reutilização de materiais recicláveis",
-    status: "Aceito",
+    status: "Solicitado",
     localizacao: "São Paulo - SP",
     habilidades: ["Organização", "Comunicação", "Logística"],
     ong: "Instituto Solidário SP",

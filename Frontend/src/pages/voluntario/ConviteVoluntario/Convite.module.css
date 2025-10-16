@@ -100,7 +100,8 @@
         gap: 5px;
 
         .card__title_tag {
-          width: 80px;
+          min-width: 80px;
+          max-width: 100px;
           height: 30px;
           display: flex;
           justify-content: center;
@@ -111,7 +112,10 @@
           font-weight: 500;
           border: 0.5px solid #d6d6d6;
           box-shadow: --shadow-5;
-
+          
+          p{
+            font-size: 16px;
+          }
           @media (max-width: 425px) {
             width: 80px;
             height: 25px;
