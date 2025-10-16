@@ -39,7 +39,9 @@ export function Pagination({ currentPage, totalPages, onPageChange, windowSize =
   };
 
   return (
-    <div className={style.container__pagination}>
+    <div className={style.container__pagination} style={{
+      display: totalPages < 2 ? "none" : "flex"
+    }}>
       <button disabled={currentPage === 1} onClick={handlePrev} className={style.buttonBefore}>
         <Menor/>
       </button>
