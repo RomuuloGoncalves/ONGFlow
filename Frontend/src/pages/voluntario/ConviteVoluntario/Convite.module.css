@@ -111,6 +111,14 @@
           font-weight: 500;
           border: 0.5px solid #d6d6d6;
           box-shadow: --shadow-5;
+
+          @media (max-width: 425px) {
+            width: 80px;
+            height: 25px;
+            p {
+              font-size: 10px;
+            }
+          }
         }
 
         h1 {
@@ -159,8 +167,8 @@
           @media (max-width: 425px) {
             width: 80px;
             height: 25px;
-            p{
-                font-size: 10px;
+            p {
+              font-size: 10px;
             }
           }
         }
@@ -184,7 +192,7 @@
           gap: 10px;
           @media (max-width: 425px) {
             font-size: 12px;
-            .icon{
+            .icon {
               width: 16px;
             }
           }

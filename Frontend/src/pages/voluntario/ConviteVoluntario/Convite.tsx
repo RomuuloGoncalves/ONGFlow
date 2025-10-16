@@ -82,7 +82,7 @@ const items = projetos.map((projeto, index) => ({
 function Convite() {
   // Número da página atual e a quantidade de itens por página
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 1;
+  const itemsPerPage = 2;
 
   // índice do primeiro item da página atual
   const start = (currentPage - 1) * itemsPerPage;
