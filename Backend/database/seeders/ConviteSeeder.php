@@ -12,6 +12,6 @@ class ConviteSeeder extends Seeder
      */
     public function run(): void
     {
-        Convite::factory(5)->create();
+        Convite::factory(1000)->create();
     }
 }

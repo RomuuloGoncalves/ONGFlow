@@ -9,6 +9,11 @@ import { useState } from "react";
 import { Relogio } from "@/assets/icons/Relogio";
 import { Check } from "@/assets/icons/Check";
 import { Lixo } from "@/assets/icons/Lixo";
+import ConviteService from "@/services/conviteService";
+
+
+console.log(await ConviteService.getConvitesVoluntario(51))
+
 
 
 // RETORNAR A API COM NOME 'projetos'

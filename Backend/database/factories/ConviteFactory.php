@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Projeto;
+use App\Models\Voluntario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,7 +18,11 @@ class ConviteFactory extends Factory
      */
     public function definition(): array
     {
+        $projeto = Projeto::inRandomOrder()->first();
         return [
+            'id_voluntario' => Voluntario::inRandomOrder()->first()->id,
+            'id_projeto' => $projeto->id,
+            'id_ong' => $projeto->id_ong,
             'mensagem' => fake()->text(),
             'iniciador' => fake()->randomElement(['ong', 'voluntario']),
             'status' => 'pendente',

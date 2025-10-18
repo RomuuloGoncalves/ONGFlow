@@ -5,28 +5,43 @@ namespace App\Http\Controllers;
 use App\Models\Convite;
 use Illuminate\Http\Request;
 use App\Http\Requests\Convite\StoreRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ConviteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function index(string $idVoluntario)
     {
-        $query = Convite::with(['projeto.ong.endereco', 'projeto.habilidades']);
-
-        if ($request->has('idVoluntario')) {
-            $query->where('id_voluntario', $request->input('idVoluntario'));
-        }
-
-        $convites = $query->get();
+        $convites = Convite::with(['projeto.ong', 'projeto.habilidades'])
+            ->where('id_voluntario', $idVoluntario)
+            ->get();
 
         return response()->json($convites);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function aceitar(string $id)
+    {
+        try {
+            $convite = Convite::findOrFail($id);
+            $convite->status = 'aceito';
+            $convite->save();
+            return response()->json(['message' => 'Convite aceito com sucesso.']);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Convite não encontrado.'], 404);
+        }
+    }
+
+    public function recusar(string $id)
+    {
+        try {
+            $convite = Convite::findOrFail($id);
+            $convite->status = 'recusado';
+            $convite->save();
+            return response()->json(['message' => 'Convite recusado com sucesso.']);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => 'Convite não encontrado.'], 404);
+        }
+    }
+
     public function store(StoreRequest $request)
     {
         try {
@@ -47,9 +62,6 @@ class ConviteController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         try {
@@ -78,9 +90,6 @@ class ConviteController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(StoreRequest $request, string $id)
     {
         try {
@@ -102,9 +111,6 @@ class ConviteController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
