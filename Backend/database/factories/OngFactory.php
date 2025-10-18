@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Endereco;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,6 +18,7 @@ class OngFactory extends Factory
             'cnpj' => fake()->unique()->numerify('##.###.###/####-##'),
             'sigla' => fake()->lexify('???'),
             'data_fundacao' => fake()->date(),
+            'id_endereco' => Endereco::factory(),
         ];
     }
 }

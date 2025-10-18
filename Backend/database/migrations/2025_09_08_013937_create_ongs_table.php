@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('cnpj')->unique();
             $table->string('sigla')->nullable();
             $table->date('data_fundacao');
-            // $table->integer('endereco_id')->references('id')->on('endereco');
+            $table->foreignId('id_endereco')->nullable()->constrained('enderecos')->onDelete('cascade');
             $table->timestamps();
         });
     }

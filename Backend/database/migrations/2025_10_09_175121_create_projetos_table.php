@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('quantidade_maxima_voluntarios')->nullable();
             $table->enum('status', ['ativo', 'cancelado', 'finalizado']);
             $table->foreignId('id_ong')->constrained('ongs')->onDelete('cascade');
+            $table->foreignId('id_endereco')->nullable()->constrained('enderecos')->onDelete('cascade');
             $table->timestamps();
         });
     }

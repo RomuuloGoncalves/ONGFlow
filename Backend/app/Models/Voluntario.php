@@ -27,6 +27,7 @@ class Voluntario extends Authenticatable
         'telefone',
         'bio',
         'status',
+        'id_endereco',
     ];
 
     protected $hidden = [
@@ -63,5 +64,10 @@ class Voluntario extends Authenticatable
     public function projetos()
     {
         return $this->belongsToMany(Projeto::class, 'projeto_voluntario', 'id_voluntario', 'id_projeto');
+    }
+
+    public function endereco()
+    {
+        return $this->belongsTo(Endereco::class, 'id_endereco');
     }
 }

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            EnderecoSeeder::class,
             VoluntarioSeeder::class,
             OngSeeder::class,
         ]);
@@ -55,5 +56,10 @@ class DatabaseSeeder extends Seeder
                 }
             });
         }
+
+        $this->call([
+            ConviteSeeder::class,
+            ConviteSeeder::class,
+        ]);
     }
 }

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telefone');
             $table->text('bio')->nullable();
             $table->enum('status', ['ativo', 'inativo']);
+            $table->foreignId('id_endereco')->nullable()->constrained('enderecos')->onDelete('cascade');
             $table->timestamps();
             // $table->softDeletes();
         });

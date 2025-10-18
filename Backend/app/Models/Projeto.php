@@ -19,6 +19,7 @@ class Projeto extends Model
         'quantidade_maxima_voluntarios',
         'status',
         'id_ong',
+        'id_endereco',
     ];
 
     protected $hidden = [
@@ -49,5 +50,10 @@ class Projeto extends Model
     public function convites()
     {
         return $this->hasMany(Convite::class, 'id_projeto', 'id');
+    }
+
+    public function endereco()
+    {
+        return $this->belongsTo(Endereco::class, 'id_endereco');
     }
 }
