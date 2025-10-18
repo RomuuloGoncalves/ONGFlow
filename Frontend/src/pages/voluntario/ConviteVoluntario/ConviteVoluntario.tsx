@@ -5,248 +5,44 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Telefone } from "@/assets/icons/Telefone";
 import { Usuario } from "@/assets/icons/Usuario";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Relogio } from "@/assets/icons/Relogio";
 import { Check } from "@/assets/icons/Check";
 import { Lixo } from "@/assets/icons/Lixo";
 import ConviteService from "@/services/conviteService";
-
-
-console.log(await ConviteService.getConvitesVoluntario(51))
-
-
-
-// RETORNAR A API COM NOME 'projetos'
-const projetos = [
-  {
-    id: 1,
-    titulo: "Campanha de Arrecadação de Alimentos",
-    descricao:
-      "Ensinar reutilização de materiais recicláveis,Ensinar reutilização de materiais recicláveis",
-    status: "Solicitado",
-    localizacao: "São Paulo - SP",
-    habilidades: ["Organização", "Comunicação", "Logística"],
-    ong: "Instituto Solidário SP",
-    telefone: "(11) 98888-1234",
-    dataHora: "2025-10-15 09:00",
-  },
-  {
-    id: 2,
-    titulo: "Aulas de Reforço Escolar",
-    descricao:
-      "Apoio escolar para crianças do ensino fundamental com foco em matemática e português.",
-    status: "Pendente",
-    localizacao: "Curitiba - PR",
-    habilidades: ["Didática", "Paciência", "Pedagogia"],
-    ong: "Associação Educar Curitiba",
-    telefone: "(41) 97777-4567",
-    dataHora: "2025-10-15 10:15",
-  },
-  {
-    id: 3,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao:
-      "Grupo de voluntários para limpeza de rios e parques com conscientização ambiental.",
-    status: "Recusado",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: [
-      "Trabalho em equipe",
-      "Esforço físico",
-      "Conscientização ambiental",
-    ],
-    ong: "Verde+ RJ",
-    telefone: "(21) 96666-7890",
-    dataHora: "2025-10-15 11:45",
-  },
-  {
-    id: 4,
-    titulo: "Campanha de Adoção de Animais",
-    descricao:
-      "Apoio em feiras de adoção e cuidados temporários para animais resgatados.",
-    status: "Pendente",
-    localizacao: "Porto Alegre - RS",
-    habilidades: ["Empatia", "Atendimento ao público", "Organização"],
-    ong: "Amigos dos Pets RS",
-    telefone: "(51) 95555-3210",
-    dataHora: "2025-10-15 13:00",
-  },
-  {
-    id: 5,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 6,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Solicitado",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 7,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 8,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 9,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 10,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 11,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 12,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 13,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 14,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 15,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 16,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 17,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-  {
-    id: 18,
-    titulo: "Oficina de Inclusão Digital para Idosos",
-    descricao: "Ensinar idosos a utilizarem smartphones e aplicativos básicos.",
-    status: "Pendente",
-    localizacao: "Belo Horizonte - MG",
-    habilidades: ["Paciência", "Tecnologia básica", "Ensino"],
-    ong: "Conectar BH",
-    telefone: "(31) 94444-6543",
-    dataHora: "2025-10-15 14:20",
-  },
-];
+import { Convite } from "@/interfaces/convite";
 
 function Convite() {
+  const [convites, setConvites] = useState<Convite[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filtro, setFiltro] = useState("Todos");
   const [textPesquisa, setTextPesquisa] = useState("");
 
+  useEffect(() => {
+    async function fetchConvites() {
+      // TODO: Obter o ID do voluntário logado
+      const response = await ConviteService.getConvitesVoluntario(1);
+      setConvites(response.data);
+    }
+    fetchConvites();
+  }, []);
+
   const itemsPerPage = 6;
 
   // Aplica o filtro
-  const projetosFiltrados = projetos.filter((p) => {
+  const convitesFiltrados = convites.filter((c) => {
     const pesquisa = textPesquisa.toLocaleLowerCase();
-    const statusValido = filtro === "Todos" || p.status === filtro;
+    const statusValido = filtro === "Todos" || c.status === filtro;
     const pesquisaValida =
-      p.titulo.toLowerCase().includes(pesquisa) ||
-      p.ong.toLowerCase().includes(pesquisa);
+      c.projeto.nome.toLowerCase().includes(pesquisa) ||
+      c.projeto.ong.nome_fantasia.toLowerCase().includes(pesquisa);
 
     return statusValido && pesquisaValida;
   });
 
   // Aplica a paginação DEPOIS do filtro
   const start = (currentPage - 1) * itemsPerPage;
-  const paginatedItems = projetosFiltrados.slice(start, start + itemsPerPage);
+  const paginatedItems = convitesFiltrados.slice(start, start + itemsPerPage);
 
   return (
     <>
@@ -280,43 +76,43 @@ function Convite() {
               Todos
             </button>
             <button
-              onClick={() => setFiltro("Pendente")}
+              onClick={() => setFiltro("pendente")}
               className={`${style.button} ${
-                filtro === "Pendente" ? style.active : ""
+                filtro === "pendente" ? style.active : ""
               }`}
             >
               Pendentes
             </button>
             <button
-              onClick={() => setFiltro("Aceito")}
+              onClick={() => setFiltro("aceito")}
               className={`${style.button} ${
-                filtro === "Aceito" ? style.active : ""
+                filtro === "aceito" ? style.active : ""
               }`}
             >
               Aceitos
             </button>
             <button
-              onClick={() => setFiltro("Recusado")}
+              onClick={() => setFiltro("recusado")}
               className={`${style.button} ${
-                filtro === "Recusado" ? style.active : ""
+                filtro === "recusado" ? style.active : ""
               }`}
             >
               Recusados
             </button>
             <button
-              onClick={() => setFiltro("Solicitado")}
+              onClick={() => setFiltro("cancelado")}
               className={`${style.button} ${
-                filtro === "Solicitado" ? style.active : ""
+                filtro === "cancelado" ? style.active : ""
               }`}
             >
-              Solicitados
+              Cancelados
             </button>
           </div>
         </div>
         <div className={style.container__table_body}>
           {paginatedItems.length === 0 ? (
             <p className={style.alertMensage}>
-              Ops! Não encontramos nenhum projeto.
+              Ops! Não encontramos nenhum convite.
             </p>
           ) : (
             paginatedItems.map((item) => (
@@ -325,15 +121,15 @@ function Convite() {
                   <div className={style.card__title_tag}>
                     <p>{item.status}</p>
                   </div>
-                  <h1>{item.titulo}</h1>
+                  <h1>{item.projeto.nome}</h1>
                 </div>
                 <div className={style.card__descricao}>
-                  <p>{item.descricao}</p>
+                  <p>{item.projeto.descricao}</p>
                 </div>
                 <div className={style.habilidades}>
-                  {item.habilidades.map((hab, i) => (
+                  {item.projeto.habilidades.map((hab, i) => (
                     <div key={i} className={style.badge}>
-                      <p>{hab}</p>
+                      <p>{hab.descricao}</p>
                     </div>
                   ))}
                 </div>
@@ -341,25 +137,26 @@ function Convite() {
                   <div className={style.card__location_date}>
                     <p>
                       <Localizacao className={style.icon} />
-                      {item.localizacao}
+                      {/* {item.projeto.ong.endereco} */}  Localização não disponível
                     </p>
                     <p>
                       <Relogio className={style.icon} />
-                      {item.dataHora}
+                      {new Date(item.created_at).toLocaleDateString()}
                     </p>
                   </div>
                   <div className={style.card__ong_phone}>
                     <p>
                       <Usuario className={style.icon} />
-                      {item.ong}
+                      {item.projeto.ong.nome_fantasia}
                     </p>
                     <p>
-                      <Telefone className={style.icon} /> {item.telefone}
+                      <Telefone className={style.icon} /> 
+                      {/* {item.projeto.ong.telefone} */} Telefone não disponível
                     </p>
                   </div>
                 </div>
                 <div className={style.container__buttons} style={{
-                    display: item.status.toLocaleLowerCase() == 'solicitado' ? 'flex' : 'none'
+                    display: item.iniciador.toLocaleLowerCase() == 'ong' && item.status.toLocaleLowerCase() == 'pendente' ? 'flex' : 'none'
                   }}>
                     <button className={`${style.button} ${style.buttonAccept}`}><Check className={style.icon}/> Aceitar</button>
                     <button className={`${style.button} ${style.buttonDecline}`}><Lixo className={style.icon}/> Recusar</button>
@@ -372,7 +169,7 @@ function Convite() {
         <div className={style.container__table_footer}>
           <Pagination
             currentPage={currentPage}
-            totalPages={Math.ceil(projetosFiltrados.length / itemsPerPage)}
+            totalPages={Math.ceil(convitesFiltrados.length / itemsPerPage)}
             onPageChange={(page) => setCurrentPage(page)}
           />
         </div>

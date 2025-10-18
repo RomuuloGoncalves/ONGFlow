@@ -17,18 +17,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            VoluntarioSeeder::class,
+            OngSeeder::class,
+        ]);
+
         // Create Habilidades
         $habilidades = Habilidade::factory(100)->create();
 
-        // Create Ongs
-        $ongs = Ong::factory(10)->create();
+        // Get all ongs and voluntarios
+        $ongs = Ong::all();
+        $voluntarios = Voluntario::all();
 
-        // Create Voluntarios and attach Habilidades
-        $voluntarios = Voluntario::factory(50)->create()->each(function ($voluntario) use ($habilidades) {
-            $voluntario->habilidades()->attach(
-                $habilidades->random(rand(1, 5))->pluck('id')->toArray()
-            );
-        });
 
         // Create Projetos, attach Habilidades and Voluntarios via Convites
         foreach ($ongs as $ong) {
