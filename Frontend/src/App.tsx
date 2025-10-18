@@ -5,6 +5,7 @@ import PublicHome from './pages/public/Home/Home';
 import NotFoundPage from './pages/public/NotFoundPage/NotFoundPage';
 import HomeVoluntario from './pages/voluntario/HomeVoluntario/HomeVoluntario';
 import PerfilVoluntario from './pages/voluntario/PerfilVoluntario/PerfilVoluntario';
+import PerfilOng from './pages/ong/PerfilOng_/PerfilOng';
 import ConviteVoluntario from './pages/voluntario/ConviteVoluntario/ConviteVoluntario';
 import { Layout } from './Layout';
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home/voluntario" element={<HomeVoluntario />} />
           <Route path="/perfil/voluntario" element={<PerfilVoluntario />} />
+          <Route path="/perfil/ong" element={<PerfilOng />} />
           <Route path="/convite/voluntario" element={<ConviteVoluntario />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
