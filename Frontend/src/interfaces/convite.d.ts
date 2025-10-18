@@ -2,7 +2,7 @@ import { Ong } from "./ong";
 import { Projeto } from "./projeto";
 import { Voluntario } from "./voluntario";
 
-export interface Convite {
+export interface IConvite {
   id: number;
   iniciador: "ong" | "voluntario";
   status: "pendente" | "aceito" | "recusado";
