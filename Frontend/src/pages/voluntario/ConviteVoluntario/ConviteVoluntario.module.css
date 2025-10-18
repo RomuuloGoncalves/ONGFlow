@@ -81,7 +81,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: stretch; /* Alinha os itens para terem a mesma altura */
     gap: 30px;
     padding: 0 20px;
 
@@ -94,7 +94,6 @@
 
     .card {
       width: 580px;
-      min-height: 350px;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -223,6 +222,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        margin-top: auto; /* Empurra os botões para o final do card */
 
         @media (max-width: 425px) {
           flex-direction: column;
