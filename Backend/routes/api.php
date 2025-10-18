@@ -22,6 +22,7 @@ Route::prefix('voluntarios')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::delete('/{id}', [VoluntarioController::class, 'destroy']);
         Route::put('/{id}', [VoluntarioController::class, 'update']);
+        Route::get('/{idVoluntario}/convites', [ConviteController::class, 'index']);
     });
 });
 

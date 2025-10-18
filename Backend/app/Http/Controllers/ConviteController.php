@@ -11,9 +11,15 @@ class ConviteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $convites = Convite::all();
+        $query = Convite::with(['projeto.ong.endereco', 'projeto.habilidades']);
+
+        if ($request->has('idVoluntario')) {
+            $query->where('id_voluntario', $request->input('idVoluntario'));
+        }
+
+        $convites = $query->get();
 
         return response()->json($convites);
     }

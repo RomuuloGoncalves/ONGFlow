@@ -1,5 +1,5 @@
 import Header from "@/components/Voluntario/Header/Header";
-import style from "./Convite.module.css";
+import style from "./ConviteVoluntario.module.css";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Localizacao } from "@/assets/icons/Localizacao";

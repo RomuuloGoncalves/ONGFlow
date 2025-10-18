@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
+import useCustomToast from '../../../components/ui/use-toast';
+import voluntarioService from '../../../services/voluntarioService';
+import Cookies from 'js-cookie';
 
 function Login() {
   const IconeSetaEsquerda = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
   );
 
+  const navigate = useNavigate();
+  const { showToast } = useCustomToast();
+
   const [tipoLogin, setTipoLogin] = useState('VOLUNTARIO');
   const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{ email?: string[]; password?: string[]; general?: string }>({});
 
   const seletorClasse = (tipo: string) => {
     const classes = [styles.seletorBotao];
@@ -19,9 +26,50 @@ function Login() {
     return classes.join(' ');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleTypeChange = (type: string) => {
+    setTipoLogin(type);
+    setEmail('');
+    setPassword('');
+    setErrors({});
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Dados do login:", { email, senha });
+    setErrors({});
+
+    try {
+      if (tipoLogin === 'VOLUNTARIO') {
+        const response = await voluntarioService.login({ email, password });
+        const { access_token, voluntario, message } = response.data;
+
+        Cookies.set('token', access_token, { expires: 7, path: '/' });
+        localStorage.setItem('user', JSON.stringify(voluntario));
+
+        showToast(message || 'Login realizado com sucesso!', 'success');
+        navigate('/home/voluntario');
+      } else {
+        showToast('Login de ONG ainda não implementado.', 'error');
+      }
+    } catch (error: any) {
+        if (error.response) {
+            const { status, data } = error.response;
+            if (status === 422) { // Erros de validação
+                setErrors(data.errors || {});
+                showToast('Por favor, corrija os erros no formulário.', 'error');
+            } else if (status === 401) { // Erro de autenticação
+                setErrors({ general: data.message || 'Email ou senha inválidos.' });
+                showToast(data.message || 'Email ou senha inválidos.', 'error');
+            } else { // Outros erros do servidor
+                const errorMessage = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+                setErrors({ general: errorMessage });
+                showToast(errorMessage, 'error');
+            }
+        } else {
+            const errorMessage = 'Não foi possível conectar ao servidor.';
+            setErrors({ general: errorMessage });
+            showToast(errorMessage, 'error');
+        }
+    }
   };
 
   return (
@@ -42,20 +90,24 @@ function Login() {
           </div>
 
           <div className={styles.seletorTipo}>
-            <button type="button" className={seletorClasse('VOLUNTARIO')} onClick={() => setTipoLogin('VOLUNTARIO')}>
+            <button type="button" className={seletorClasse('VOLUNTARIO')} onClick={() => handleTypeChange('VOLUNTARIO')}>
               Voluntário
             </button>
-            <button type="button" className={seletorClasse('ONG')} onClick={() => setTipoLogin('ONG')}>
+            <button type="button" className={seletorClasse('ONG')} onClick={() => handleTypeChange('ONG')}>
               ONG
             </button>
           </div>
 
           <div className={styles.grupoInput}>
             <input type="email" placeholder="Endereço de Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            {errors.email && <span className={styles.erro}>{errors.email[0]}</span>}
           </div>
           <div className={styles.grupoInput}>
-            <input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} />
+            <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+            {errors.password && <span className={styles.erro}>{errors.password[0]}</span>}
           </div>
+
+          {errors.general && <p className={styles.erroGeral}>{errors.general}</p>}
 
           <p className={styles.linkLogin}>
             Não tem conta? <Link to="/signup">Cadastre-se</Link>

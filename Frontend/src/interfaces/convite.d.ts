@@ -1,3 +1,5 @@
+import { Projeto } from "./projeto";
+
 export interface Convite {
  id: number;
  id_voluntario: number;
@@ -7,4 +9,6 @@ export interface Convite {
  data_criacao: string;
  mensagem: string;
  data_resposta: string;
+ status: string;
+ projeto: Projeto;
 }
