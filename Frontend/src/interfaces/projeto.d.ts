@@ -1,4 +1,5 @@
 import { Habilidade } from "./habilidade";
+import { Ong } from "./ong";
 
 export interface Projeto {
   id: number;
@@ -9,4 +10,5 @@ export interface Projeto {
   data_fim: string;
   status: "pendente" | "em andamento" | "concluido";
   habilidades: Habilidade[];
+  ong: Ong;
 }

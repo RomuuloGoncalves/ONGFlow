@@ -10,9 +10,9 @@ import { Relogio } from "@/assets/icons/Relogio";
 import { Check } from "@/assets/icons/Check";
 import { Lixo } from "@/assets/icons/Lixo";
 import ConviteService from "@/services/conviteService";
-import { Convite } from "@/interfaces/convite";
+import type { Convite } from "@/interfaces/convite";
 
-function Convite() {
+function ConviteVoluntario() {
   const [convites, setConvites] = useState<Convite[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [filtro, setFiltro] = useState("Todos");
@@ -31,11 +31,14 @@ function Convite() {
 
   // Aplica o filtro
   const convitesFiltrados = convites.filter((c) => {
+    if (!c.projeto) {
+      return false;
+    }
     const pesquisa = textPesquisa.toLocaleLowerCase();
     const statusValido = filtro === "Todos" || c.status === filtro;
     const pesquisaValida =
       c.projeto.nome.toLowerCase().includes(pesquisa) ||
-      c.projeto.ong.nome_fantasia.toLowerCase().includes(pesquisa);
+      c.ong.nome_fantasia.toLowerCase().includes(pesquisa);
 
     return statusValido && pesquisaValida;
   });
@@ -121,15 +124,15 @@ function Convite() {
                   <div className={style.card__title_tag}>
                     <p>{item.status}</p>
                   </div>
-                  <h1>{item.projeto.nome}</h1>
+                  <h1>{item.projeto?.nome}</h1>
                 </div>
                 <div className={style.card__descricao}>
-                  <p>{item.projeto.descricao}</p>
+                  <p>{item.projeto?.descricao}</p>
                 </div>
                 <div className={style.habilidades}>
-                  {item.projeto.habilidades.map((hab, i) => (
+                  {item.projeto?.habilidades.map((hab, i) => (
                     <div key={i} className={style.badge}>
-                      <p>{hab.descricao}</p>
+                      <p>{hab.nome}</p>
                     </div>
                   ))}
                 </div>
@@ -137,7 +140,7 @@ function Convite() {
                   <div className={style.card__location_date}>
                     <p>
                       <Localizacao className={style.icon} />
-                      {/* {item.projeto.ong.endereco} */}  Localização não disponível
+                      {/* {item.ong.endereco} */}  Localização não disponível
                     </p>
                     <p>
                       <Relogio className={style.icon} />
@@ -147,11 +150,11 @@ function Convite() {
                   <div className={style.card__ong_phone}>
                     <p>
                       <Usuario className={style.icon} />
-                      {item.projeto.ong.nome_fantasia}
+                      {item.ong.nome_fantasia}
                     </p>
                     <p>
                       <Telefone className={style.icon} /> 
-                      {/* {item.projeto.ong.telefone} */} Telefone não disponível
+                      {/* {item.ong.telefone} */} Telefone não disponível
                     </p>
                   </div>
                 </div>
@@ -178,4 +181,4 @@ function Convite() {
   );
 }
 
-export default Convite;
+export default ConviteVoluntario;
