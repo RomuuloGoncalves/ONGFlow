@@ -1,6 +1,6 @@
 import type { AxiosPromise } from "axios";
 import api from "./api";
-import type { IConvite } from "../interfaces/convite";
+import type { Convite } from "../interfaces/convite";
 
 interface ConviteActionResponse {
   message: string;
@@ -9,8 +9,8 @@ interface ConviteActionResponse {
 const conviteService = {
   getConvitesVoluntario: (
     idVoluntario: number
-  ): AxiosPromise<IConvite[]> => {
-    return api.get<IConvite[]>(`/voluntarios/${idVoluntario}/convites`);
+  ): AxiosPromise<Convite[]> => {
+    return api.get<Convite[]>(`/voluntarios/${idVoluntario}/convites`);
   },
 
   aceitarConvite: (idConvite: number): AxiosPromise<ConviteActionResponse> => {
