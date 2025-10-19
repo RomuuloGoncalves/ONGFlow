@@ -43,6 +43,28 @@ function ConviteVoluntario() {
     return statusValido && pesquisaValida;
   });
 
+  // funcao aceitar/recusar convite
+  const aceitarConvite = async(id: number) => {
+    try {
+      await ConviteService.aceitarConvite(id);
+      setConvites((prev) =>
+        prev.map((c) => (c.id === id ? { ...c, status: "aceito" } : c))
+      );
+    } catch (error) {
+      console.error("Erro ao aceitar convite", error);
+    }
+  };
+  const recusarConvite = async(id: number) => {
+    try {
+      await ConviteService.recusarConvite(id);
+      setConvites((prev) =>
+        prev.map((c) => (c.id === id ? { ...c, status: "recusado" } : c))
+      );
+    } catch (error) {
+      console.error("Erro ao aceitar convite", error);
+    }
+  };
+
   // Aplica a paginação DEPOIS do filtro
   const start = (currentPage - 1) * itemsPerPage;
   const paginatedItems = convitesFiltrados.slice(start, start + itemsPerPage);
@@ -161,8 +183,8 @@ function ConviteVoluntario() {
                 <div className={style.container__buttons} style={{
                     display: item.iniciador.toLocaleLowerCase() == 'ong' && item.status.toLocaleLowerCase() == 'pendente' ? 'flex' : 'none'
                   }}>
-                    <button className={`${style.button} ${style.buttonAccept}`}><Check className={style.icon}/> Aceitar</button>
-                    <button className={`${style.button} ${style.buttonDecline}`}><Lixo className={style.icon}/> Recusar</button>
+                    <button className={`${style.button} ${style.buttonAccept}`} onClick={() => aceitarConvite(item.id)}><Check className={style.icon}/> Aceitar</button>
+                    <button className={`${style.button} ${style.buttonDecline}`} onClick={() => recusarConvite(item.id)}><Lixo className={style.icon}/> Recusar</button>
                   </div>
               </div>
             ))
