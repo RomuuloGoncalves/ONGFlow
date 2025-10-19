@@ -50,6 +50,7 @@ function ConviteVoluntario() {
       setConvites((prev) =>
         prev.map((c) => (c.id === id ? { ...c, status: "aceito" } : c))
       );
+      
     } catch (error) {
       console.error("Erro ao aceitar convite", error);
     }
