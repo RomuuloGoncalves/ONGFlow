@@ -10,6 +10,7 @@ import { Telefone } from "@/assets/icons/Telefone";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Sobre } from "@/assets/icons/Sobre";
 import { Salvar } from "@/assets/icons/Salvar";
+import { Logout } from "@/assets/icons/Logout";
 
 function PerfilVoluntario() {
   const [voluntario, setVoluntario] = useState({
@@ -113,6 +114,10 @@ function PerfilVoluntario() {
             <button className={style.buttonSave}>
                 <Salvar/>
                 Salvar Alterações
+            </button>
+            <button className={style.buttonLogout}>
+                <Logout/>
+                Sair
             </button>
           </form>
         </div>

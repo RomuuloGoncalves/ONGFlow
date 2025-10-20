@@ -10,7 +10,6 @@ function PublicHome() {
         <nav className={styles.navegacao}>
           <Link to="/login" className={styles.botaoSecundario}>Entrar</Link>
           <Link to="/signUp" className={styles.botaoPrimario}>Cadastrar-se</Link>
-          <Link to="/home/voluntario" className={styles.botaoPrimario}>Home Voluntário</Link>
         </nav>
       </header>
 

@@ -15,7 +15,7 @@
   --primary-purple-blue-500-primary: rgba(67, 24, 255, 1);
   --primary-purple-blue-600: rgba(51, 17, 219, 1);
   --primary-purple-blue-700: rgba(34, 0, 183, 1);
-  --primary-purple-blue-800: rgba(25, 7, 147, 1);
+  --primary-purple-blue-800: rgb(25, 7, 147);
   --primary-purple-blue-900: rgba(17, 4, 122, 1);
   --secondary-primary-black: rgba(0, 0, 0, 1);
   --secondary-primary-white: rgba(255, 255, 255, 1);
