@@ -65,6 +65,8 @@ Route::prefix('convites')->group(function () {
     Route::post('/', [ConviteController::class, 'store']);
     Route::get('/{id}', [ConviteController::class, 'show']);
     Route::put('/{id}', [ConviteController::class, 'update']);
+    Route::put('/{id}/aceitar', [ConviteController::class, 'aceitar']);
+    Route::put('/{id}/recusar', [ConviteController::class, 'recusar']);
     Route::delete('/{id}', [ConviteController::class, 'destroy']);
 
 });

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Convite\StoreRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+use App\Http\Controllers\ProjetoVoluntarioController;
+
 class ConviteController extends Controller
 {
     public function index(string $idVoluntario)
@@ -24,7 +26,16 @@ class ConviteController extends Controller
             $convite = Convite::findOrFail($id);
             $convite->status = 'aceito';
             $convite->save();
-            return response()->json(['message' => 'Convite aceito com sucesso.']);
+
+        $projetoVoluntarioController = new ProjetoVoluntarioController();
+
+        $projetoVoluntarioController->store(
+            $convite->id_voluntario,
+            $convite->id_projeto,
+            $convite->id
+        );
+
+        return response()->json(['message' => 'Convite aceito com sucesso.']);
         } catch (ModelNotFoundException $e) {
             return response()->json(['message' => 'Convite não encontrado.'], 404);
         }
