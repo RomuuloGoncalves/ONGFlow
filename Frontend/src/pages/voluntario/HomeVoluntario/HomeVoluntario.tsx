@@ -5,8 +5,9 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import SelectSimple from "@/components/Voluntario/Select";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
+import ModalVoluntario from "@/modals/Voluntario/modalVoluntario";
 
-// Aqui você precisa ter seu array de projetos
+// Nome da API(json) tem que ser projetos
 const projetos = [
   {
     id: 1,
@@ -56,13 +57,13 @@ const projetos = [
     localizacao: "Rio de Janeiro - RJ",
     habilidades: ["Trabalho em equipe", "Esforço físico"],
   },
-  // ... outros projetos
 ];
 
 function HomeVoluntario() {
   const [currentPage, setCurrentPage] = useState(1);
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const itemsPerPage = 4;
 
@@ -82,7 +83,9 @@ function HomeVoluntario() {
 
   return (
     <>
+
       <Header />
+
       <div className={style.container__title}>
         <h1>Bem vindo de volta!</h1>
         <p>Acompanhe as suas participações em projetos </p>
@@ -116,7 +119,7 @@ function HomeVoluntario() {
             </p>
           ) : (
             paginatedItems.map((item) => (
-              <div key={item.id} className={style.card}>
+              <div key={item.id} className={style.card} onClick={() => setIsModalOpen(true)}>
                 <div className={style.card__title}>
                   <div className={style.card__title_tag}>
                     <p>{item.status}</p>
@@ -156,6 +159,10 @@ function HomeVoluntario() {
           />
         </div>
       </div>
+      <ModalVoluntario
+        isOpen={isModalOpen} 
+        setIsOpen={setIsModalOpen} 
+      />
     </>
   );
 }
