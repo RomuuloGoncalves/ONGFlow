@@ -1,5 +1,4 @@
 import { useId } from "react"
-
 import {
   Select,
   SelectContent,
@@ -8,11 +7,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-export default function SelectSimple() {
+interface SelectSimpleProps {
+  value: string
+  onChange: (valor: string) => void
+}
+
+export default function SelectSimple({ value, onChange }: SelectSimpleProps) {
   const id = useId()
+
   return (
-    <div className="*:not-first:mt-2">
-      <Select defaultValue="Todos">
+    <div className="*:not-first:mt-2" style={{outline: "none"}}>
+      <Select value={value} onValueChange={onChange}>
         <SelectTrigger id={id}>
           <SelectValue placeholder="Categorias" />
         </SelectTrigger>
@@ -20,6 +25,7 @@ export default function SelectSimple() {
           <SelectItem value="Todos">Todos</SelectItem>
           <SelectItem value="Pendente">Pendente</SelectItem>
           <SelectItem value="Andamento">Andamento</SelectItem>
+          <SelectItem value="Concluido">Concluído</SelectItem>
         </SelectContent>
       </Select>
     </div>
