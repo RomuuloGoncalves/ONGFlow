@@ -45,12 +45,12 @@ function modalVoluntario({ isOpen, setIsOpen }: ModalProps) {
             </div>
           </div>
           <div className={style.location}>
-            <label>Location</label>
+            <label>Localização</label>
             <p>São Paulo - SP</p>
           </div>
           <div className={style.ong__phone}>
             <div className={style.ong}>
-              <label>ONG</label>
+              <label>Nome da ONG</label>
               <p>Nome da ONG</p>
             </div>
             <div className={style.phone}>
