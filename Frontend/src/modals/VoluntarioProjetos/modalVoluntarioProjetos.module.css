@@ -1,0 +1,132 @@
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+}
+.modal {
+  max-width: 500px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  position: relative;
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+
+  @media (max-width: 520px) {
+    max-width: 375px;
+  }
+
+  @media (max-width: 375px) {
+      max-width: 315px;
+  }
+  .modal__header {
+    width: 100%;
+    min-height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .modal__body {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+
+    label {
+      font-weight: 500;
+      color: #585858;
+
+      @media (max-width: 520px) {
+        font-size: 14px;
+      }
+    }
+
+    .descricao {
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    .habilidades {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .habilidades__badge {
+        width: 100%;
+        min-height: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+
+        .badge {
+          min-width: 100px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 15px;
+          padding: 10px;
+          background: var(--primary-purple-blue-900);
+          color: var(--secondary-primary-white);
+          font-weight: 500;
+          font-size: 12px;
+          box-shadow: --shadow-5;
+
+          @media (max-width: 425px) {
+            min-width: 80px;
+            height: 25px;
+            p {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    }
+    .location{
+      width: 100%;
+      min-height: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .ong__phone {
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+
+      p {
+        font-size: 0.9rem;
+      }
+      .ong,
+      .phone {
+        width: 50%;
+        height: 100%;
+      }
+    }
+  }
+}

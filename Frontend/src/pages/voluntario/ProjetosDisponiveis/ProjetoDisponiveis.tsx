@@ -1,11 +1,11 @@
 import Header from "@/components/Voluntario/Header/Header";
-import style from "./HomeVoluntario.module.css";
+import style from "./ProjetosDisponiveis.module.css";
 import { useState } from "react";
 import { Pagination } from "@/components/Pagination/Pagination";
-import SelectSimple from "@/components/Voluntario/Select";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
-import ModalVoluntario from "@/modals/Voluntario/modalVoluntario";
+import { Convite } from "@/assets/icons/Convite";
+import ModalVoluntarioProjetos   from "@/modals/VoluntarioProjetos/modalVoluntarioProjetos";
 
 // Nome da API(json) tem que ser projetos
 const projetos = [
@@ -13,7 +13,6 @@ const projetos = [
     id: 1,
     titulo: "Campanha de Arrecadação de Alimentos",
     descricao: "Ensinar reutilização de materiais recicláveis",
-    status: "Pendente",
     localizacao: "São Paulo - SP",
     habilidades: ["Organização", "Comunicação", "Logística", "Telecomunicação"],
   },
@@ -21,7 +20,6 @@ const projetos = [
     id: 2,
     titulo: "Mutirão de Limpeza Ambiental",
     descricao: "Limpeza de rios e parques",
-    status: "Aceito",
     localizacao: "Rio de Janeiro - RJ",
     habilidades: ["Trabalho em equipe", "Esforço físico"],
   },
@@ -29,7 +27,6 @@ const projetos = [
     id: 3,
     titulo: "Mutirão de Limpeza Ambiental",
     descricao: "Limpeza de rios e parques",
-    status: "Aceito",
     localizacao: "Rio de Janeiro - RJ",
     habilidades: ["Trabalho em equipe", "Esforço físico"],
   },
@@ -37,7 +34,6 @@ const projetos = [
     id: 4,
     titulo: "Mutirão de Limpeza Ambiental",
     descricao: "Limpeza de rios e parques",
-    status: "Aceito",
     localizacao: "Rio de Janeiro - RJ",
     habilidades: ["Trabalho em equipe", "Esforço físico"],
   },
@@ -45,7 +41,6 @@ const projetos = [
     id: 5,
     titulo: "Mutirão de Limpeza Ambiental",
     descricao: "Limpeza de rios e parques",
-    status: "Aceito",
     localizacao: "Rio de Janeiro - RJ",
     habilidades: ["Trabalho em equipe", "Esforço físico"],
   },
@@ -53,7 +48,6 @@ const projetos = [
     id: 6,
     titulo: "Mutirão de Limpeza Ambiental",
     descricao: "Limpeza de rios e parques",
-    status: "Aceito",
     localizacao: "Rio de Janeiro - RJ",
     habilidades: ["Trabalho em equipe", "Esforço físico"],
   },
@@ -62,7 +56,6 @@ const projetos = [
 function HomeVoluntario() {
   const [currentPage, setCurrentPage] = useState(1);
   const [textPesquisa, setTextPesquisa] = useState("");
-  const [filtro, setFiltro] = useState("Todos");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const itemsPerPage = 4;
@@ -70,11 +63,10 @@ function HomeVoluntario() {
   // Aplica filtro por status e pesquisa
   const projetosFiltrados = projetos.filter((p) => {
     const pesquisa = textPesquisa.toLowerCase();
-    const statusValido = filtro === "Todos" || p.status === filtro;
-    const pesquisaValida =
+    return (
       p.titulo.toLowerCase().includes(pesquisa) ||
-      p.localizacao.toLowerCase().includes(pesquisa);
-    return statusValido && pesquisaValida;
+      p.localizacao.toLowerCase().includes(pesquisa)
+    );
   });
 
   // Paginação
@@ -83,7 +75,7 @@ function HomeVoluntario() {
 
   return (
     <>
-      <ModalVoluntario isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <ModalVoluntarioProjetos isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       <Header />
       <div className={style.container__title}>
         <h1>Projetos Disponíveis</h1>
@@ -96,7 +88,7 @@ function HomeVoluntario() {
             <Pesquisa className={style.icon} />
             <input
               type="text"
-              placeholder="Procure por projeto ou ONG"
+              placeholder="Procure por projeto ou localizacao"
               value={textPesquisa}
               onChange={(e) => setTextPesquisa(e.target.value)}
             />
@@ -106,8 +98,7 @@ function HomeVoluntario() {
         <div className={style.container__table_body}>
           {paginatedItems.length === 0 ? (
             <p className={style.alertMensage}>
-                           Ops! Não encontramos nenhum projeto.
-
+              Ops! Não encontramos nenhum projeto.
             </p>
           ) : (
             paginatedItems.map((item) => (
@@ -117,9 +108,6 @@ function HomeVoluntario() {
                 onClick={() => setIsModalOpen(true)}
               >
                 <div className={style.card__title}>
-                  <div className={style.card__title_tag}>
-                    <p>{item.status}</p>
-                  </div>
                   <h1>{item.titulo}</h1>
                 </div>
                 <div className={style.card__descricao}>
@@ -141,6 +129,12 @@ function HomeVoluntario() {
                       <p>+{item.habilidades.length - 3}</p>
                     </div>
                   )}
+                </div>
+                <div className={style.buttonInvite}>
+                  <button>
+                    <Convite className={style.icon} />
+                    Candidatar
+                  </button>
                 </div>
               </div>
             ))
