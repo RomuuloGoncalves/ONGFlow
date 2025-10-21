@@ -44,6 +44,16 @@ function modalVoluntario({ isOpen, setIsOpen }: ModalProps) {
               </div>
             </div>
           </div>
+          <div className={style.ong__phone}>
+            <div className={style.ong}>
+              <label>ONG</label>
+              <p>Nome da ONG</p>
+            </div>
+            <div className={style.phone}>
+              <label>Telefone</label>
+              <p>(+55) 15 9977777</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
