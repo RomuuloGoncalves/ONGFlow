@@ -6,6 +6,7 @@ import SelectSimple from "@/components/Voluntario/Select";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import ModalVoluntario from "@/modals/Voluntario/modalVoluntario";
+import { Link } from "react-router-dom";
 
 // Nome da API(json) tem que ser projetos
 const projetos = [
@@ -88,9 +89,9 @@ function HomeVoluntario() {
       <div className={style.container__title}>
         <h1>Bem vindo de volta!</h1>
         <p>Acompanhe as suas participações em projetos </p>
-        <button className={style.button__newProject}>
+        <Link to="/projetos/voluntario" className={style.button__newProject}>
           Participar de um novo Projeto
-        </button>
+        </Link>
       </div>
       <div className={style.container__table}>
         <div className={style.container__table_header}>
