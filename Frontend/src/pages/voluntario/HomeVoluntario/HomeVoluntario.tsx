@@ -113,7 +113,7 @@ function HomeVoluntario() {
         <div className={style.container__table_body}>
           {paginatedItems.length === 0 ? (
             <p className={style.alertMensage}>
-              Nenhum projeto encontrado para "{filtro}"
+             Ops! Não encontramos nenhum projeto.
             </p>
           ) : (
             paginatedItems.map((item) => (
