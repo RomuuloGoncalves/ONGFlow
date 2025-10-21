@@ -161,7 +161,6 @@ function HomeVoluntario() {
           />
         </div>
       </div>
-      0
     </>
   );
 }

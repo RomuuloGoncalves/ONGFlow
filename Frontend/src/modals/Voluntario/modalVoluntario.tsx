@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import style from "./modalVoluntario.module.css";
 import { Fechar } from "@/assets/icons/Fechar";
 
@@ -7,10 +8,21 @@ interface ModalProps {
 }
 
 function modalVoluntario({ isOpen, setIsOpen }: ModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
   return (
     <div className={style.modal__overlay} onClick={() => setIsOpen(false)}>
-      <div className={style.modal}>
+      <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={style.modal__header}>
           <h1>Mutirão de Reforma em Escola Comunitária</h1>
           <Fechar onClick={() => setIsOpen(false)} />
@@ -27,9 +39,9 @@ function modalVoluntario({ isOpen, setIsOpen }: ModalProps) {
           <div className={style.habilidades}>
             <label>Habilidades necessárias</label>
             <div className={style.habilidades__badge}>
-                <div className={style.badge}>
-                    <p>Habilidade</p>
-                </div>
+              <div className={style.badge}>
+                <p>Habilidade</p>
+              </div>
             </div>
           </div>
           <div className={style.status__location}>
