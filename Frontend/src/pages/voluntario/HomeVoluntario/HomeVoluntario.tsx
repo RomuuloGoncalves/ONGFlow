@@ -15,7 +15,7 @@ const projetos = [
     descricao: "Ensinar reutilização de materiais recicláveis",
     status: "Pendente",
     localizacao: "São Paulo - SP",
-    habilidades: ["Organização", "Comunicação", "Logística","Telecomunicação"],
+    habilidades: ["Organização", "Comunicação", "Logística", "Telecomunicação"],
   },
   {
     id: 2,
@@ -83,9 +83,8 @@ function HomeVoluntario() {
 
   return (
     <>
-
+      <ModalVoluntario isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       <Header />
-
       <div className={style.container__title}>
         <h1>Bem vindo de volta!</h1>
         <p>Acompanhe as suas participações em projetos </p>
@@ -93,7 +92,6 @@ function HomeVoluntario() {
           Participar de um novo Projeto
         </button>
       </div>
-
       <div className={style.container__table}>
         <div className={style.container__table_header}>
           <p>Filtro</p>
@@ -119,7 +117,11 @@ function HomeVoluntario() {
             </p>
           ) : (
             paginatedItems.map((item) => (
-              <div key={item.id} className={style.card} onClick={() => setIsModalOpen(true)}>
+              <div
+                key={item.id}
+                className={style.card}
+                onClick={() => setIsModalOpen(true)}
+              >
                 <div className={style.card__title}>
                   <div className={style.card__title_tag}>
                     <p>{item.status}</p>
@@ -159,10 +161,7 @@ function HomeVoluntario() {
           />
         </div>
       </div>
-      <ModalVoluntario
-        isOpen={isModalOpen} 
-        setIsOpen={setIsModalOpen} 
-      />
+      0
     </>
   );
 }

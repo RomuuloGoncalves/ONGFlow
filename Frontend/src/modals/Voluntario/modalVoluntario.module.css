@@ -21,8 +21,13 @@
   background: white;
   padding: 2rem;
   border-radius: 0.5rem;
+
   @media (max-width: 520px) {
-    max-width: 315px;
+    max-width: 375px;
+  }
+
+  @media (max-width: 375px) {
+      max-width: 315px;
   }
   .modal__header {
     width: 100%;
