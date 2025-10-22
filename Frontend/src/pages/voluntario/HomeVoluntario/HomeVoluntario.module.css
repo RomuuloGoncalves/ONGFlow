@@ -132,6 +132,7 @@ main {
       border: 0.5px solid #d6d6d6;
       padding: 20px;
       box-shadow: var(--shadow-5);
+      cursor: pointer;
 
       .card__title {
         width: 100%;

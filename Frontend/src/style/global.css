@@ -181,6 +181,21 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ----------------------------------------------------- */
+
+*{
+  font-family: 'Poppins',sans-serif;
+}
+
 .container__title{
     width: 80%;
     min-height: 100px;
@@ -200,7 +215,6 @@
         background-clip: text;
         -webkit-text-fill-color: transparent; /* Safari/Chrome */
         color: transparent; /* fallback */
-        /* opcional: melhora contraste em alguns navegadores */
         display: inline-block;
     }
 
@@ -210,15 +224,18 @@
     }
 }
 
-*{
-  font-family: 'Poppins',sans-serif;
+.modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+
+

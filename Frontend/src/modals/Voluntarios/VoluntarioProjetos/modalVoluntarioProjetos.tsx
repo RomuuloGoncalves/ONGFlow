@@ -25,7 +25,7 @@ function modalVoluntario({ isOpen, setIsOpen }: ModalProps) {
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={style.modal__header}>
           <h1>Mutirão de Reforma em Escola Comunitária</h1>
-          <Fechar onClick={() => setIsOpen(false)} />
+          <Fechar onClick={() => setIsOpen(false)} style={{cursor: 'pointer'}}/>
         </div>
         <div className={style.modal__body}>
           <div className={style.descricao}>

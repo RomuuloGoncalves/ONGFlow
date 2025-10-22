@@ -5,7 +5,7 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Convite } from "@/assets/icons/Convite";
-import ModalVoluntarioProjetos   from "@/modals/VoluntarioProjetos/modalVoluntarioProjetos";
+import ModalVoluntarioProjetos   from "@/modals/Voluntarios/VoluntarioProjetos/modalVoluntarioProjetos";
 
 // Nome da API(json) tem que ser projetos
 const projetos = [
