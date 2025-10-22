@@ -1,5 +1,5 @@
 import { Fechar } from "@/assets/icons/Fechar";
-import style from "./modalCriarProjeto.module.css";
+import style from "./modalEditarProjeto.module.css";
 import SelectInput from "@/components/Voluntario/MultiSelect";
 
 import { Salvar } from "@/assets/icons/Salvar";
@@ -18,7 +18,7 @@ function modalCriarProjeto({ isOpen, setIsOpen }: ModalProps) {
     <div className={style.modal__overlay} onClick={() => setIsOpen(false)}>
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={style.modal__header}>
-          <h1>Crie um Projeto</h1>
+          <h1>Edite as informações do projeto</h1>
         </div>
         <div className={style.modal__body}>
           <div className={style.name}>
@@ -42,7 +42,7 @@ function modalCriarProjeto({ isOpen, setIsOpen }: ModalProps) {
               <DateCalendar />
             </div>
             <div className={style.time}>
-              <label > Hora Inicio</label>
+              <label>Hora Inicio</label>
               <Clock />
             </div>
           </div>
