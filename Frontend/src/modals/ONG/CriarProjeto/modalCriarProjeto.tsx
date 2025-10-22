@@ -34,7 +34,7 @@ function modalCriarProjeto({ isOpen, setIsOpen }: ModalProps) {
           </div>
           <div className={style.location}>
             <label>Localização</label>
-            <input type="text" placeholder="Digite o nome do projeto" />
+            <input type="text" placeholder="Digite a localização do projeto" />
           </div>
           <div className={style.date__time}>
             <div className={style.date}>
