@@ -5,7 +5,7 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import SelectSimple from "@/components/Voluntario/Select";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
-import ModalVoluntario from "@/modals/Voluntarios/Voluntario/modalVoluntario";
+import ModalVoluntario from "@/modals/Voluntarios/VoluntarioHome/modalVoluntarioHome";
 import { Link } from "react-router-dom";
 
 // Nome da API(json) tem que ser projetos

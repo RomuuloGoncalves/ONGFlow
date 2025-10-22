@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import style from "./modalVoluntario.module.css";
+import style from "./modalVoluntarioHome.module.css";
 import { Fechar } from "@/assets/icons/Fechar";
 
 interface ModalProps {

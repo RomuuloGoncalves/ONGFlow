@@ -94,14 +94,13 @@ export default function Component() {
   return (
     <div className="*:not-first:mt-2">
       <div className="d-flex">
-        <Alvo/>
         <Label>Habilidades</Label>
       </div>
       <MultipleSelector
         commandProps={{
           label: "Selecione suas Habilidades",
         }}
-        value={habilities.slice(0, 2)}
+        value={[]}
         defaultOptions={habilities}
         placeholder="Selecione suas habilidades"
         hideClearAllButton

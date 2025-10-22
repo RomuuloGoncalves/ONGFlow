@@ -195,7 +195,7 @@ const MultipleSelector = ({
   const [open, setOpen] = React.useState(false)
   const [onScrollbar, setOnScrollbar] = React.useState(false)
   const [isLoading, setIsLoading] = React.useState(false)
-  const dropdownRef = React.useRef<HTMLDivElement>(null) // Added this
+  const dropdownRef = React.useRef<HTMLDivElement>(null) // reference usada no wrapper do dropdown
 
   const [selected, setSelected] = React.useState<Option[]>(value || [])
   const [options, setOptions] = React.useState<GroupOption>(
@@ -411,7 +411,6 @@ const MultipleSelector = ({
 
   return (
     <Command
-      ref={dropdownRef}
       {...commandProps}
       onKeyDown={(e) => {
         handleKeyDown(e)
@@ -535,6 +534,9 @@ const MultipleSelector = ({
       </div>
       <div className="relative">
         <div
+          // Aqui aplicamos o ref no wrapper do dropdown (em vez de no <Command />),
+          // para evitar o warning de refs em function components e ainda detectar cliques externos.
+          ref={dropdownRef}
           className={cn(
             "absolute top-2 z-10 w-full overflow-hidden rounded-md border border-input",
             "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",

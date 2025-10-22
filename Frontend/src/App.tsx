@@ -7,7 +7,8 @@ import HomeVoluntario from './pages/voluntario/HomeVoluntario/HomeVoluntario';
 import PerfilVoluntario from './pages/voluntario/PerfilVoluntario/PerfilVoluntario';
 import PerfilOng from './pages/ong/PerfilOng_/PerfilOng';
 import ConviteVoluntario from './pages/voluntario/ConviteVoluntario/ConviteVoluntario';
-import ProjetosDisponiveis from './pages/voluntario/ProjetosDisponiveis/ProjetoDisponiveis'
+import ProjetosDisponiveis from './pages/voluntario/ProjetosDisponiveis/ProjetoDisponiveis';
+import ProjetosOng from './pages/ong/Projetos/projetos';
 
 import { Layout } from './Layout';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/perfil/ong" element={<PerfilOng />} />
           <Route path="/convite/voluntario" element={<ConviteVoluntario />} />
           <Route path="/projetos/voluntario" element={<ProjetosDisponiveis />} />
+          <Route path="/projetos/ong" element={<ProjetosOng />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
