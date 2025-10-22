@@ -1,14 +1,17 @@
 import {
   composeRenderProps,
-  DateFieldProps,
   DateField as DateFieldRac,
-  DateInputProps as DateInputPropsRac,
   DateInput as DateInputRac,
-  DateSegmentProps,
   DateSegment as DateSegmentRac,
+  TimeField as TimeFieldRac,
+} from "react-aria-components"
+
+import type {
+  DateFieldProps,
+  DateInputProps as DateInputPropsRac,
+  DateSegmentProps,
   DateValue as DateValueRac,
   TimeFieldProps,
-  TimeField as TimeFieldRac,
   TimeValue as TimeValueRac,
 } from "react-aria-components"
 

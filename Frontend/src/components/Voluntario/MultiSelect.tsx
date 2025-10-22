@@ -1,7 +1,6 @@
 import { Label } from "@/components/ui/label"
 import MultipleSelector from "@/components/ui/multiselect"
 import type { Option }  from "@/components/ui/multiselect"
-import { Alvo } from "@/assets/icons/Alvo"
 
 const habilities: Option[] = [
   // 💬 Comunicação
