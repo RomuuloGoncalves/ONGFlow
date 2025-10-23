@@ -1,13 +1,16 @@
-import Logo from '@/assets/Logo.svg';
-import { Dashboard } from '@/assets/icons/Dashboard';
-import { Projetos } from '@/assets/icons/Projetos';
-import { Convite } from '@/assets/icons/Convite';
-import { Usuario } from '@/assets/icons/Usuario';
-import { Logout } from '@/assets/icons/Logout';
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import Logo from "@/assets/Logo.svg";
+import { Dashboard } from "@/assets/icons/Dashboard";
+import { Projetos } from "@/assets/icons/Projetos";
+import { Convite } from "@/assets/icons/Convite";
+import { Usuario } from "@/assets/icons/Usuario";
+import { Logout } from "@/assets/icons/Logout";
+import { Menu as MenuIcon, X } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const links = [
     { to: "/dashboard/ong", label: "Dashboard", icon: <Dashboard /> },
@@ -18,46 +21,120 @@ const Header = () => {
   ];
 
   return (
-    <aside className="h-screen w-64 bg-[var(--secondary-grey-200)] text-[var(--secondary-grey-700)] flex flex-col justify-between p-6 font-poppins">
-      <div className="mb-12">
-        <img src={Logo} alt="ONGFLOW" className="w-25 m-auto" /> 
-      </div>
+    <>
+      {/* --- MENU DESKTOP --- */}
+      <aside className="hidden lg:flex h-screen w-64 bg-white text-[var(--secondary-grey-700)] flex-col justify-between p-6 font-poppins">
+        <div className="mb-12">
+          <img src={Logo} alt="ONGFLOW" className="h-25 w-auto m-auto" />
+        </div>
 
-      <nav>
-        <ul className="space-y-4">
-          {links.map((link) => {
-            const isActive = location.pathname.startsWith(link.to);
+        <nav>
+          <ul className="space-y-4">
+            {links.map((link) => {
+              const isActive = location.pathname.startsWith(link.to);
+              return (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className={`flex items-center gap-4 py-3 px-4 rounded-md transition-colors
+                      ${
+                        isActive
+                          ? "bg-[var(--primary-purple-blue-500-primary)] text-white shadow-[var(--shadow-5)]"
+                          : "text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)]"
+                      }`}
+                  >
+                    <span className="w-7 h-7 flex items-center justify-center">
+                      {link.icon}
+                    </span>
+                    <span className="text-[15px] font-medium">{link.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
 
-            return (
-              <li key={link.to}>
-                <Link
-                  to={link.to}
-                  className={`flex items-center gap-3 py-3 px-4 rounded-md transition-colors
-                    ${
-                      isActive
-                        ? "bg-[var(--primary-purple-blue-500-primary)] text-white shadow-[var(--shadow-5)]"
-                        : "text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)]"
-                    }`}
-                >
-                  {link.icon}
-                  {link.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+        <div className="mt-auto">
+          <Link
+            to="/logout"
+            className="flex items-center gap-4 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors"
+          >
+            <span className="w-7 h-7 flex items-center justify-center">
+              <Logout />
+            </span>
+            Log Out
+          </Link>
+        </div>
+      </aside>
 
-      <div className="mt-auto">
-        <Link
-          to="/logout"
-          className="flex items-center gap-3 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors"
+      {/* --- MENU MOBILE --- */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-[70px] bg-white flex justify-between items-center px-4 py-3">
+        <img src={Logo} alt="ONGFLOW" className="h-15 w-auto" />
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="text-[var(--secondary-grey-700)] focus:outline-none"
         >
-          <Logout />
-          Log Out
-        </Link>
+          {menuOpen ? <X size={30} /> : <MenuIcon size={30} />}
+        </button>
       </div>
-    </aside>
+
+      {/* --- MENU SLIDE MOBILE --- */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 mt-[20px] bg-white z-40 transform transition-transform duration-300 ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:hidden`}
+      >
+        <div className="flex flex-col justify-between h-full p-6 pt-16 font-poppins">
+          <nav>
+            <ul className="space-y-4">
+              {links.map((link) => {
+                const isActive = location.pathname.startsWith(link.to);
+                return (
+                  <li key={link.to}>
+                    <Link
+                      to={link.to}
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-4 py-3 px-4 rounded-md transition-colors
+                        ${
+                          isActive
+                            ? "bg-[var(--primary-purple-blue-500-primary)] text-white shadow-[var(--shadow-5)]"
+                            : "text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)]"
+                        }`}
+                    >
+                      <span className="w-7 h-7 flex items-center justify-center">
+                        {link.icon}
+                      </span>
+                      <span className="text-[15px] font-medium">{link.label}</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <div className="mt-auto">
+            <Link
+              to="/logout"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-4 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors"
+            >
+              <span className="w-7 h-7 flex items-center justify-center">
+                <Logout />
+              </span>
+              Log Out
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* --- OVERLAY --- */}
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen(false)}
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 lg:hidden"
+        />
+      )}
+    </>
   );
 };
 
