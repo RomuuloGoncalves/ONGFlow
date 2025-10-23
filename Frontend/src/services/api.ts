@@ -3,7 +3,7 @@ import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
 const api: AxiosInstance = axios.create({
-  baseURL: 'https://scaling-memory-x66vxxggjwwfj49-8000.app.github.dev/api'
+  baseURL: '/api'
 });
 
 api.interceptors.request.use(
