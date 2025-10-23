@@ -6,8 +6,8 @@ import { Projetos } from "@/assets/icons/Projetos";
 import { Convite } from "@/assets/icons/Convite";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Logout } from "@/assets/icons/Logout";
-import { Menu as MenuIcon, X } from "lucide-react";
-
+import { Menu } from "@/assets/icons/Menu"
+import { Fechar } from "@/assets/icons/Fechar"
 const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,7 +74,7 @@ const Header = () => {
           onClick={() => setMenuOpen(!menuOpen)}
           className="text-[var(--secondary-grey-700)] focus:outline-none"
         >
-          {menuOpen ? <X size={30} /> : <MenuIcon size={30} />}
+          {menuOpen ? <Fechar width={30} /> : <Menu width={30} />}
         </button>
       </div>
 
