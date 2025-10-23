@@ -11,7 +11,7 @@ export interface Ong {
   sigla: string;
   data_fundacao: string;
   telefone: string;
-  endereco: Endereco;
+  endereco?: Endereco;
 }
 
 export interface OngCadastro {

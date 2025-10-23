@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Voluntario;
 use App\Http\Requests\Voluntario\StoreRequest;
+use Illuminate\Support\Facades\DB;
 
 class VoluntarioController extends Controller
 {
@@ -32,7 +33,7 @@ class VoluntarioController extends Controller
                 'data' => $voluntario,
             ], 201); // 201 Created
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Ocorreu um erro no servidor ao salvar o voluntário.',
@@ -63,10 +64,30 @@ class VoluntarioController extends Controller
                 ], 404); // 404 Not Found
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Ocorreu um erro no servidor ao excluir o voluntário.',
+                'error' => $e->getMessage(),
+            ], 500); // Erro interno
+        }
+    }
+
+    public function projetos(string $id)
+    {
+        try {
+            $projetos = DB::table('projeto_voluntario')
+                ->join('projetos', 'projeto_voluntario.id_projeto', '=', 'projetos.id')
+                ->where('projeto_voluntario.id_voluntario', $id)
+                ->select('projetos.*')
+                ->get();
+
+            return response()->json($projetos);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao buscar os projetos.',
                 'error' => $e->getMessage(),
             ], 500); // Erro interno
         }
@@ -87,7 +108,7 @@ class VoluntarioController extends Controller
                 'data' => $voluntario,
             ], 200); // 200 OK
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Ocorreu um erro no servidor ao salvar o voluntário.',
@@ -119,7 +140,7 @@ class VoluntarioController extends Controller
                 ], 404); // 404 Not Found
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Ocorreu um erro no servidor ao excluir o voluntário.',

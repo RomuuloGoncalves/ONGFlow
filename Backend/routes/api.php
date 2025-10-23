@@ -19,6 +19,7 @@ Route::prefix('voluntarios')->group(function () {
     //Precisa estar logado como voluntário
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [VoluntarioController::class, 'show']);
+        Route::get('/{id}/projetos', [VoluntarioController::class, 'projetos']);
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::delete('/{id}', [VoluntarioController::class, 'destroy']);
         Route::put('/{id}', [VoluntarioController::class, 'update']);

@@ -1,6 +1,7 @@
 import api from './api';
 import type { Voluntario, VoluntarioCadastro, VoluntarioLogin } from '../interfaces/voluntario';
 import type { AxiosPromise } from 'axios';
+import type { Projeto } from '@/interfaces/projeto';
 
 interface LoginResponse {
   message: string;
@@ -15,6 +16,10 @@ const voluntarioService = {
 
   login: (dadosLogin: VoluntarioLogin): AxiosPromise<LoginResponse> => {
     return api.post<LoginResponse>('/voluntarios/login', dadosLogin);
+  },
+
+  getProjetos: (id: number): AxiosPromise<Projeto[]> => {
+    return api.get<Projeto[]>(`/voluntarios/${id}/projetos`);
   },
 
 };

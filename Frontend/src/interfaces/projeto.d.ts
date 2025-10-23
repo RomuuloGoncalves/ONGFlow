@@ -9,6 +9,6 @@ export interface Projeto {
   data_inicio: string;
   data_fim: string;
   status: "pendente" | "em andamento" | "concluido";
-  habilidades: Habilidade[];
-  ong: Ong;
+  habilidades?: Habilidade[];
+  ong?: Ong;
 }

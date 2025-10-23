@@ -7,7 +7,7 @@ import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import ModalVoluntario from "@/modals/Voluntarios/VoluntarioHome/modalVoluntarioHome";
 import { Link } from "react-router-dom";
-// import ProjetoService from "@/services/projetoService";
+import voluntarioService from "@/services/voluntarioService";
 import type { Projeto } from "@/interfaces/projeto";
 
 function HomeVoluntario() {
@@ -21,9 +21,12 @@ function HomeVoluntario() {
     async function fetchProjetos() {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       if (user && user.id) {
-        // const response = await ProjetoService.colocarmetodo(user.id);
-        // const response = undefined;
-        // setProjetos(response.data);
+        try {
+          const response = await voluntarioService.getProjetos(user.id);
+          setProjetos(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar projetos:", error);
+        }
       }
     }
     fetchProjetos();
@@ -37,7 +40,8 @@ function HomeVoluntario() {
     const statusValido = filtro === "Todos" || p.status === filtro;
     const pesquisaValida =
       p.nome.toLowerCase().includes(pesquisa) ||
-      p.ong.endereco.cidade.toLowerCase().includes(pesquisa);
+      (p.ong?.endereco?.cidade &&
+        p.ong.endereco.cidade.toLowerCase().includes(pesquisa));
     return statusValido && pesquisaValida;
   });
 
@@ -77,7 +81,7 @@ function HomeVoluntario() {
         <div className={style.container__table_body}>
           {paginatedItems.length === 0 ? (
             <p className={style.alertMensage}>
-             Ops! Não encontramos nenhum projeto.
+              Ops! Não encontramos nenhum projeto.
             </p>
           ) : (
             paginatedItems.map((item) => (
@@ -97,18 +101,22 @@ function HomeVoluntario() {
                 </div>
                 <div className={style.card__location}>
                   <Localizacao className={style.icon} />
-                  <p>{`${item.ong.endereco.cidade} - ${item.ong.endereco.estado}`}</p>
+                  <p>
+                    {item.ong?.endereco
+                      ? `${item.ong.endereco.cidade} - ${item.ong.endereco.estado}`
+                      : "Localização não informada"}
+                  </p>
                 </div>
                 <div className={style.habilidades}>
-                  {item.habilidades.slice(0, 3).map((hab, i) => (
+                  {(item.habilidades || []).slice(0, 3).map((hab, i) => (
                     <div key={i} className={style.badge}>
                       <p>{hab.descricao}</p>
                     </div>
                   ))}
 
-                  {item.habilidades.length > 3 && (
+                  {(item.habilidades?.length || 0) > 3 && (
                     <div className={style.badge}>
-                      <p>+{item.habilidades.length - 3}</p>
+                      <p>+{(item.habilidades?.length || 0) - 3}</p>
                     </div>
                   )}
                 </div>
