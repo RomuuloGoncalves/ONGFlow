@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('id_voluntario')->constrained('voluntarios')->onDelete('cascade');
             $table->foreignId('id_projeto')->constrained('projetos')->onDelete('cascade');
             $table->foreignId('id_convite')->constrained('convites')->onDelete('cascade');
+            $table->unique(['id_voluntario', 'id_projeto', 'id_convite']);
             $table->timestamps();
         });
     }

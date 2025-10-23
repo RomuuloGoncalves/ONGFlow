@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProjetoVoluntario;
+use Illuminate\Support\Facades\DB;
 use Exception;
 
 class ProjetoVoluntarioController extends Controller
@@ -10,7 +10,7 @@ class ProjetoVoluntarioController extends Controller
     public function store($id_voluntario, $id_projeto, $id_convite)
     {
         try {
-            $projetoVoluntario = ProjetoVoluntario::create([
+            DB::table('projeto_voluntario')->insert([
                 'id_voluntario' => $id_voluntario,
                 'id_projeto' => $id_projeto,
                 'id_convite' => $id_convite,
@@ -19,7 +19,6 @@ class ProjetoVoluntarioController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Projeto Voluntário cadastrado com sucesso!',
-                'data' => $projetoVoluntario,
             ], 201);
 
         } catch (Exception $e) {
