@@ -1,70 +1,33 @@
 import Header from "@/components/Voluntario/Header/Header";
 import style from "./HomeVoluntario.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Pagination } from "@/components/Pagination/Pagination";
 import SelectSimple from "@/components/Voluntario/Select";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import ModalVoluntario from "@/modals/Voluntarios/VoluntarioHome/modalVoluntarioHome";
 import { Link } from "react-router-dom";
-
-// Nome da API(json) tem que ser projetos
-const projetos = [
-  {
-    id: 1,
-    titulo: "Campanha de Arrecadação de Alimentos",
-    descricao: "Ensinar reutilização de materiais recicláveis",
-    status: "Pendente",
-    localizacao: "São Paulo - SP",
-    habilidades: ["Organização", "Comunicação", "Logística", "Telecomunicação"],
-  },
-  {
-    id: 2,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    status: "Aceito",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 3,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    status: "Aceito",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 4,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    status: "Aceito",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 5,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    status: "Aceito",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 6,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    status: "Aceito",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-];
+// import ProjetoService from "@/services/projetoService";
+import type { Projeto } from "@/interfaces/projeto";
 
 function HomeVoluntario() {
+  const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    async function fetchProjetos() {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      if (user && user.id) {
+        // const response = await ProjetoService.colocarmetodo(user.id);
+        // const response = undefined;
+        // setProjetos(response.data);
+      }
+    }
+    fetchProjetos();
+  }, []);
 
   const itemsPerPage = 4;
 
@@ -73,8 +36,8 @@ function HomeVoluntario() {
     const pesquisa = textPesquisa.toLowerCase();
     const statusValido = filtro === "Todos" || p.status === filtro;
     const pesquisaValida =
-      p.titulo.toLowerCase().includes(pesquisa) ||
-      p.localizacao.toLowerCase().includes(pesquisa);
+      p.nome.toLowerCase().includes(pesquisa) ||
+      p.ong.endereco.cidade.toLowerCase().includes(pesquisa);
     return statusValido && pesquisaValida;
   });
 
@@ -127,19 +90,19 @@ function HomeVoluntario() {
                   <div className={style.card__title_tag}>
                     <p>{item.status}</p>
                   </div>
-                  <h1>{item.titulo}</h1>
+                  <h1>{item.nome}</h1>
                 </div>
                 <div className={style.card__descricao}>
                   <p>{item.descricao}</p>
                 </div>
                 <div className={style.card__location}>
                   <Localizacao className={style.icon} />
-                  <p>{item.localizacao}</p>
+                  <p>{`${item.ong.endereco.cidade} - ${item.ong.endereco.estado}`}</p>
                 </div>
                 <div className={style.habilidades}>
                   {item.habilidades.slice(0, 3).map((hab, i) => (
                     <div key={i} className={style.badge}>
-                      <p>{hab}</p>
+                      <p>{hab.descricao}</p>
                     </div>
                   ))}
 

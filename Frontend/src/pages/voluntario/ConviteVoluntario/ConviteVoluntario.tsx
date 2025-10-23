@@ -11,6 +11,7 @@ import { Check } from "@/assets/icons/Check";
 import { Lixo } from "@/assets/icons/Lixo";
 import ConviteService from "@/services/conviteService";
 import type { Convite } from "@/interfaces/convite";
+import SelectSimple from "@/components/Voluntario/Select";
 
 function ConviteVoluntario() {
   const [convites, setConvites] = useState<Convite[]>([]);
@@ -21,8 +22,12 @@ function ConviteVoluntario() {
   useEffect(() => {
     async function fetchConvites() {
       // TODO: Obter o ID do voluntário logado
-      const response = await ConviteService.getConvitesVoluntario(1);
-      setConvites(response.data);
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      console.log(user)
+      if (user && user.id) {
+        const response = await ConviteService.getConvitesVoluntario(user.id);
+        setConvites(response.data);
+      }
     }
     fetchConvites();
   }, []);
@@ -82,58 +87,21 @@ function ConviteVoluntario() {
       </div>
       <div className={style.container__table}>
         <div className={style.container__table_header}>
-          <div className={style.search}>
-            <Pesquisa />
+        <p>Filtro</p>
+
+        <div className={style.input__search}>
+            <Pesquisa className={style.icon} />
             <input
               type="text"
-              className={style.search}
-              placeholder="Filtrar por ONG ou projeto"
+              placeholder="Procure por projeto"
               value={textPesquisa}
               onChange={(e) => setTextPesquisa(e.target.value)}
             />
           </div>
-          <div className={style.container__tags}>
-            <button
-              onClick={() => setFiltro("Todos")}
-              className={`${style.button} ${
-                filtro === "Todos" ? style.active : ""
-              }`}
-            >
-              Todos
-            </button>
-            <button
-              onClick={() => setFiltro("pendente")}
-              className={`${style.button} ${
-                filtro === "pendente" ? style.active : ""
-              }`}
-            >
-              Pendentes
-            </button>
-            <button
-              onClick={() => setFiltro("aceito")}
-              className={`${style.button} ${
-                filtro === "aceito" ? style.active : ""
-              }`}
-            >
-              Aceitos
-            </button>
-            <button
-              onClick={() => setFiltro("recusado")}
-              className={`${style.button} ${
-                filtro === "recusado" ? style.active : ""
-              }`}
-            >
-              Recusados
-            </button>
-            <button
-              onClick={() => setFiltro("cancelado")}
-              className={`${style.button} ${
-                filtro === "cancelado" ? style.active : ""
-              }`}
-            >
-              Cancelados
-            </button>
-          </div>
+          <SelectSimple
+            value={filtro}
+            onChange={(valor: string) => setFiltro(valor)}
+          />
         </div>
         <div className={style.container__table_body}>
           {paginatedItems.length === 0 ? (
@@ -181,12 +149,29 @@ function ConviteVoluntario() {
                     </p>
                   </div>
                 </div>
-                <div className={style.container__buttons} style={{
-                    display: item.iniciador.toLocaleLowerCase() == 'ong' && item.status.toLocaleLowerCase() == 'pendente' ? 'flex' : 'none'
-                  }}>
-                    <button className={`${style.button} ${style.buttonAccept}`} onClick={() => aceitarConvite(item.id)}><Check className={style.icon}/> Aceitar</button>
-                    <button className={`${style.button} ${style.buttonDecline}`} onClick={() => recusarConvite(item.id)}><Lixo className={style.icon}/> Recusar</button>
-                  </div>
+                <div
+                  className={style.container__buttons}
+                  style={{
+                    display:
+                      item.iniciador.toLocaleLowerCase() === 'ong' &&
+                      item.status.toLocaleLowerCase() === 'pendente'
+                        ? 'flex'
+                        : 'none',
+                  }}
+                >
+                  <button
+                    className={`${style.button} ${style.buttonAccept}`}
+                    onClick={() => aceitarConvite(item.id)}
+                  >
+                    <Check className={style.icon} /> Aceitar
+                  </button>
+                  <button
+                    className={`${style.button} ${style.buttonDecline}`}
+                    onClick={() => recusarConvite(item.id)}
+                  >
+                    <Lixo className={style.icon} /> Recusar
+                  </button>
+                </div>
               </div>
             ))
           )}
@@ -204,4 +189,4 @@ function ConviteVoluntario() {
   );
 }
 
-export default ConviteVoluntario;
+export default ConviteVoluntario; 

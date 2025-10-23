@@ -23,8 +23,9 @@ export default function SelectSimple({ value, onChange }: SelectSimpleProps) {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="Todos">Todos</SelectItem>
-          <SelectItem value="Pendente">Pendente</SelectItem>
-          <SelectItem value="Andamento">Andamento</SelectItem>
+          <SelectItem value="pendente">Pendente</SelectItem>
+          <SelectItem value="aceito">Aceito</SelectItem>
+          <SelectItem value="andamento">Andamento</SelectItem>
           <SelectItem value="Concluido">Concluído</SelectItem>
         </SelectContent>
       </Select>

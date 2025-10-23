@@ -10,67 +10,49 @@
     padding: 0 10px;
 
   .container__table_header {
-    width: 100%;
-    min-height: 70px;
+    width: 50%;
+    height: 150px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    padding: 0 20px;
-    flex-wrap: wrap;
+    padding: 15px;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 0.5px solid #d6d6d6;
+    background-color: var(--secondary-primary-white);
 
-    @media (max-width: 900px) {
-      justify-content: center;
+    @media (max-width: 768px){
+        min-width: 75%;
     }
-    .search {
-      min-width: 100px;
+
+    @media (max-width: 425px){
+        width: 90%;
+    }
+    p {
+      color: var(--color-blue-900);
+      font-weight: 600;
+      font-size: 18px;
+      margin: 0 auto;
+    }
+    .input__search {
+      width: 100%;
+      height: 35px;
       display: flex;
-      justify-content: center;
       align-items: center;
       gap: 10px;
 
+      .icon {
+        color: #8d8d8d;
+      }
+
       input {
-        width: 300px;
-        height: 50px;
-        border: 0.5px solid #dddddd;
-        background-color: var(--secondary-primary-white);
-        padding: 0 10px;
-        border-radius: 5px;
+        width: 100%;
+        height: 35px;
         outline: none;
-      }
-    }
-    .container__tags {
-      min-width: 40%;
-      min-height: 70px;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-
-      @media (max-width: 570px) {
-        justify-content: center;
-      }
-
-      .button {
-        width: 100px;
-        height: 50px;
-        font-weight: 600;
-        border: .5px solid var(--primary-purple-blue-900);
-        color: var(--primary-purple-blue-900);
+        padding: 10px;
         border-radius: 5px;
-        cursor: pointer;
-      }
-      .active {
-        color: var(--secondary-primary-white);
-        cursor: pointer;
-        background-color: var(--primary-purple-blue-900);
-      }
-
-      .disable {
-        color: var(--primary-purple-blue-900);
-        border: 0.5px solid var(--primary-purple-blue-900);
-        background-color: var(--secondary-primary-white);
+        border: 0.5px solid #d6d6d6;
+        position: relative;
       }
     }
   }
