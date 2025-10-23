@@ -9,9 +9,11 @@ import ModalVoluntario from "@/modals/Voluntarios/VoluntarioHome/modalVoluntario
 import { Link } from "react-router-dom";
 import voluntarioService from "@/services/voluntarioService";
 import type { Projeto } from "@/interfaces/projeto";
+import Loading from "@/components/Loading/Loading";
 
 function HomeVoluntario() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
@@ -26,6 +28,8 @@ function HomeVoluntario() {
           setProjetos(response.data);
         } catch (error) {
           console.error("Erro ao buscar projetos:", error);
+        } finally {
+          setIsLoading(false);
         }
       }
     }
@@ -78,52 +82,56 @@ function HomeVoluntario() {
           />
         </div>
 
-        <div className={style.container__table_body}>
-          {paginatedItems.length === 0 ? (
-            <p className={style.alertMensage}>
-              Ops! Não encontramos nenhum projeto.
-            </p>
-          ) : (
-            paginatedItems.map((item) => (
-              <div
-                key={item.id}
-                className={style.card}
-                onClick={() => setIsModalOpen(true)}
-              >
-                <div className={style.card__title}>
-                  <div className={style.card__title_tag}>
-                    <p>{item.status}</p>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className={style.container__table_body}>
+            {paginatedItems.length === 0 ? (
+              <p className={style.alertMensage}>
+                Ops! Não encontramos nenhum projeto.
+              </p>
+            ) : (
+              paginatedItems.map((item) => (
+                <div
+                  key={item.id}
+                  className={style.card}
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  <div className={style.card__title}>
+                    <div className={style.card__title_tag}>
+                      <p>{item.status}</p>
+                    </div>
+                    <h1>{item.nome}</h1>
                   </div>
-                  <h1>{item.nome}</h1>
-                </div>
-                <div className={style.card__descricao}>
-                  <p>{item.descricao}</p>
-                </div>
-                <div className={style.card__location}>
-                  <Localizacao className={style.icon} />
-                  <p>
-                    {item.ong?.endereco
-                      ? `${item.ong.endereco.cidade} - ${item.ong.endereco.estado}`
-                      : "Localização não informada"}
-                  </p>
-                </div>
-                <div className={style.habilidades}>
-                  {(item.habilidades || []).slice(0, 3).map((hab, i) => (
-                    <div key={i} className={style.badge}>
-                      <p>{hab.descricao}</p>
-                    </div>
-                  ))}
+                  <div className={style.card__descricao}>
+                    <p>{item.descricao}</p>
+                  </div>
+                  <div className={style.card__location}>
+                    <Localizacao className={style.icon} />
+                    <p>
+                      {item.ong?.endereco
+                        ? `${item.ong.endereco.cidade} - ${item.ong.endereco.estado}`
+                        : "Localização não informada"}
+                    </p>
+                  </div>
+                  <div className={style.habilidades}>
+                    {(item.habilidades || []).slice(0, 3).map((hab, i) => (
+                      <div key={i} className={style.badge}>
+                        <p>{hab.descricao}</p>
+                      </div>
+                    ))}
 
-                  {(item.habilidades?.length || 0) > 3 && (
-                    <div className={style.badge}>
-                      <p>+{(item.habilidades?.length || 0) - 3}</p>
-                    </div>
-                  )}
+                    {(item.habilidades?.length || 0) > 3 && (
+                      <div className={style.badge}>
+                        <p>+{(item.habilidades?.length || 0) - 3}</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
-        </div>
+              ))
+            )}
+          </div>
+        )}
 
         <div className={style.container__table_footer}>
           <Pagination

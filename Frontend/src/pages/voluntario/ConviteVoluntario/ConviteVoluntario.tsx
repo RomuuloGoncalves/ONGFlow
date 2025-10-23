@@ -12,21 +12,27 @@ import { Lixo } from "@/assets/icons/Lixo";
 import ConviteService from "@/services/conviteService";
 import type { Convite } from "@/interfaces/convite";
 import SelectSimple from "@/components/Voluntario/Select";
+import Loading from "@/components/Loading/Loading";
 
 function ConviteVoluntario() {
   const [convites, setConvites] = useState<Convite[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [filtro, setFiltro] = useState("Todos");
   const [textPesquisa, setTextPesquisa] = useState("");
 
   useEffect(() => {
     async function fetchConvites() {
-      // TODO: Obter o ID do voluntário logado
       const user = JSON.parse(localStorage.getItem('user') || '{}');
-      console.log(user)
       if (user && user.id) {
-        const response = await ConviteService.getConvitesVoluntario(user.id);
-        setConvites(response.data);
+        try {
+          const response = await ConviteService.getConvitesVoluntario(user.id);
+          setConvites(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar convites:", error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
     fetchConvites();
@@ -34,7 +40,6 @@ function ConviteVoluntario() {
 
   const itemsPerPage = 6;
 
-  // Aplica o filtro
   const convitesFiltrados = convites.filter((c) => {
     if (!c.projeto) {
       return false;
@@ -48,7 +53,6 @@ function ConviteVoluntario() {
     return statusValido && pesquisaValida;
   });
 
-  // funcao aceitar/recusar convite
   const aceitarConvite = async(id: number) => {
     try {
       await ConviteService.aceitarConvite(id);
@@ -71,7 +75,6 @@ function ConviteVoluntario() {
     }
   };
 
-  // Aplica a paginação DEPOIS do filtro
   const start = (currentPage - 1) * itemsPerPage;
   const paginatedItems = convitesFiltrados.slice(start, start + itemsPerPage);
 
@@ -103,79 +106,83 @@ function ConviteVoluntario() {
             onChange={(valor: string) => setFiltro(valor)}
           />
         </div>
-        <div className={style.container__table_body}>
-          {paginatedItems.length === 0 ? (
-            <p className={style.alertMensage}>
-              Ops! Não encontramos nenhum convite.
-            </p>
-          ) : (
-            paginatedItems.map((item) => (
-              <div key={item.id} className={style.card}>
-                <div className={style.card__title}>
-                  <div className={style.card__title_tag}>
-                    <p>{item.status}</p>
-                  </div>
-                  <h1>{item.projeto?.nome}</h1>
-                </div>
-                <div className={style.card__descricao}>
-                  <p>{item.projeto?.descricao}</p>
-                </div>
-                <div className={style.habilidades}>
-                  {item.projeto?.habilidades.map((hab, i) => (
-                    <div key={i} className={style.badge}>
-                      <p>{hab.descricao}</p>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className={style.container__table_body}>
+            {paginatedItems.length === 0 ? (
+              <p className={style.alertMensage}>
+                Ops! Não encontramos nenhum convite.
+              </p>
+            ) : (
+              paginatedItems.map((item) => (
+                <div key={item.id} className={style.card}>
+                  <div className={style.card__title}>
+                    <div className={style.card__title_tag}>
+                      <p>{item.status}</p>
                     </div>
-                  ))}
-                </div>
-                <div className={style.container__details}>
-                  <div className={style.card__location_date}>
-                    <p>
-                      <Localizacao className={style.icon} />
-                      {/* {item.projeto?.ong.endereco} */}  Localização não disponível
-                    </p>
-                    <p>
-                      <Relogio className={style.icon} />
-                      {new Date(item.created_at).toLocaleDateString()}
-                    </p>
+                    <h1>{item.projeto?.nome}</h1>
                   </div>
-                  <div className={style.card__ong_phone}>
-                    <p>
-                      <Usuario className={style.icon} />
-                      {item.projeto?.ong.nome_fantasia}
-                    </p>
-                    <p>
-                      <Telefone className={style.icon} /> 
-                      {/* {item.projeto?.ong.telefone} */} Telefone não disponível
-                    </p>
+                  <div className={style.card__descricao}>
+                    <p>{item.projeto?.descricao}</p>
+                  </div>
+                  <div className={style.habilidades}>
+                    {item.projeto?.habilidades.map((hab, i) => (
+                      <div key={i} className={style.badge}>
+                        <p>{hab.descricao}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className={style.container__details}>
+                    <div className={style.card__location_date}>
+                      <p>
+                        <Localizacao className={style.icon} />
+                        {item.projeto?.ong?.endereco ? `${item.projeto.ong.endereco.cidade} - ${item.projeto.ong.endereco.estado}` : "Localização não disponível"}
+                      </p>
+                      <p>
+                        <Relogio className={style.icon} />
+                        {new Date(item.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div className={style.card__ong_phone}>
+                      <p>
+                        <Usuario className={style.icon} />
+                        {item.projeto?.ong.nome_fantasia}
+                      </p>
+                      <p>
+                        <Telefone className={style.icon} /> 
+                        {item.projeto?.ong.telefone ? item.projeto.ong.telefone : "Telefone não disponível"}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    className={style.container__buttons}
+                    style={{
+                      display:
+                        item.iniciador.toLocaleLowerCase() === 'ong' &&
+                        item.status.toLocaleLowerCase() === 'pendente'
+                          ? 'flex'
+                          : 'none',
+                    }}
+                  >
+                    <button
+                      className={`${style.button} ${style.buttonAccept}`}
+                      onClick={() => aceitarConvite(item.id)}
+                    >
+                      <Check className={style.icon} /> Aceitar
+                    </button>
+                    <button
+                      className={`${style.button} ${style.buttonDecline}`}
+                      onClick={() => recusarConvite(item.id)}
+                    >
+                      <Lixo className={style.icon} /> Recusar
+                    </button>
                   </div>
                 </div>
-                <div
-                  className={style.container__buttons}
-                  style={{
-                    display:
-                      item.iniciador.toLocaleLowerCase() === 'ong' &&
-                      item.status.toLocaleLowerCase() === 'pendente'
-                        ? 'flex'
-                        : 'none',
-                  }}
-                >
-                  <button
-                    className={`${style.button} ${style.buttonAccept}`}
-                    onClick={() => aceitarConvite(item.id)}
-                  >
-                    <Check className={style.icon} /> Aceitar
-                  </button>
-                  <button
-                    className={`${style.button} ${style.buttonDecline}`}
-                    onClick={() => recusarConvite(item.id)}
-                  >
-                    <Lixo className={style.icon} /> Recusar
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+              ))
+            )}
+          </div>
+        )}
 
         <div className={style.container__table_footer}>
           <Pagination
@@ -189,4 +196,4 @@ function ConviteVoluntario() {
   );
 }
 
-export default ConviteVoluntario; 
+export default ConviteVoluntario;
