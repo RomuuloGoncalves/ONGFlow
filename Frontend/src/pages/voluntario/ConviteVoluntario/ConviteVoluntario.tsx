@@ -48,7 +48,7 @@ function ConviteVoluntario() {
     const statusValido = filtro === "Todos" || c.status === filtro;
     const pesquisaValida =
       c.projeto.nome.toLowerCase().includes(pesquisa) ||
-      c.projeto.ong.nome_fantasia.toLowerCase().includes(pesquisa);
+      (c.projeto.ong?.nome_fantasia.toLowerCase().includes(pesquisa) ?? false);
 
     return statusValido && pesquisaValida;
   });
@@ -127,7 +127,7 @@ function ConviteVoluntario() {
                     <p>{item.projeto?.descricao}</p>
                   </div>
                   <div className={style.habilidades}>
-                    {item.projeto?.habilidades.map((hab, i) => (
+                    {(item.projeto?.habilidades || []).map((hab, i) => (
                       <div key={i} className={style.badge}>
                         <p>{hab.descricao}</p>
                       </div>
@@ -147,11 +147,11 @@ function ConviteVoluntario() {
                     <div className={style.card__ong_phone}>
                       <p>
                         <Usuario className={style.icon} />
-                        {item.projeto?.ong.nome_fantasia}
+                        {item.projeto?.ong?.nome_fantasia}
                       </p>
                       <p>
                         <Telefone className={style.icon} /> 
-                        {item.projeto?.ong.telefone ? item.projeto.ong.telefone : "Telefone não disponível"}
+                        {item.projeto?.ong?.telefone ? item.projeto.ong.telefone : "Telefone não disponível"}
                       </p>
                     </div>
                   </div>
