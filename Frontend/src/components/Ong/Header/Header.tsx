@@ -16,14 +16,13 @@ const Header = () => {
     { to: "/dashboard/ong", label: "Dashboard", icon: <Dashboard /> },
     { to: "/projetos/ong", label: "Projetos", icon: <Projetos /> },
     { to: "/voluntarios/ong", label: "Voluntários", icon: <Usuario /> },
-    { to: "/convites/ong", label: "Convites", icon: <Convite /> },
+    { to: "/convite/ong", label: "Convites", icon: <Convite /> },
     { to: "/perfil/ong", label: "Perfil", icon: <Usuario /> },
   ];
 
   return (
     <>
-      {/* --- MENU DESKTOP --- */}
-      <aside className="hidden lg:flex h-screen w-64 bg-white text-[var(--secondary-grey-700)] flex-col justify-between p-6 font-poppins">
+      <aside className="hidden lg:flex h-screen w-64 bg-white text-[var(--secondary-grey-700)] flex-col justify-between p-6 font-poppins shadow-sm fixed">
         <div className="mb-12">
           <img src={Logo} alt="ONGFLOW" className="h-25 w-auto m-auto" />
         </div>
@@ -67,8 +66,7 @@ const Header = () => {
         </div>
       </aside>
 
-      {/* --- MENU MOBILE --- */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-[70px] bg-white flex justify-between items-center px-4 py-3">
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-[70px] bg-white flex justify-between items-center px-4 py-3 shadow-sm">
         <img src={Logo} alt="ONGFLOW" className="h-15 w-auto" />
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -78,7 +76,6 @@ const Header = () => {
         </button>
       </div>
 
-      {/* --- MENU SLIDE MOBILE --- */}
       <div
         className={`fixed top-0 left-0 h-full w-64 mt-[20px] bg-white z-40 transform transition-transform duration-300 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
@@ -126,8 +123,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-
-      {/* --- OVERLAY --- */}
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}

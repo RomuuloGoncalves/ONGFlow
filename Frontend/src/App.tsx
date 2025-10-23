@@ -33,7 +33,7 @@ function App() {
           <Route path="/dashboard/ong" element={<DashboardOng/>}/>
           <Route path="/projetos/ong" element={<ProjetosOng />} />
           <Route path="/voluntarios/ong" element={<ListagemVoluntario />} />
-          <Route path="/convites/ong" element={<ConviteOng />} />
+          <Route path="/convite/ong" element={<ConviteOng />} />
           <Route path="/perfil/ong" element={<PerfilOng />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
