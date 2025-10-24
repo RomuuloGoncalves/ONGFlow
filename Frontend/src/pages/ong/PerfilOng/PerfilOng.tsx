@@ -77,26 +77,25 @@ function PerfilOng() {
               </div>
               <input
                 type="text"
-                name="sobre"
+                name="sobre"  
                 placeholder="Fale sobre você..."
               />
             </div>
-            <hr />
             {/* Endereço */}
             <div className={style.container__form_endereco}>
               <div className={style.title_endereco}>
                 <Localizacao />
-                <h2>Endereço</h2>
+                <h1>Endereço</h1>
               </div>
               {/* CEP e Numero */}
               <div className={style.container__cep_number}>
-                <div className={style.container__form_input}>
+                <div className={style.container__form_input__cep}>
                   <div className={style.label}>
                     <label>CEP</label>
                   </div>
                   <input type="text" name="cep" placeholder="12345-678" />
                 </div>
-                <div className={style.container__form_input}>
+                <div className={style.container__form_input__number}>
                   <div className={style.label}>
                     <label>Número</label>
                   </div>
@@ -111,19 +110,19 @@ function PerfilOng() {
                 <input type="text" name="logradouro" placeholder="Jucelino" />
               </div>
               <div className={style.container__bairro_cidade__estado}>
-                <div className={style.container__form_input}>
+                <div className={style.container__form_input__bairro}>
                   <div className={style.label}>
                     <label>Bairro</label>
                   </div>
                   <input type="text" name="bairro" placeholder="bairro" />
                 </div>
-                <div className={style.container__form_input}>
+                <div className={style.container__form_input__cidade}>
                   <div className={style.label}>
                     <label>Cidade</label>
                   </div>
                   <input type="text" name="cidade" placeholder="cidade" />
                 </div>
-                <div className={style.container__form_input}>
+                <div className={style.container__form_input__estado}>
                   <div className={style.label}>
                     <label>Estado</label>
                   </div>
