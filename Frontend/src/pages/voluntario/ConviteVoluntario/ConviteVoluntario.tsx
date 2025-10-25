@@ -11,7 +11,6 @@ import { Check } from "@/assets/icons/Check";
 import { Lixo } from "@/assets/icons/Lixo";
 import ConviteService from "@/services/conviteService";
 import type { Convite } from "@/interfaces/convite";
-import SelectSimple from "@/components/Voluntario/Select";
 import Loading from "@/components/Loading/Loading";
 
 function ConviteVoluntario() {
@@ -90,21 +89,58 @@ function ConviteVoluntario() {
       </div>
       <div className={style.container__table}>
         <div className={style.container__table_header}>
-        <p>Filtro</p>
-
-        <div className={style.input__search}>
-            <Pesquisa className={style.icon} />
+        <div className={style.search}>
+            <Pesquisa />
             <input
               type="text"
-              placeholder="Procure por projeto"
+              className={style.search}
+              placeholder="Filtrar por ONG ou projeto"
               value={textPesquisa}
               onChange={(e) => setTextPesquisa(e.target.value)}
             />
           </div>
-          <SelectSimple
-            value={filtro}
-            onChange={(valor: string) => setFiltro(valor)}
-          />
+          <div className={style.container__tags}>
+            <button
+              onClick={() => setFiltro("Todos")}
+              className={`${style.button} ${
+                filtro === "Todos" ? style.active : ""
+              }`}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => setFiltro("pendente")}
+              className={`${style.button} ${
+                filtro === "pendente" ? style.active : ""
+              }`}
+            >
+              Pendentes
+            </button>
+            <button
+              onClick={() => setFiltro("aceito")}
+              className={`${style.button} ${
+                filtro === "aceito" ? style.active : ""
+              }`}
+            >
+              Aceitos
+            </button>
+            <button
+              onClick={() => setFiltro("recusado")}
+              className={`${style.button} ${
+                filtro === "recusado" ? style.active : ""
+              }`}
+            >
+              Recusados
+            </button>
+            <button
+              onClick={() => setFiltro("cancelado")}
+              className={`${style.button} ${
+                filtro === "cancelado" ? style.active : ""
+              }`}
+            >
+              Cancelados
+            </button>
+          </div>
         </div>
         {isLoading ? (
           <Loading />
