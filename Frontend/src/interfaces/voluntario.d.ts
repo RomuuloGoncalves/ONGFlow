@@ -1,12 +1,15 @@
 export interface Voluntario {
   id: number;
   nome: string;
-  senha: string;
+  // senha: string;
   cpf: string;
   email: string;
   data_nascimento: string;
   telefone?: string;
-  status: 'ativo' | 'inativo';
+  // status: 'ativo' | 'inativo';
+  status: string;
+  bio: string;
+  id_endereco: number;
 }
 
 export interface VoluntarioCadastro {

@@ -20,5 +20,6 @@ export default defineConfig({
         secure: false,
       }
     }
-  }
+  },
+  logLevel: 'error',
 })

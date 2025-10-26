@@ -1,6 +1,6 @@
 import Header from "@/components/Voluntario/Header/Header";
 import style from "./PerfilVoluntario.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectInput from "@/components/Voluntario/MultiSelect";
 
 // Icons
@@ -11,21 +11,110 @@ import { Localizacao } from "@/assets/icons/Localizacao";
 import { Sobre } from "@/assets/icons/Sobre";
 import { Salvar } from "@/assets/icons/Salvar";
 import { Logout } from "@/assets/icons/Logout";
+import { useNavigate } from "react-router-dom";
+import voluntarioService from "@/services/voluntarioService";
+import type { Endereco } from "@/interfaces/endereco";
+import enderecoService from "@/services/enderecoService";
+import type { Voluntario } from "@/interfaces/voluntario";
 
+// falta a parte das habilidades
 function PerfilVoluntario() {
-  const [voluntario, setVoluntario] = useState({
-    nome: "",
-    email: "",
-    telefone: "",
-    endereco: "",
-    sobre: "",
-    habilidade: "",
-  });
+
+const [voluntario, setVoluntario] = useState<Voluntario>({
+  id: 0,
+  nome: '',
+  email: '',
+  // senha: '',
+  cpf: '',
+  data_nascimento: '',
+  telefone: '',
+  bio: '',
+  status: 'ativo',
+  id_endereco: 0,
+});
+
+const [endereco, setEndereco] = useState<Endereco>({
+  id: 0,
+  cep: '',
+  logradouro: '',
+  numero: 0,
+  complemento: '',
+  bairro: '',
+  cidade: '',
+  estado: '',
+});
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    if (userData) {
+      setVoluntario((prev) => ({
+        ...prev,
+        id: userData.id || 0,
+        nome: userData.nome || "",
+        email: userData.email || "",
+        cpf: userData.cpf || "",
+        bio: userData.bio || "",
+        telefone: userData.telefone || "",
+        data_nascimento: userData.data_nascimento || "",
+        id_endereco: userData.id_endereco || "",
+      }));
+    }
+if (userData.id_endereco) {
+        enderecoService.getEndereco(userData.id_endereco).then((res) => {
+          const enderecoData = res.data.data;
+          setEndereco({
+            id: enderecoData.id || 0,
+            cep: enderecoData.cep || "",
+            logradouro: enderecoData.logradouro || "",
+            numero: enderecoData.numero || 0,
+            complemento: enderecoData.complemento || "",
+            bairro: enderecoData.bairro || "",
+            cidade: enderecoData.cidade || "",
+            estado: enderecoData.estado || "",
+          });
+        });
+      }
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      const response = await voluntarioService.updateVoluntario(voluntario.id, voluntario);
+
+      localStorage.setItem("user", JSON.stringify(response.data.data));
+
+    } catch (error) {
+      console.error("Erro ao atualizar voluntário:", error);
+    }
+
+    try {
+      if (endereco.id) {
+        const responseEndereco = await enderecoService.updateEndereco(endereco.id, endereco);
+        console.log("Endereço atualizado com sucesso!", responseEndereco.data);
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar endereço:", error);
+    }
+  }
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setVoluntario((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleChangeEndereco = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setEndereco((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
+  const navigate = useNavigate();
+  function handleClickSair() {
+    navigate("/home/voluntario")
+  }
 
   return (
     <>
@@ -36,7 +125,7 @@ function PerfilVoluntario() {
           <p>Atualize suas informações de perfil.</p>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* Nome */}
           <div className={style.container__form_input}>
             <div className={style.label}>
@@ -90,39 +179,69 @@ function PerfilVoluntario() {
                 <div className={style.label}>
                   <label>CEP</label>
                 </div>
-                <input type="text" placeholder="12345-678" />
+                <input 
+                type="text"
+                name="cep" 
+                placeholder="12345-678"
+                value={endereco.cep}
+                onChange={handleChangeEndereco} />
               </div>
               <div className={style.endereco__numero}>
                 <div className={style.label}>
                   <label>Número</label>
                 </div>
-                <input type="number" placeholder="1234" />
+                <input 
+                type="number"
+                name="numero" 
+                placeholder="1234" 
+                value={endereco.numero}
+                onChange={handleChangeEndereco}/>
               </div>
             </div>
             <div className={style.endereco__logradouro}>
               <div className={style.label}>
                 <label>Logradouro</label>
               </div>
-              <input type="text" placeholder="Jucelino" />
+              <input 
+              type="text"
+              name="logradouro" 
+              placeholder="Jucelino" 
+              value={endereco.logradouro}
+              onChange={handleChangeEndereco}/>
             </div>
             <div className={style.endereco__bairro_cidade__estado}>
               <div className={style.endereco__bairro}>
                 <div className={style.label}>
                   <label>Bairro</label>
                 </div>
-                <input type="text" placeholder="Bairro" />
+                <input 
+                type="text"
+                name="bairro" 
+                placeholder="Bairro" 
+                value={endereco.bairro}
+                onChange={handleChangeEndereco}/>
               </div>
               <div className={style.endereco__cidade}>
                 <div className={style.label}>
                   <label>Cidade</label>
                 </div>
-                <input type="text" placeholder="cidade" />
+                <input 
+                type="text"
+                name="cidade" 
+                placeholder="cidade" 
+                value={endereco.cidade}
+                onChange={handleChangeEndereco}/>
               </div>
               <div className={style.endereco__estado}>
                 <div className={style.label}>
                   <label>Estado</label>
                 </div>
-                <input type="text" placeholder="estado" />
+                <input 
+                type="text"
+                name="estado" 
+                placeholder="estado" 
+                value={endereco.estado}
+                onChange={handleChangeEndereco}/>
               </div>
             </div>
           </div>
@@ -135,8 +254,8 @@ function PerfilVoluntario() {
             </div>
             <input
               type="text"
-              name="sobre"
-              value={voluntario.sobre}
+              name="bio"
+              value={voluntario.bio}
               onChange={handleChange}
               placeholder="Fale sobre você..."
             />
@@ -146,11 +265,11 @@ function PerfilVoluntario() {
           <hr />
           <div className={style.container__buttons}>
             {/* Btn */}
-            <button className={style.buttonSave}>
+            <button className={style.buttonSave} type="submit">
               <Salvar />
               Salvar Alterações
             </button>
-            <button className={style.buttonLogout}>
+            <button className={style.buttonLogout} onClick={handleClickSair}>
               <Logout />
               Sair
             </button>

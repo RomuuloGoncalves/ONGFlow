@@ -8,6 +8,7 @@ use App\Http\Controllers\OngController;
 use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\HabilidadeController;
 use App\Http\Controllers\ConviteController;
+use App\Http\Controllers\EnderecoController;
 
 
 Route::prefix('voluntarios')->group(function () {
@@ -69,6 +70,16 @@ Route::prefix('convites')->group(function () {
     Route::put('/{id}/aceitar', [ConviteController::class, 'aceitar']);
     Route::put('/{id}/recusar', [ConviteController::class, 'recusar']);
     Route::delete('/{id}', [ConviteController::class, 'destroy']);
+
+});
+
+Route::prefix('enderecos')->group(function () {
+
+    Route::get('/', [EnderecoController::class, 'index']);
+    Route::post('/', [EnderecoController::class, 'store']);
+    Route::get('/{id}', [EnderecoController::class, 'show']);
+    Route::put('/{id}', [EnderecoController::class, 'update']);
+    Route::delete('/{id}', [EnderecoController::class, 'destroy']);
 
 });
 

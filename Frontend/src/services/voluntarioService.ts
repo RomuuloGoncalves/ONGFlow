@@ -1,5 +1,6 @@
 import api from './api';
 import type { Voluntario, VoluntarioCadastro, VoluntarioLogin } from '../interfaces/voluntario';
+import type { ApiResponse } from '../interfaces/apiResponse';
 import type { AxiosPromise } from 'axios';
 import type { Projeto } from '@/interfaces/projeto';
 
@@ -21,6 +22,15 @@ const voluntarioService = {
   getProjetos: (id: number): AxiosPromise<Projeto[]> => {
     return api.get<Projeto[]>(`/voluntarios/${id}/projetos`);
   },
+
+  getVoluntario: (id: number): AxiosPromise<Voluntario> => {
+    return api.get<Voluntario>(`/voluntarios/${id}`);
+  },
+
+  updateVoluntario: (id: number, dados: Partial<Voluntario>): AxiosPromise<ApiResponse<Voluntario>> => {
+    return api.put<ApiResponse<Voluntario>>(`/voluntarios/${id}`, dados);
+  },
+
 
 };
 
