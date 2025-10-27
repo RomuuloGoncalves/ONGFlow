@@ -18,6 +18,8 @@ function HomeVoluntario() {
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const itemsPerPage = 4;
 
   useEffect(() => {
     async function fetchProjetos() {
@@ -35,8 +37,10 @@ function HomeVoluntario() {
     }
     fetchProjetos();
   }, []);
-
-  const itemsPerPage = 4;
+  
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filtro, textPesquisa]);
 
   // Aplica filtro por status e pesquisa
   const projetosFiltrados = projetos.filter((p) => {
