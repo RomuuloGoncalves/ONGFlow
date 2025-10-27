@@ -1,6 +1,6 @@
 import Header from "@/components/Voluntario/Header/Header";
 import style from "./ProjetosDisponiveis.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
@@ -68,11 +68,6 @@ function HomeVoluntario() {
       p.localizacao.toLowerCase().includes(pesquisa)
     );
   });
-
-  // Reseta página ao mudar filtro ou pesquisa
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filtro, textPesquisa]);
 
   // Paginação
   const start = (currentPage - 1) * itemsPerPage;
