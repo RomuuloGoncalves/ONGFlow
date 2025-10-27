@@ -7,39 +7,37 @@ import { Telefone } from "@/assets/icons/Telefone";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Relogio } from "@/assets/icons/Relogio";
 import { Localizacao } from "@/assets/icons/Localizacao";
+import ConviteService from "@/services/conviteService";
 import Loading from "@/components/Loading/Loading";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { useState, useEffect } from "react";
-
-// Dados Falsos - Retirar quando fizer a integração
-const mockConvites = Array.from({ length: 20 }, (_, i) => ({
-  id: i + 1,
-  status: ["pendente", "aceito", "recusado", "solicitacao"][i % 4],
-  iniciador: i % 2 === 0 ? "voluntario" : "ong",
-  created_at: new Date().toISOString(),
-  projeto: {
-    nome: `Projeto ${i + 1}`,
-    descricao: `Descrição do Projeto ${i + 1}`,
-    ong: {
-      nome_fantasia: `ONG ${i + 1}`,
-      telefone: `(11) 9${i}000-000${i}`,
-      endereco: {
-        cidade: `Cidade ${i + 1}`,
-        estado: "SP",
-      },
-    },
-  },
-}));
+import type { Convite } from "@/interfaces/convite";
 
 function ConviteOng() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [filtro, setFiltro] = useState("Todos");
   const [textPesquisa, setTextPesquisa] = useState("");
-  const [convites, setConvites] = useState(mockConvites);
+  const [convites, setConvites] = useState<Convite[]>([]);
 
   const itemsPerPage = 6;
 
+  useEffect(() => {
+    async function fetchConvites() {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      if (user && user.id) {
+        try {
+          const response = await ConviteService.getConvitesVoluntario(user.id);
+          setConvites(response.data);
+        } catch (error) {
+          console.error("Erro ao buscar convites:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    }
+    fetchConvites();
+  }, []);
   // Simula carregamento
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 500);
@@ -88,22 +86,48 @@ function ConviteOng() {
               />
             </div>
             <div className={style.container__tags}>
-              {["Todos", "pendente", "aceito", "recusado", "solicitações"].map(
-                (status) => (
-                  <button
-                    key={status}
-                    onClick={() => setFiltro(status)}
-                    className={`${style.button} ${
-                      filtro === status ? style.active : ""
-                    }`}
-                  >
-                    {status.charAt(0).toUpperCase() + status.slice(1)}
-                  </button>
-                )
-              )}
+              <button
+                onClick={() => setFiltro("Todos")}
+                className={`${style.button} ${
+                  filtro === "Todos" ? style.active : ""
+                }`}
+              >
+                Todos
+              </button>
+              <button
+                onClick={() => setFiltro("pendente")}
+                className={`${style.button} ${
+                  filtro === "pendente" ? style.active : ""
+                }`}
+              >
+                Pendentes
+              </button>
+              <button
+                onClick={() => setFiltro("aceito")}
+                className={`${style.button} ${
+                  filtro === "aceito" ? style.active : ""
+                }`}
+              >
+                Aceitos
+              </button>
+              <button
+                onClick={() => setFiltro("recusado")}
+                className={`${style.button} ${
+                  filtro === "recusado" ? style.active : ""
+                }`}
+              >
+                Recusados
+              </button>
+              <button
+                onClick={() => setFiltro("cancelado")}
+                className={`${style.button} ${
+                  filtro === "cancelado" ? style.active : ""
+                }`}
+              >
+                Cancelados
+              </button>
             </div>
           </div>
-
           {isLoading ? (
             <Loading />
           ) : (
@@ -123,6 +147,13 @@ function ConviteOng() {
                     </div>
                     <div className={style.card__descricao}>
                       <p>{item.projeto?.descricao}</p>
+                    </div>
+                    <div className={style.habilidades}>
+                      {(item.projeto?.habilidades || []).map((hab, i) => (
+                        <div key={i} className={style.badge}>
+                          <p>{hab.descricao}</p>
+                        </div>
+                      ))}
                     </div>
                     <div className={style.container__details}>
                       <div className={style.card__location_date}>
@@ -154,40 +185,21 @@ function ConviteOng() {
                       className={style.container__buttons}
                       style={{
                         display:
-                          item.iniciador.toLowerCase() === "voluntario" &&
-                          item.status.toLowerCase() === "solicitacao"
+                          item.iniciador.toLocaleLowerCase() === "ong" &&
+                          item.status.toLocaleLowerCase() === "pendente"
                             ? "flex"
                             : "none",
                       }}
                     >
                       <button
                         className={`${style.button} ${style.buttonAccept}`}
+                        // onClick={() => aceitarConvite(item.id)}
                       >
                         <Check className={style.icon} /> Aceitar
                       </button>
                       <button
                         className={`${style.button} ${style.buttonDecline}`}
-                      >
-                        <Lixo className={style.icon} /> Recusar
-                      </button>
-                    </div>
-                                        <div
-                      className={style.container__buttons}
-                      style={{
-                        display:
-                          item.iniciador.toLowerCase() === "voluntario" &&
-                          item.status.toLowerCase() === "solicitacao"
-                            ? "flex"
-                            : "none",
-                      }}
-                    >
-                      <button
-                        className={`${style.button} ${style.buttonAccept}`}
-                      >
-                        <Check className={style.icon} /> Aceitar
-                      </button>
-                      <button
-                        className={`${style.button} ${style.buttonDecline}`}
+                        // onClick={() => recusarConvite(item.id)}
                       >
                         <Lixo className={style.icon} /> Recusar
                       </button>
