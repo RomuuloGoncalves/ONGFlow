@@ -20,6 +20,8 @@ function ConviteVoluntario() {
   const [filtro, setFiltro] = useState("Todos");
   const [textPesquisa, setTextPesquisa] = useState("");
 
+  const itemsPerPage = 6;
+
   useEffect(() => {
     async function fetchConvites() {
       const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -36,8 +38,6 @@ function ConviteVoluntario() {
     }
     fetchConvites();
   }, []);
-
-  const itemsPerPage = 6;
 
   const convitesFiltrados = convites.filter((c) => {
     if (!c.projeto) {
