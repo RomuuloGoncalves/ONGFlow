@@ -22,7 +22,7 @@ function ConviteVoluntario() {
 
   useEffect(() => {
     async function fetchConvites() {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
       if (user && user.id) {
         try {
           const response = await ConviteService.getConvitesVoluntario(user.id);
@@ -52,18 +52,17 @@ function ConviteVoluntario() {
     return statusValido && pesquisaValida;
   });
 
-  const aceitarConvite = async(id: number) => {
+  const aceitarConvite = async (id: number) => {
     try {
       await ConviteService.aceitarConvite(id);
       setConvites((prev) =>
         prev.map((c) => (c.id === id ? { ...c, status: "aceito" } : c))
       );
-      
     } catch (error) {
       console.error("Erro ao aceitar convite", error);
     }
   };
-  const recusarConvite = async(id: number) => {
+  const recusarConvite = async (id: number) => {
     try {
       await ConviteService.recusarConvite(id);
       setConvites((prev) =>
@@ -89,7 +88,7 @@ function ConviteVoluntario() {
       </div>
       <div className={style.container__table}>
         <div className={style.container__table_header}>
-        <div className={style.search}>
+          <div className={style.search}>
             <Pesquisa />
             <input
               type="text"
@@ -173,7 +172,9 @@ function ConviteVoluntario() {
                     <div className={style.card__location_date}>
                       <p>
                         <Localizacao className={style.icon} />
-                        {item.projeto?.ong?.endereco ? `${item.projeto.ong.endereco.cidade} - ${item.projeto.ong.endereco.estado}` : "Localização não disponível"}
+                        {item.projeto?.ong?.endereco
+                          ? `${item.projeto.ong.endereco.cidade} - ${item.projeto.ong.endereco.estado}`
+                          : "Localização não disponível"}
                       </p>
                       <p>
                         <Relogio className={style.icon} />
@@ -186,8 +187,10 @@ function ConviteVoluntario() {
                         {item.projeto?.ong?.nome_fantasia}
                       </p>
                       <p>
-                        <Telefone className={style.icon} /> 
-                        {item.projeto?.ong?.telefone ? item.projeto.ong.telefone : "Telefone não disponível"}
+                        <Telefone className={style.icon} />
+                        {item.projeto?.ong?.telefone
+                          ? item.projeto.ong.telefone
+                          : "Telefone não disponível"}
                       </p>
                     </div>
                   </div>
@@ -195,10 +198,10 @@ function ConviteVoluntario() {
                     className={style.container__buttons}
                     style={{
                       display:
-                        item.iniciador.toLocaleLowerCase() === 'ong' &&
-                        item.status.toLocaleLowerCase() === 'pendente'
-                          ? 'flex'
-                          : 'none',
+                        item.iniciador.toLocaleLowerCase() === "ong" &&
+                        item.status.toLocaleLowerCase() === "pendente"
+                          ? "flex"
+                          : "none",
                     }}
                   >
                     <button
