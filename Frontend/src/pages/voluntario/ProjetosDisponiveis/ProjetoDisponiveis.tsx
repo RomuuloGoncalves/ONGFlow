@@ -1,11 +1,11 @@
 import Header from "@/components/Voluntario/Header/Header";
 import style from "./ProjetosDisponiveis.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Convite } from "@/assets/icons/Convite";
-import ModalVoluntarioProjetos   from "@/modals/Voluntarios/VoluntarioProjetos/modalVoluntarioProjetos";
+import ModalVoluntarioProjetos from "@/modals/Voluntarios/VoluntarioProjetos/modalVoluntarioProjetos";
 
 // Nome da API(json) tem que ser projetos
 const projetos = [
@@ -69,17 +69,28 @@ function HomeVoluntario() {
     );
   });
 
+  // Reseta página ao mudar filtro ou pesquisa
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filtro, textPesquisa]);
+
   // Paginação
   const start = (currentPage - 1) * itemsPerPage;
   const paginatedItems = projetosFiltrados.slice(start, start + itemsPerPage);
 
   return (
     <>
-      <ModalVoluntarioProjetos isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <ModalVoluntarioProjetos
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+      />
       <Header />
       <div className={style.container__title}>
         <h1>Projetos Disponíveis</h1>
-        <p>Nesta área, você encontrará os projetos das ONGs que podes candidatar. Aqui serão exibidas todas os projetos em que você pode se candidatar</p>
+        <p>
+          Nesta área, você encontrará os projetos das ONGs que podes candidatar.
+          Aqui serão exibidas todas os projetos em que você pode se candidatar
+        </p>
       </div>
       <div className={style.container__table}>
         <div className={style.container__table_header}>
