@@ -97,6 +97,7 @@ class VoluntarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
 public function update(Request $request, string $id)
 {
     try {
@@ -111,8 +112,12 @@ public function update(Request $request, string $id)
             'password' => ['sometimes', 'string', 'min:8'],
             'bio' => ['nullable', 'string'],
             'status' => ['sometimes', 'in:ativo,inativo'],
+            'id_endereco' => ['nullable', 'integer', 'exists:enderecos,id'], // permite atualização do endereço
         ]);
+
         $voluntario->fill($validated);
+
+        // Se quiser permitir alteração de senha
         // if (isset($validated['password'])) {
         //     $voluntario->password = bcrypt($validated['password']);
         // }
@@ -139,6 +144,7 @@ public function update(Request $request, string $id)
         ], 500);
     }
 }
+
 
     /**
      * Remove the specified resource from storage.

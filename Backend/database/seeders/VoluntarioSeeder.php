@@ -14,6 +14,7 @@ class VoluntarioSeeder extends Seeder
         Voluntario::factory()->create([
             'email' => 'a@a.a',
             'password' => 'asdasdasd',
+            'id_endereco' => null,
         ]);
 
         // Cria outros 10 voluntários aleatórios, como estava antes

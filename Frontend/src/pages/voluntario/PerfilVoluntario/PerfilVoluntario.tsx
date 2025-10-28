@@ -76,26 +76,55 @@ if (userData.id_endereco) {
       }
   }, []);
 
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await voluntarioService.updateVoluntario(voluntario.id, voluntario);
+
+  //     localStorage.setItem("user", JSON.stringify(response.data.data));
+
+  //   } catch (error) {
+  //     console.error("Erro ao atualizar voluntário:", error);
+  //   }
+
+  //   try {
+  //     if (endereco.id) {
+  //       const responseEndereco = await enderecoService.updateEndereco(endereco.id, endereco);
+  //       console.log("Endereço atualizado com sucesso!", responseEndereco.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Erro ao atualizar endereço:", error);
+  //   }
+  // }
+
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    try {
-      const response = await voluntarioService.updateVoluntario(voluntario.id, voluntario);
+  e.preventDefault();
 
-      localStorage.setItem("user", JSON.stringify(response.data.data));
+  try {
+    let enderecoId = endereco.id;
 
-    } catch (error) {
-      console.error("Erro ao atualizar voluntário:", error);
+    if (enderecoId) {
+      const responseEndereco = await enderecoService.updateEndereco(enderecoId, endereco);
+      console.log("Endereço atualizado com sucesso!", responseEndereco.data);
+    } 
+    else {
+      const responseNovoEndereco = await enderecoService.createEndereco(endereco);
+      enderecoId = responseNovoEndereco.data.data.id;
+      console.log("Novo endereço criado com sucesso!", responseNovoEndereco.data);
+
+      voluntario.id_endereco = enderecoId;
+      console.log("id_endereco", voluntario.id_endereco)
     }
 
-    try {
-      if (endereco.id) {
-        const responseEndereco = await enderecoService.updateEndereco(endereco.id, endereco);
-        console.log("Endereço atualizado com sucesso!", responseEndereco.data);
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar endereço:", error);
-    }
+    const responseVoluntario = await voluntarioService.updateVoluntario(voluntario.id, voluntario);
+    localStorage.setItem("user", JSON.stringify(responseVoluntario.data.data));
+
+    console.log("Voluntário atualizado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao atualizar voluntário ou endereço:", error);
   }
+}
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
