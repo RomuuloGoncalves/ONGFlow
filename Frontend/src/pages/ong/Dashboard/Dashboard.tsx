@@ -59,7 +59,7 @@ function Dashboard() {
               </div>
             </div>
             <Link to="/voluntarios/ong" className={style.container__button}>
-              <button>Ver Todos</button>
+              Ver Todos
               <Maior className={style.icon} />
             </Link>
           </div>
@@ -84,7 +84,7 @@ function Dashboard() {
               </div>
             </div>
             <Link to="/voluntarios/ong" className={style.container__button}>
-              <button>Ver Todos</button>
+              Ver Todos
               <Maior className={style.icon} />
             </Link>
           </div>
@@ -106,7 +106,7 @@ function Dashboard() {
               </div>
             </div>
             <div className={style.container__button}>
-              <button>Ver Todos</button>
+              Ver Todos
               <Maior className={style.icon} />
             </div>
           </div>
@@ -126,7 +126,7 @@ function Dashboard() {
               </div>
             </div>
             <div className={style.container__button}>
-              <button>Ver Todos</button>
+              Ver Todos
               <Maior className={style.icon} />
             </div>
           </div>

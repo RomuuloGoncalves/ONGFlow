@@ -275,10 +275,9 @@
           justify-content: flex-end;
           align-items: center;
           gap: 10px;
-          button {
-            color: var(--secondary-primary-white);
-            font-weight: 600;
-          }
+          cursor: pointer;
+          color: var(--secondary-primary-white);
+          font-weight: 600;
           .icon {
             color: var(--secondary-primary-white);
           }

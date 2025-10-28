@@ -38,7 +38,7 @@ const Header = () => {
                     className={`flex items-center gap-4 py-3 px-4 rounded-md transition-colors
                       ${
                         isActive
-                          ? "bg-[var(--primary-purple-blue-500-primary)] text-white shadow-[var(--shadow-5)]"
+                          ? "bg-[var(--primary-purple-blue-500)] text-white shadow-[var(--shadow-5)]"
                           : "text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)]"
                       }`}
                   >
