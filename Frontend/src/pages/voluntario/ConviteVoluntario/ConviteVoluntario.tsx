@@ -73,6 +73,11 @@ function ConviteVoluntario() {
     }
   };
 
+  // Reseta página ao mudar filtro ou pesquisa
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filtro, textPesquisa]);
+
   const start = (currentPage - 1) * itemsPerPage;
   const paginatedItems = convitesFiltrados.slice(start, start + itemsPerPage);
 
