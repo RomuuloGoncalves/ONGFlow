@@ -12,7 +12,7 @@
   --primary-purple-blue-200: rgba(185, 162, 255, 1);
   --primary-purple-blue-300: rgba(147, 116, 255, 1);
   --primary-purple-blue-400: rgba(117, 81, 255, 1);
-  --primary-purple-blue-500-primary: rgba(67, 24, 255, 1);
+  --primary-purple-blue-500: rgba(67, 24, 255, 1);
   --primary-purple-blue-600: rgba(51, 17, 219, 1);
   --primary-purple-blue-700: rgba(34, 0, 183, 1);
   --primary-purple-blue-800: rgb(25, 7, 147);
@@ -106,7 +106,7 @@
   --background-color: linear-gradient(90deg, #868CFF  -20%, #4318FF 100%);
 
   /* Shadow */
-  --shadow-5: 4px 4px 4px rgba(0, 0, 0, 0.05);
+  --shadow-5: 0px 4px 4px rgba(0, 0, 0, 0.05);
 }
 
 @theme inline {
