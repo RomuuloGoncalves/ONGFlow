@@ -251,6 +251,7 @@
 
   @media (max-width: 520px) {
     max-width: 375px;
+    padding: 1rem;
   }
 
   @media (max-width: 375px) {

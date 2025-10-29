@@ -41,7 +41,7 @@ function projetos() {
         </div>
         <Header />
         <button onClick={() => setIsModalCriarOpen(true)} style={{border: '1px solid black', margin: '10px'}} >Abrir Modal Criar Projeto</button>
-        <button onClick={() => setIsModalCriarOpen(true)} style={{border: '1px solid black', margin: '10px'}}>Abrir Modal Editar Projeto</button>
+        <button onClick={() => setIsModalEditarOpen(true)} style={{border: '1px solid black', margin: '10px'}}>Abrir Modal Editar Projeto</button>
         <ModalCriarProjeto isOpen={isModalCriarOpen} setIsOpen={setIsModalCriarOpen}/>
         <ModalEditarProjeto isOpen={isModalEditarOpen} setIsOpen={setIsModalEditarOpen}/>
     </>
