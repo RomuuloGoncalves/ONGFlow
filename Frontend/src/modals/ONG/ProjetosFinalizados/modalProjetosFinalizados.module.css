@@ -211,6 +211,11 @@
       box-shadow: var(--shadow-5);
       color: var(--secondary-primary-white);
       background-color: #ff0000;
+
+      @media (max-width:425px) {
+        min-width: 80px;
+        font-size: 12px;
+      }
     }
   }
 }

@@ -4,11 +4,13 @@ import ModalEditarProjeto from "@/modals/ONG/EditarProjeto/modalEditarProjeto"
 import style from './projetos.module.css'
 import Header from "@/components/Ong/Header/Header"
 import ModalProjetosFinalizados from "@/modals/ONG/ProjetosFinalizados/modalProjetosFinalizados"
+import ModalProjetosAndamento from "@/modals/ONG/ProjetosAndamento/modalProjetosAndamento"
 
 function projetos() {
   const [isModalCriarOpen, setIsModalCriarOpen] = useState(false)
   const [isModalEditarOpen, setIsModalEditarOpen] = useState(false)
   const [isModalProjetosFinalizadosOpen, setIsModalProjetosFinalizadosOpen] = useState(false)
+  const [isModalProjetosAndamentoOpen, setIsModalProjetosAndamentoOpen] = useState(false)
   return (
     <>
         <div className={style.main}>
@@ -45,9 +47,11 @@ function projetos() {
         <button onClick={() => setIsModalCriarOpen(true)} style={{border: '1px solid black', margin: '10px'}} >Abrir Modal Criar Projeto</button>
         <button onClick={() => setIsModalEditarOpen(true)} style={{border: '1px solid black', margin: '10px'}}>Abrir Modal Editar Projeto</button>
         <button onClick={() => setIsModalProjetosFinalizadosOpen(true)} style={{border: '1px solid black', margin: '10px'}}>Abrir Modal Projetos Finalizados</button>
+        <button onClick={() => setIsModalProjetosAndamentoOpen(true)} style={{border: '1px solid black', margin: '10px'}}>Abrir Modal Projetos Andamento</button>
         <ModalCriarProjeto isOpen={isModalCriarOpen} setIsOpen={setIsModalCriarOpen}/>
         <ModalEditarProjeto isOpen={isModalEditarOpen} setIsOpen={setIsModalEditarOpen}/>
         <ModalProjetosFinalizados isOpen={isModalProjetosFinalizadosOpen} setIsOpen={setIsModalProjetosFinalizadosOpen}/>
+        <ModalProjetosAndamento isOpen={isModalProjetosAndamentoOpen} setIsOpen={setIsModalProjetosAndamentoOpen}/>
     </>
     )
 }

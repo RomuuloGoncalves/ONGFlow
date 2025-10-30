@@ -55,20 +55,19 @@ function modalProjetosFinalizados({ isOpen, setIsOpen }: Modalprops) {
                 </div>
               )}
             </div>
-
-            <div className={style.location__status}>
-              <div className={style.location}>
-                <p>Localização</p>
-                <span>asdasdad</span>
-              </div>
-              <div className={style.status}>
-                <p>Status</p>
-                <div className={style.tag}>
-                  <span>Finalizado</span>
-                </div>
+          </div>
+          <div className={style.location__status}>
+            <div className={style.location}>
+              <p>Localização</p>
+              <span>asdasdad</span>
+            </div>
+            <div className={style.status}>
+              <p>Status</p>
+              <div className={style.tag}>
+                <span>Finalizado</span>
               </div>
             </div>
-
+          </div>
             <div className={style.voluntarios}>
               <div className={style.voluntarios__header}>
                 <Usuario className={style.icon} />
@@ -115,7 +114,6 @@ function modalProjetosFinalizados({ isOpen, setIsOpen }: Modalprops) {
               </div>
             </div>
           </div>
-        </div>
         <div className={style.modal__footer}>
           <button>
             <Lixo />

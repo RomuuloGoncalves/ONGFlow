@@ -1,0 +1,165 @@
+@import "@/style/global.css";
+
+.modal {
+  min-height: 400px;
+  .modal__header {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .icon{
+        cursor: pointer;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+  }
+
+  .modal__body {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px;
+
+    p {
+      font-weight: 500;
+      color: #585858;
+
+      @media (max-width: 425px) {
+        font-size: 12px;
+      }
+    }
+
+    span {
+      @media (max-width: 425px) {
+        font-size: 10px;
+      }
+    }
+
+    .description,
+    .card__habilities {
+      width: 100%;
+      min-height: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .habilities {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      gap: 10px;
+      .badge {
+        min-width: 100px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 15px;
+        padding: 5px;
+        background: var(--background-color);
+        color: var(--secondary-primary-white);
+        font-weight: 500;
+        font-size: 12px;
+        box-shadow: --shadow-5;
+
+        @media (max-width: 520px) {
+          min-width: 80px;
+          height: 25px;
+          span {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+    .location__status {
+      width: 100%;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .location,
+      .status {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        span {
+          @media (max-width: 425px) {
+            font-size: 12px;
+          }
+        }
+
+        .tag {
+          max-width: 110px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 5px;
+          border-radius: 15px;
+          background-color: #dbeafe;
+
+          span {
+            color: #2269c6;
+            font-weight: 600;
+            @media (max-width: 425px) {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+  }
+  .modal__footer {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    @media (max-width: 425px) {
+      justify-content: center;
+    }
+
+    button {
+      min-width: 100px;
+      height: 80%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: var(--shadow-5);
+      color: var(--secondary-primary-white);
+      
+      @media (max-width:425px) {
+          min-width: 80px;
+          font-size: 12px;
+        }
+    }
+    
+    .buttonDelete{
+        background-color: #ff0000;
+    }
+
+    .buttonEdit{
+        background-color: var(--secondary-primary-white);
+        border: .5px solid #D2D2D2;
+        color: var(--secondary-primary-black);  
+    }
+  }
+}
