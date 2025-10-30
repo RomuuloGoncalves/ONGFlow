@@ -16,10 +16,7 @@ const habilidades = [
   },
 ];
 
-export default function ModalExibirVoluntario({
-  isOpen,
-  setIsOpen,
-}: Modalprops) {
+export default function ModalExibirVoluntario({isOpen,setIsOpen,}: Modalprops) {
   if (!isOpen) return null;
 
   return (
@@ -31,7 +28,6 @@ export default function ModalExibirVoluntario({
         </div>
 
         <div className={style.modal__body}>
-          {/* SOBRE */}
           <div className={style.about}>
             <p>Sobre</p>
             <span>
@@ -39,8 +35,6 @@ export default function ModalExibirVoluntario({
               DescriçãoDescrição Descrição
             </span>
           </div>
-
-          {/* HABILIDADES */}
           <div className={style.card__habilities}>
             <p>Habilidades</p>
             <div className={style.habilities}>
@@ -66,7 +60,6 @@ export default function ModalExibirVoluntario({
             </div>
           </div>
 
-          {/* LOCALIZAÇÃO / TELEFONE */}
           <div className={style.location__phone}>
             <div className={style.location}>
               <p>Localização</p>
@@ -78,7 +71,6 @@ export default function ModalExibirVoluntario({
             </div>
           </div>
 
-          {/* PROJETOS */}
           <div className={style.project}>
             <div className={style.project__header}>
               <Usuario className={style.icon} />

@@ -1,6 +1,7 @@
 @import "@/style/global.css";
 
 .modal {
+  min-height: 400px;
   .modal__header {
     width: 100%;
     height: 30px;
@@ -37,7 +38,7 @@
       }
     }
 
-    .about,
+    .description,
     .card__habilities {
       width: 100%;
       min-height: 50px;
@@ -45,11 +46,12 @@
       flex-direction: column;
       gap: 10px;
     }
+
     .habilities {
-			width: 100%;
-			height: 100%;
-			display: flex;
-			gap: 10px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      gap: 10px;
       .badge {
         min-width: 100px;
         height: 30px;
@@ -73,31 +75,56 @@
         }
       }
     }
-    .location__phone {
+    .location__status {
       width: 100%;
-      min-height: 50px;
+      height: 70px;
       display: flex;
       justify-content: space-between;
       align-items: center;
 
       .location,
-      .phone {
+      .status {
         width: 40%;
         height: 100%;
         display: flex;
         flex-direction: column;
         gap: 10px;
+
+        span{
+            @media (max-width: 425px) {
+            font-size: 12px;
+          }
+        }
+        
+        .tag {
+          max-width: 110px;
+          height: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 5px;
+          border-radius: 15px;
+          background-color: #dbeafe;
+
+          span {
+            color: #2269c6;
+            font-weight: 600;
+              @media (max-width: 425px) {
+                font-size: 12px;
+              }
+          }
+        }
       }
     }
 
-    .project {
+    .voluntarios {
       width: 100%;
       height: 250px;
       max-height: 300px;
       display: flex;
       flex-direction: column;
 
-      .project__header {
+      .voluntarios__header {
         width: 100%;
         height: 30px;
         display: flex;
@@ -112,7 +139,7 @@
         }
       }
 
-      .project__body {
+      .voluntarios__body {
         width: 100%;
         max-height: 270px;
         display: flex;
@@ -127,24 +154,28 @@
           flex-direction: column;
           justify-content: space-between;
           gap: 20px;
-          background-color: #f9f9f9;
-          border: 0.5px solid #e7e7e7;
+          background-color: #edfff3;
+          border: 0.5px solid #55a076;
           border-radius: 10px;
           padding: 10px 20px;
+
+          @media (max-width: 425px) {
+            padding: 10px;
+          }
 
           .card__header {
             width: 100%;
             height: 20px;
             h1 {
               font-weight: 600;
-              color: var(--primary-purple-blue-900);
+              color: var(--secondary-primary-black);
             }
-						
-						@media(max-width: 425px){
-							h1{
-								font-size: 14px;
-							}
-						}
+
+            @media (max-width: 425px) {
+              h1 {
+                font-size: 14px;
+              }
+            }
           }
           .card__body {
             width: 100%;
@@ -152,68 +183,6 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-
-            .description {
-              width: 100%;
-              height: 80px;
-              overflow: hidden;
-              p {
-                    width: 100%;
-                    height: 100%;
-                    word-break: break-all;
-                    white-space-collapse: break-word;
-                    text-overflow: ellipsis;
-                    color: #585858;
-              }
-            }
-
-            .date__hour {
-              width: 100%;
-              height: 20px;
-              display: flex;
-              gap: 10px;
-
-              .icon {
-                width: 20px;
-                height: 20px;
-                color: #585858;
-              }
-
-              p {
-                color: #585858;
-              }
-            }
-          }
-          .card__footer {
-            width: 100%;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .buttonConvidar {
-              width: 90%;
-              height: 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              gap: 10px;
-              border-radius: 5px;
-              color: var(--secondary-primary-white);
-              background: var(--background-color);
-
-              .icon {
-                color: var(--secondary-primary-white);
-              }
-
-							@media (max-width: 425px) {
-								font-size: 12px;
-								.icon{
-									width: 10px;
-									height: 10px;
-								}
-							}
-            }
           }
         }
       }
