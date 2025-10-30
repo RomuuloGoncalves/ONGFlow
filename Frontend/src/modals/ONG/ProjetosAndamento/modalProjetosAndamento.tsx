@@ -1,6 +1,5 @@
 import { Fechar } from "@/assets/icons/Fechar";
 import style from "./modalProjetosAndamento.module.css";
-import { Usuario } from "@/assets/icons/Usuario";
 import { Lapis } from "@/assets/icons/Lapis";
 import { Lixo } from "@/assets/icons/Lixo";
 
