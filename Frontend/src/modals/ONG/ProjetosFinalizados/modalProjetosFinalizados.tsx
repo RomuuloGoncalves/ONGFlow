@@ -1,6 +1,7 @@
 import { Fechar } from "@/assets/icons/Fechar";
 import style from "./modalProjetosFinalizados.module.css";
 import { Usuario } from "@/assets/icons/Usuario";
+import { Lixo } from "@/assets/icons/Lixo";
 
 interface Modalprops {
   isOpen: boolean;
@@ -114,6 +115,12 @@ function modalProjetosFinalizados({ isOpen, setIsOpen }: Modalprops) {
               </div>
             </div>
           </div>
+        </div>
+        <div className={style.modal__footer}>
+          <button>
+            <Lixo />
+            Excluir
+          </button>
         </div>
       </div>
     </div>

@@ -90,12 +90,12 @@
         flex-direction: column;
         gap: 10px;
 
-        span{
-            @media (max-width: 425px) {
+        span {
+          @media (max-width: 425px) {
             font-size: 12px;
           }
         }
-        
+
         .tag {
           max-width: 110px;
           height: 30px;
@@ -109,9 +109,9 @@
           span {
             color: #2269c6;
             font-weight: 600;
-              @media (max-width: 425px) {
-                font-size: 12px;
-              }
+            @media (max-width: 425px) {
+              font-size: 12px;
+            }
           }
         }
       }
@@ -186,6 +186,31 @@
           }
         }
       }
+    }
+  }
+  .modal__footer {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    @media (max-width: 425px) {
+      justify-content: center;
+    }
+
+    button {
+      min-width: 100px;
+      height: 80%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-weight: 600;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: var(--shadow-5);
+      color: var(--secondary-primary-white);
+      background-color: #ff0000;
     }
   }
 }
