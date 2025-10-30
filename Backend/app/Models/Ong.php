@@ -36,6 +36,11 @@ class Ong extends Authenticatable
     ];
 
     protected $primaryKey = 'id';
+    
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 
     // relações
     public function projetos()
