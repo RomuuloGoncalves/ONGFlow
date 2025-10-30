@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 
 function Login() {
   const IconeSetaEsquerda = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
   );
 
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ function Login() {
         showToast(message || 'Login realizado com sucesso!', 'success');
         navigate('/home/voluntario');
       } else { // Lógica para login de ONG
-        response = await ongService.login({ login: email, password });
+        response = await ongService.login({ email, password });
         const { access_token, ong, message } = response.data;
 
         Cookies.set('token', access_token, { expires: 7, path: '/' });

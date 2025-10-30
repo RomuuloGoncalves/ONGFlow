@@ -39,7 +39,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8'
         ]);
 
-        $ong = Ong::where('login', $credentials['email'])->first();
+        $ong = Ong::where('email', $credentials['email'])->first();
 
         if (!$ong || !Hash::check($credentials['password'], $ong->password)) {
             return response()->json(['message' => 'Credenciais inválidas'], 401);

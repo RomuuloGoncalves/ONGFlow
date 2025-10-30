@@ -25,6 +25,6 @@ export interface OngCadastro {
 }
 
 export interface OngLogin {
-  login: string;
+  email: string;
   password: string;
 }

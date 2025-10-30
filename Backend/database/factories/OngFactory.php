@@ -11,7 +11,7 @@ class OngFactory extends Factory
     public function definition(): array
     {
         return [
-            'login' => fake()->unique()->userName(),
+            'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password'),
             'nome' => fake()->company(),
             'nome_fantasia' => fake()->company(),

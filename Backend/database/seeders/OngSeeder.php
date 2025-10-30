@@ -10,7 +10,7 @@ class OngSeeder extends Seeder
     public function run()
     {
         Ong::factory()->create([
-            'login' => 'a@a.a',
+            'email' => 'a@a.a',
             'password' => 'asdasdasd',
         ]);
 

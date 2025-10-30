@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => ['required', 'email', 'unique:ongs,login', 'max:255'],
+            'email' => ['required', 'email', 'unique:ongs,email', 'max:255'],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password' => ['required', 'string', 'min:8'],
             'nome' => ['required', 'string', 'max:255'],
@@ -43,9 +43,9 @@ class StoreRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'login.required' => 'O campo e-mail de login é obrigatório.',
-            'login.unique' => 'Este e-mail de login já está em uso por outra ONG.',
-            'login.email' => 'Por favor, insira um endereço de e-mail válido para o login.',
+            'email.required' => 'O campo e-mail de email é obrigatório.',
+            'email.unique' => 'Este e-mail de email já está em uso por outra ONG.',
+            'email.email' => 'Por favor, insira um endereço de e-mail válido para o email.',
 
             'password.required' => 'O campo senha é obrigatório.',
             'password.min' => 'A senha deve ter no mínimo 8 caracteres.',

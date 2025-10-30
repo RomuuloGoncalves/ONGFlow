@@ -17,7 +17,7 @@ class Ong extends Authenticatable
     protected $table = 'ongs';
 
     protected $fillable = [
-        'login',
+        'email',
         'password',
         'nome',
         'nome_fantasia',

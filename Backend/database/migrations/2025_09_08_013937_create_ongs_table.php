@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ongs', function (Blueprint $table) {
             $table->id();
-            $table->string('login')->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('nome');
             $table->string('nome_fantasia')->nullable();
