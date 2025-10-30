@@ -1,10 +1,16 @@
-import serverService from './serverService';
-import type { Ong, OngCadastro } from '../interfaces/ong';
+import api from './api';
+import type { Ong, OngLogin } from '../interfaces/ong';
 import type { AxiosPromise } from 'axios';
 
+interface LoginResponse {
+  message: string;
+  ong: Ong;
+  access_token: string;
+}
+
 const ongService = {
-  cadastro: (dadosOng: OngCadastro): AxiosPromise<Ong> => {
-    return serverService.post<Ong>('/ongs', dadosOng);
+  login: (dadosLogin: OngLogin): AxiosPromise<LoginResponse> => {
+    return api.post<LoginResponse>('/ongs/login', dadosLogin);
   },
 };
 

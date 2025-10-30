@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 import useCustomToast from '../../../components/ui/use-toast';
 import voluntarioService from '../../../services/voluntarioService';
+import ongService from '../../../services/ongService'; // Importando o serviço da ONG
 import Cookies from 'js-cookie';
 
 function Login() {
@@ -38,17 +39,27 @@ function Login() {
     setErrors({});
 
     try {
+      let response;
       if (tipoLogin === 'VOLUNTARIO') {
-        const response = await voluntarioService.login({ email, password });
+        response = await voluntarioService.login({ email, password });
         const { access_token, voluntario, message } = response.data;
 
         Cookies.set('token', access_token, { expires: 7, path: '/' });
         localStorage.setItem('user', JSON.stringify(voluntario));
+        localStorage.setItem('userType', 'voluntario'); // Armazenando o tipo de usuário
 
         showToast(message || 'Login realizado com sucesso!', 'success');
         navigate('/home/voluntario');
-      } else {
-        showToast('Login de ONG ainda não implementado.', 'error');
+      } else { // Lógica para login de ONG
+        response = await ongService.login({ login: email, password });
+        const { access_token, ong, message } = response.data;
+
+        Cookies.set('token', access_token, { expires: 7, path: '/' });
+        localStorage.setItem('user', JSON.stringify(ong));
+        localStorage.setItem('userType', 'ong'); // Armazenando o tipo de usuário
+
+        showToast(message || 'Login de ONG realizado com sucesso!', 'success');
+        navigate('/dashboard/ong'); // Redirecionando para a home da ONG
       }
     } catch (error: any) {
         if (error.response) {

@@ -23,3 +23,8 @@ export interface OngCadastro {
   sigla: string;
   data_fundacao: string;
 }
+
+export interface OngLogin {
+  login: string;
+  password: string;
+}

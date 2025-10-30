@@ -15,7 +15,7 @@ Route::prefix('voluntarios')->group(function () {
 
     Route::get('/', [VoluntarioController::class, 'index']);
     Route::post('/', [VoluntarioController::class, 'store']);
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'loginVoluntario']);
 
     //Precisa estar logado como voluntário
     Route::middleware('auth:sanctum')->group(function () {
@@ -33,12 +33,14 @@ Route::prefix('ongs')->group(function () {
 
     Route::get('/', [OngController::class, 'index']);
     Route::post('/', [OngController::class, 'store']);
-    Route::get('/{id}', [OngController::class, 'show']);
-    Route::put('/{id}', [OngController::class, 'update']);
-    Route::delete('/{id}', [OngController::class, 'destroy']);
+    Route::post('/login', [AuthController::class, 'loginOng']);
 
-    Route::post('/login', [AuthController::class, 'login']);
-
+    Route::middleware('auth:sanctum')->group(function() {
+        Route::get('/{id}', [OngController::class, 'show']);
+        Route::put('/{id}', [OngController::class, 'update']);
+        Route::delete('/{id}', [OngController::class, 'destroy']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });
 });
 
 Route::prefix('projetos')->group(function () {

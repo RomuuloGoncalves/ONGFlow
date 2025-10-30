@@ -7,8 +7,13 @@ use Illuminate\Database\Seeder;
 
 class OngSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        Ong::factory(5)->create();
+        Ong::factory()->create([
+            'login' => 'a@a.a',
+            'password' => 'asdasdasd',
+        ]);
+
+        Ong::factory(4)->create();
     }
 }
