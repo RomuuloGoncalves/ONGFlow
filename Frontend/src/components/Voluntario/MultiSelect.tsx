@@ -1,111 +1,37 @@
-import { Label } from "@/components/ui/label"
-import MultipleSelector from "@/components/ui/multiselect"
-import type { Option }  from "@/components/ui/multiselect"
+import { Label } from "@/components/ui/label";
+import MultipleSelector from "@/components/ui/multiselect";
+import type { Option } from "@/components/ui/multiselect";
 
 const habilities: Option[] = [
-  // 💬 Comunicação
-  {
-    value: "comunicacao-interpessoal",
-    label: "Comunicação interpessoal",
-  },
-  {
-    value: "empatia",
-    label: "Empatia",
-  },
-  {
-    value: "trabalho-em-equipe",
-    label: "Trabalho em equipe",
-  },
-
-  // 🧠 Organizacionais
-  {
-    value: "planejamento-atividades",
-    label: "Planejamento de atividades",
-  },
-  {
-    value: "gestao-projetos",
-    label: "Gestão de projetos",
-  },
-  {
-    value: "coordenacao-voluntarios",
-    label: "Coordenação de voluntários",
-  },
-
-  // 💻 Técnicas
-  {
-    value: "criacao-conteudo-digital",
-    label: "Criação de conteúdo digital",
-  },
-  {
-    value: "design-grafico",
-    label: "Design gráfico",
-  },
-  {
-    value: "informatica-basica",
-    label: "Informática básica",
-  },
-
-  // 💚 Sociais e Comunitárias
-  {
-    value: "acolhimento-orientacao",
-    label: "Acolhimento e orientação",
-  },
-  {
-    value: "educacao-reforco-escolar",
-    label: "Educação e reforço escolar",
-  },
-  {
-    value: "conscientizacao-ambiental",
-    label: "Conscientização ambiental",
-  },
-
-  // 🛠️ Práticas
-  {
-    value: "jardinagem-horta-comunitaria",
-    label: "Jardinagem e horta comunitária",
-  },
-  {
-    value: "cozinha-solidaria",
-    label: "Cozinha solidária",
-  },
-  {
-    value: "fotografia-filmagem",
-    label: "Fotografia e filmagem de eventos",
-  },
-
-  // 🌍 Estratégicas e de Impacto
-  {
-    value: "lideranca-comunitaria",
-    label: "Liderança comunitária",
-  },
-  {
-    value: "resolucao-problemas",
-    label: "Resolução de problemas",
-  },
-  {
-    value: "sustentabilidade-ecologia",
-    label: "Sustentabilidade e ecologia",
-  },
+  { value: "Comunicação interpessoal", label: "Comunicação interpessoal" },
+  { value: "Empatia", label: "Empatia" },
+  { value: "Trabalho em equipe", label: "Trabalho em equipe" },
+  { value: "Gestão de projetos", label: "Gestão de projetos" },
+  { value: "Coordenação de voluntários", label: "Coordenação de voluntários" },
+  { value: "Design gráfico", label: "Design gráfico" },
+  { value: "Criação de conteúdo digital", label: "Criação de conteúdo digital" },
+  { value: "Sustentabilidade e ecologia", label: "Sustentabilidade e ecologia" },
+  { value: "Conscientização ambiental", label: "Conscientização ambiental" },
 ];
 
+export default function SelectInput({ onChange }: { onChange?: (values: string[]) => void }) {
+  const handleChange = (selected: Option[]) => {
+    const values = selected.map((opt) => opt.label);
+    onChange?.(values);
+  };
 
-export default function Component() {
   return (
     <div className="*:not-first:mt-2">
-      <div className="d-flex">
-        <Label>Habilidades</Label>
-      </div>
+      <Label>Habilidades</Label>
       <MultipleSelector
-        commandProps={{
-          label: "Selecione suas Habilidades",
-        }}
-        value={[]}
+        commandProps={{ label: "Selecione suas Habilidades" }}
         defaultOptions={habilities}
         placeholder="Selecione suas habilidades"
+        onChange={handleChange}
         hideClearAllButton
         hidePlaceholderWhenSelected
         emptyIndicator={<p className="text-center text-sm">Sem resultados encontrados</p>}
       />
     </div>
-  )
+  );
 }
