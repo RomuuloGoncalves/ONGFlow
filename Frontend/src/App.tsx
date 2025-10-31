@@ -35,7 +35,7 @@ function App() {
           <Route path="/voluntarios/ong" element={<ListagemVoluntario />} />
           <Route path="/convite/ong" element={<ConviteOng />} />
           <Route path="/perfil/ong" element={<PerfilOng />} />
-          <Route path="/criarProjeto/ong" element={<CriarProjeto />} />
+          <Route path="/criar/projeto/ong" element={<CriarProjeto />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
