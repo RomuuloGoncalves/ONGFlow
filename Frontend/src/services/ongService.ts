@@ -1,5 +1,5 @@
-import api from './api';
-import type { Ong, OngLogin } from '../interfaces/ong';
+import serverService from './serverService';
+import type { Ong, OngLogin, OngCadastro } from '../interfaces/ong';
 import type { AxiosPromise } from 'axios';
 
 interface LoginResponse {
@@ -9,8 +9,12 @@ interface LoginResponse {
 }
 
 const ongService = {
+  cadastro: (dadosOng: OngCadastro): AxiosPromise<Ong> => {
+    return serverService.post<Ong>('/ongs', dadosOng);
+  },
+
   login: (dadosLogin: OngLogin): AxiosPromise<LoginResponse> => {
-    return api.post<LoginResponse>('/ongs/login', dadosLogin);
+    return serverService.post<LoginResponse>('/ongs/login', dadosLogin);
   },
 };
 
