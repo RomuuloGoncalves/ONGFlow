@@ -77,10 +77,6 @@ function EditarProjeto() {
     setVoluntariosCompatíveis(filtrados);
   }, [habilidadesSelecionadas, voluntariosSelecionados]);
 
-  // 🔹 Atualiza habilidades e filtra voluntários
-  const handleSelectHabilidades = (habs: string[]) => {
-    setHabilidadesSelecionadas(habs);
-  };
 
   // 🔹 Convidar voluntário (move dos compatíveis para selecionados)
   const handleConvidar = (voluntario: any) => {
