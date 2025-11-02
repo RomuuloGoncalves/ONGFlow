@@ -15,6 +15,7 @@ import DashboardOng from './pages/ong/Dashboard/Dashboard';
 import ListagemVoluntario from './pages/ong/ListagemVoluntario/ListagemVoluntario';
 import ConviteOng from './pages/ong/ConviteOng/ConviteOng';
 import CriarProjeto from './pages/ong/CriarProjeto/CriarProjeto'
+import EditarProjeto from './pages/ong/EditarProjeto/EditarProjeto';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/convite/ong" element={<ConviteOng />} />
           <Route path="/perfil/ong" element={<PerfilOng />} />
           <Route path="/criar/projeto/ong" element={<CriarProjeto />} />
+          <Route path="/editar/projeto/ong" element={<EditarProjeto />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
