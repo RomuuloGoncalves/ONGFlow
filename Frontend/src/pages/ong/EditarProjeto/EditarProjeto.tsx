@@ -7,6 +7,7 @@ import Clock from "@/components/ui/Clock";
 import { Fechar } from "@/assets/icons/Fechar";
 import { Salvar } from "@/assets/icons/Salvar";
 import { Usuario } from "@/assets/icons/Usuario";
+import { useNavigate } from "react-router-dom";
 
 // 🔹 Dados falsos de voluntários
 const VOLUNTARIOS_FAKE = [
@@ -66,6 +67,8 @@ function EditarProjeto() {
   const [voluntariosCompatíveis, setVoluntariosCompatíveis] = useState<any[]>(
     []
   );
+  const navigate = useNavigate();
+  
 
   // 🔹 Atualiza lista de compatíveis sempre que habilidades mudam
   useEffect(() => {
@@ -85,7 +88,7 @@ function EditarProjeto() {
       setVoluntariosCompatíveis(
         voluntariosCompatíveis.filter((v) => v.id !== voluntario.id)
       );
-      console.log("✅ Voluntário adicionado:", voluntario.nome);
+      console.log("Voluntário adicionado:", voluntario.nome);
     }
   };
 
@@ -117,14 +120,14 @@ function EditarProjeto() {
       voluntariosSelecionados,
     };
 
-    console.log("📦 Projeto atualizado com sucesso!");
+    console.log("Projeto atualizado com sucesso!");
     console.log(projetoAtualizado);
-    alert("Projeto atualizado com sucesso! Veja no console.log ✅");
+    alert("Projeto atualizado com sucesso! Veja no console.log ");
   };
 
   return (
     <div className={style.main}>
-      <div className={style.actionButton}>
+      <div className={style.actionButton}  onClick={() => navigate("/projetos/ong")}>
         <Menor className={style.icon} />
         <p>Voltar para lista de projetos</p>
       </div>

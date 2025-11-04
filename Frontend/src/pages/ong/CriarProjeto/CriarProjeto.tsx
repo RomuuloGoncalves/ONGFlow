@@ -7,6 +7,7 @@ import Clock from "@/components/ui/Clock";
 import { Fechar } from "@/assets/icons/Fechar";
 import { Salvar } from "@/assets/icons/Salvar";
 import { Usuario } from "@/assets/icons/Usuario";
+import { useNavigate } from "react-router-dom";
 
 // 🔹 Dados falsos de voluntários
 const VOLUNTARIOS_FAKE = [
@@ -36,7 +37,7 @@ function CriarProjeto() {
   const [habilidadesSelecionadas, setHabilidadesSelecionadas] = useState<string[]>([]);
   const [voluntariosCompatíveis, setVoluntariosCompatíveis] = useState<any[]>([]);
   const [voluntariosSelecionados, setVoluntariosSelecionados] = useState<any[]>([]);
-
+  const navigate = useNavigate();
   // 🔹 Exibir listas apenas se houver dados
   const mostrarListaCompatíveis = habilidadesSelecionadas.length > 0;
   const mostrarListaSelecionados = voluntariosSelecionados.length > 0;
@@ -74,13 +75,13 @@ function CriarProjeto() {
       habilidades: habilidadesSelecionadas,
       voluntariosSelecionados,
     };
-    console.log("📦 Projeto cadastrado:", projetoFake);
+    console.log("Projeto cadastrado:", projetoFake);
     alert("Projeto criado com sucesso! Veja no console.log");
   };
 
   return (
     <div className={style.main}>
-      <div className={style.actionButton}>
+      <div className={style.actionButton} onClick={() => navigate("/projetos/ong")}>
         <Menor className={style.icon} />
         <p>Voltar para lista de projetos</p>
       </div>

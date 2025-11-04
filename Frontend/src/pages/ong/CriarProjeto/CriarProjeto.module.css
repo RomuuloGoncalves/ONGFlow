@@ -20,6 +20,7 @@
     height: 25px;
     display: flex;
     gap: 10px;
+    cursor: pointer;
 
     .icon {
       color: #4b4b4b;
@@ -150,6 +151,11 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+          }
+
+          @media (max-width: 475px) {
+            flex-direction: column;
+            gap: 10px;
           }
         }
       }
@@ -291,8 +297,8 @@
                 flex-direction: column;
                 gap: 10px;
 
-                p{
-                    color: #585858;
+                p {
+                  color: #585858;
                 }
               }
               .habilities {
