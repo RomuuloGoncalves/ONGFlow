@@ -112,15 +112,24 @@ function ListagemVoluntario() {
   const voluntariosFiltrados = voluntarios.filter((v) => {
     const nomeMatch = v.nome.toLowerCase().includes(textPesquisa.toLowerCase());
     const statusMatch =
-      filtro === "Todos" ? true : v.status.toLowerCase() === filtro.toLowerCase();
+      filtro === "Todos"
+        ? true
+        : v.status.toLowerCase() === filtro.toLowerCase();
     return nomeMatch && statusMatch;
   });
 
   const start = (currentPage - 1) * itemsPerPage;
-  const paginatedItems = voluntariosFiltrados.slice(start, start + itemsPerPage);
+  const paginatedItems = voluntariosFiltrados.slice(
+    start,
+    start + itemsPerPage
+  );
 
   return (
     <div className={style.main}>
+      <ModalExibirVoluntario
+        isOpen={isModalExibirOpen}
+        setIsOpen={setIsModalExibirOpen}
+      />
       <Header />
       <div className={style.listagem__voluntario}>
         <div className={style.listagem__voluntario_title}>
@@ -158,19 +167,17 @@ function ListagemVoluntario() {
               />
             </div>
             <div className={style.container__tags}>
-              {["Todos", "ativo", "disponivel"].map(
-                (tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => setFiltro(tag)}
-                    className={`${style.button} ${
-                      filtro === tag ? style.active : ""
-                    }`}
-                  >
-                    {tag.charAt(0).toUpperCase() + tag.slice(1)}
-                  </button>
-                )
-              )}
+              {["Todos", "ativo", "disponivel"].map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setFiltro(tag)}
+                  className={`${style.button} ${
+                    filtro === tag ? style.active : ""
+                  }`}
+                >
+                  {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -245,11 +252,6 @@ function ListagemVoluntario() {
           </div>
         </div>
       </div>
-
-      <ModalExibirVoluntario
-        isOpen={isModalExibirOpen}
-        setIsOpen={setIsModalExibirOpen}
-      />
     </div>
   );
 }
