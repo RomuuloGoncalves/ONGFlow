@@ -29,8 +29,6 @@ interface Projeto {
 }
 
 function Projetos() {
-  const navigate = useNavigate();
-
   const [isModalProjetosFinalizadosOpen, setIsModalProjetosFinalizadosOpen] =
     useState(false);
   const [isModalProjetosAndamentoOpen, setIsModalProjetosAndamentoOpen] =
