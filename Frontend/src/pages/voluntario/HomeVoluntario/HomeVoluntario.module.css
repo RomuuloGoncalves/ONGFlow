@@ -112,20 +112,18 @@ main {
         width: 100px;
         height: 50px;
         font-weight: 600;
-        border: 0.5px solid var(--primary-purple-blue-900);
-        color: var(--primary-purple-blue-900);
+        border: 0.5px solid #868cff;
+        color: #7077fd;
         border-radius: 5px;
         cursor: pointer;
       }
       .active {
         color: var(--secondary-primary-white);
         cursor: pointer;
-        background-color: var(--primary-purple-blue-900);
+        background: var(--background-color);
       }
-
       .disable {
-        color: var(--primary-purple-blue-900);
-        border: 0.5px solid var(--primary-purple-blue-900);
+        color: #868cff;
         background-color: var(--secondary-primary-white);
       }
     }

@@ -7,7 +7,7 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
-    padding: 0 10px;
+  padding: 0 10px;
 
   .container__table_header {
     width: 100%;
@@ -22,7 +22,6 @@
 
     @media (max-width: 900px) {
       justify-content: center;
-
     }
     .search {
       min-width: 100px;
@@ -58,20 +57,18 @@
         width: 100px;
         height: 50px;
         font-weight: 600;
-        border: .5px solid var(--primary-purple-blue-900);
-        color: var(--primary-purple-blue-900);
+        border: 0.5px solid #868cff;
+        color: #7077fd;
         border-radius: 5px;
         cursor: pointer;
       }
       .active {
         color: var(--secondary-primary-white);
         cursor: pointer;
-        background-color: var(--primary-purple-blue-900);
+        background: var(--background-color);
       }
-
       .disable {
-        color: var(--primary-purple-blue-900);
-        border: 0.5px solid var(--primary-purple-blue-900);
+        color: #868cff;
         background-color: var(--secondary-primary-white);
       }
     }
@@ -83,11 +80,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: stretch; /* Alinha os itens para terem a mesma altura */
+    align-items: stretch;
     gap: 30px;
     padding: 0 20px;
 
-    .alertMensage{
+    .alertMensage {
       text-align: center;
       color: var(--primary-purple-blue-900);
       font-weight: 600;
@@ -126,7 +123,7 @@
           border: 0.5px solid #d6d6d6;
           box-shadow: --shadow-5;
 
-          p{
+          p {
             font-size: 16px;
           }
           @media (max-width: 425px) {
@@ -218,7 +215,7 @@
         }
       }
 
-      .container__buttons{
+      .container__buttons {
         width: 100%;
         min-height: 40px;
         display: flex;
@@ -230,7 +227,7 @@
           flex-direction: column;
         }
 
-        .button{
+        .button {
           width: 45%;
           height: 40px;
           display: flex;
@@ -241,20 +238,20 @@
           background-color: red;
           color: var(--secondary-primary-white);
           margin-top: 10px;
-        @media (max-width: 425px) { 
-          font-size: 12px;
-          width: 90%;
-          .icon{
-            width: 16px;
+          @media (max-width: 425px) {
+            font-size: 12px;
+            width: 90%;
+            .icon {
+              width: 16px;
+            }
           }
         }
-        }
 
-        .buttonAccept{
+        .buttonAccept {
           background: var(--background-color);
         }
-        .buttonDecline{
-          background-color: #FF0000;
+        .buttonDecline {
+          background-color: #ff0000;
         }
       }
     }
