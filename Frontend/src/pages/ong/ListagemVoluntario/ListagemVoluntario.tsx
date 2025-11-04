@@ -8,7 +8,6 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import Loading from "@/components/Loading/Loading";
 import { Localizacao } from "@/assets/icons/Localizacao";
-import { Phone } from "lucide-react"; // ✅ ícone de telefone moderno
 import { Telefone } from "@/assets/icons/Telefone";
 
 interface Voluntario {
