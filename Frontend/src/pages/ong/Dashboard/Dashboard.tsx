@@ -1,6 +1,6 @@
 import Header from "@/components/Ong/Header/Header";
 import style from "./Dashboard.module.css";
-import { Projetos } from "@/assets/icons/Projetos";
+import { ProjetosIcone } from "@/assets/icons/ProjetosIcone";
 import { Check } from "@/assets/icons/Check";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Maior } from "@/assets/icons/Maior";
@@ -15,7 +15,7 @@ function Dashboard() {
           <h1>Dashboard</h1>
           <div className={style.stats}>
             <div className={style.projetos__ativos}>
-              <Projetos className={style.icon} />
+              <ProjetosIcone className={style.icon} />
               <div className={style.text}>
                 <p>Projetos Ativos</p>
                 <span>x</span>

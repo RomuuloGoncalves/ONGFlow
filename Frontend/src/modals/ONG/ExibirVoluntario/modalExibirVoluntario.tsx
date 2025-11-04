@@ -3,6 +3,7 @@ import { Convite } from "@/assets/icons/Convite";
 import style from "./modalExibirVoluntario.module.css";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Relogio } from "@/assets/icons/Relogio";
+import { useEffect } from "react";
 
 interface Modalprops {
   isOpen: boolean;
@@ -17,6 +18,16 @@ const habilidades = [
 ];
 
 export default function ModalExibirVoluntario({isOpen,setIsOpen,}: Modalprops) {
+    useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+      return () => {
+        document.body.style.overflow = "auto";
+      };
+    }, [isOpen]);
   if (!isOpen) return null;
 
   return (

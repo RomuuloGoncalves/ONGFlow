@@ -2,7 +2,7 @@ import Header from "@/components/Ong/Header/Header";
 import style from "./ListagemVoluntario.module.css";
 import { useState, useEffect } from "react";
 import ModalExibirVoluntario from "@/modals/ONG/ExibirVoluntario/modalExibirVoluntario";
-import { Projetos } from "@/assets/icons/Projetos";
+import { ProjetosIcone } from "@/assets/icons/ProjetosIcone";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
@@ -136,7 +136,7 @@ function ListagemVoluntario() {
           <h1>Lista de Voluntários</h1>
           <div className={style.stats}>
             <div className={style.voluntario__ativo}>
-              <Projetos className={style.icon} />
+              <ProjetosIcone className={style.icon} />
               <div className={style.text}>
                 <p>Voluntários Ativos</p>
                 <span>

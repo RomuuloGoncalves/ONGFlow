@@ -2,6 +2,8 @@ import { Fechar } from "@/assets/icons/Fechar";
 import style from "./modalProjetosAndamento.module.css";
 import { Lapis } from "@/assets/icons/Lapis";
 import { Lixo } from "@/assets/icons/Lixo";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 interface Modalprops {
   isOpen: boolean;
@@ -15,11 +17,22 @@ const habilidades = [
   },
 ];
 function modalProjetosAndamento({ isOpen, setIsOpen }: Modalprops) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <div className={style.modal__overlay} onClick={() => setIsOpen(false)}>
-      <div className={style.modal}  onClick={(e) => e.stopPropagation()}>
+      <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={style.modal__header}>
           <h1>Titulo do Projeto</h1>
           <Fechar onClick={() => setIsOpen(false)} className={style.icon} />
@@ -71,11 +84,14 @@ function modalProjetosAndamento({ isOpen, setIsOpen }: Modalprops) {
           </div>
         </div>
         <div className={style.modal__footer}>
-          <button className={style.buttonEdit}>
+          <Link
+            to="/editar/projeto/ong"
+            className={`${style.buttonEdit} ${style.button}`}
+          >
             <Lapis />
             Editar
-          </button>
-          <button className={style.buttonDelete}>
+          </Link>
+          <button className={` ${style.buttonDelete} ${style.button}`}>
             <Lixo />
             Excluir
           </button>

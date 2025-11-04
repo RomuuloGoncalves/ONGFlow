@@ -133,7 +133,7 @@
       justify-content: center;
     }
 
-    button {
+    .button {
       min-width: 100px;
       height: 80%;
       display: flex;

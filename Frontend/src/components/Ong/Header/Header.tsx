@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "@/assets/Logo.svg";
 import { Dashboard } from "@/assets/icons/Dashboard";
-import { Projetos } from "@/assets/icons/Projetos";
+import { ProjetosIcone } from "@/assets/icons/ProjetosIcone";
 import { Convite } from "@/assets/icons/Convite";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Logout } from "@/assets/icons/Logout";
@@ -14,7 +14,7 @@ const Header = () => {
 
   const links = [
     { to: "/dashboard/ong", label: "Dashboard", icon: <Dashboard /> },
-    { to: "/projetos/ong", label: "Projetos", icon: <Projetos /> },
+    { to: "/projetos/ong", label: "Projetos", icon: <ProjetosIcone /> },
     { to: "/voluntarios/ong", label: "Voluntários", icon: <Usuario /> },
     { to: "/convite/ong", label: "Convites", icon: <Convite /> },
     { to: "/perfil/ong", label: "Perfil", icon: <Usuario /> },
