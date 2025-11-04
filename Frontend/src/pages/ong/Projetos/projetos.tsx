@@ -5,8 +5,6 @@ import ModalProjetosFinalizados from "@/modals/ONG/ProjetosFinalizados/modalProj
 import ModalProjetosAndamento from "@/modals/ONG/ProjetosAndamento/modalProjetosAndamento"
 
 function projetos() {
-  const [isModalCriarOpen, setIsModalCriarOpen] = useState(false)
-  const [isModalEditarOpen, setIsModalEditarOpen] = useState(false)
   const [isModalProjetosFinalizadosOpen, setIsModalProjetosFinalizadosOpen] = useState(false)
   const [isModalProjetosAndamentoOpen, setIsModalProjetosAndamentoOpen] = useState(false)
   return (
