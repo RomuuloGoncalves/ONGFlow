@@ -10,7 +10,7 @@ import PerfilVoluntario from './pages/voluntario/PerfilVoluntario/PerfilVoluntar
 import PerfilOng from './pages/ong/PerfilOng/PerfilOng';
 import ConviteVoluntario from './pages/voluntario/ConviteVoluntario/ConviteVoluntario';
 import ProjetosDisponiveis from './pages/voluntario/ProjetosDisponiveis/ProjetoDisponiveis';
-import ProjetosOng from './pages/ong/Projetos/Projetos_temp'
+import ProjetosOng from './pages/ong/Projetos/Projetos'
 import DashboardOng from './pages/ong/Dashboard/Dashboard';
 import ListagemVoluntario from './pages/ong/ListagemVoluntario/ListagemVoluntario';
 import ConviteOng from './pages/ong/ConviteOng/ConviteOng';
