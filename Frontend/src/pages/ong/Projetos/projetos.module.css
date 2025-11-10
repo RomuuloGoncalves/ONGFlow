@@ -15,7 +15,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin: 70px 0;
+      margin: 70px 0 0 0;
     }
 
     @media (max-width: 425px) {
@@ -309,9 +309,9 @@
         }
       }
       .container__table_footer {
-        height: 80px;
+        height: 50px;
         @media (max-width: 540px) {
-          padding-bottom: 20px;
+          padding-bottom: 5px;
         }
       }
     }

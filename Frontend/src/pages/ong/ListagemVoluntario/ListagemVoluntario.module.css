@@ -242,7 +242,7 @@
               }
             }
           }
-          .card__location{
+          .card__location,.card__telefone{
             width: 100%;
             min-height: 40px;
             display: flex;
