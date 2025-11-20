@@ -14,3 +14,10 @@ export interface Projeto {
   ong?: Ong;
   endereco?: Endereco;
 }
+
+export interface DashboardProjeto {
+  id: number;
+  nome: string;
+  data_inicio: string;
+  data_final?: string;
+}

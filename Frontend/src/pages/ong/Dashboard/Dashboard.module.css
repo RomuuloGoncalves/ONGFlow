@@ -124,7 +124,7 @@
           flex-direction: column;
           gap: 10px;
           margin-top: 20px;
-          overflow-y: hidden;
+          overflow-y: auto;
 
           .voluntario {
             width: 100%;
@@ -261,13 +261,13 @@
           flex-direction: column;
           gap: 10px;
           margin-top: 20px;
-          overflow-y: hidden;
+          overflow-y: auto;
 
           .projeto {
             width: 100%;
             min-height: 50px;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
             align-items: center;
 
             @media (max-width: 425px) {
@@ -276,8 +276,10 @@
             .projeto__info {
               max-width: 60%;
               min-height: 50px;
+              text-align: left;
 
               p {
+                text-align: left;
                 font-weight: 600;
                 color: var(--secondary-primary-white);
                 @media (max-width: 425px) {
@@ -293,6 +295,8 @@
             }
 
             .projeto__data {
+              text-align: right;
+
               min-width: 20%;
               height: 100%;
               display: flex;

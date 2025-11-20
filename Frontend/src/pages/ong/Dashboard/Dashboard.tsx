@@ -5,8 +5,30 @@ import { Check } from "@/assets/icons/Check";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Maior } from "@/assets/icons/Maior";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import dashboardService from "@/services/dashboardService";
+import type { DashboardProjeto } from "@/interfaces/projeto";
+import type { DashboardConvite } from "@/interfaces/convite";
+import type { DashboardHabilidade } from "@/interfaces/habilidade";
 
 function Dashboard() {
+  const [stats, setStats] = useState({ projetosAtivos: 0, projetosFinalizados: 0, voluntariosAtivos: 0 });
+  const [voluntariosAtivos, setVoluntariosAtivos] = useState<DashboardConvite[]>([]);
+  const [voluntariosDisponiveis, setVoluntariosDisponiveis] = useState<DashboardConvite[]>([]);
+  const [projetosAtivos, setProjetosAtivos] = useState<DashboardProjeto[]>([]);
+  const [projetosFinalizados, setProjetosFinalizados] = useState<DashboardProjeto[]>([]);
+
+  useEffect(() => {
+    dashboardService.getDashboardData().then(response => {
+      const data = response.data;
+      setStats(data.stats);
+      setVoluntariosAtivos(data.voluntariosAtivos);
+      setVoluntariosDisponiveis(data.voluntariosDisponiveis);
+      setProjetosAtivos(data.projetosAtivos);
+      setProjetosFinalizados(data.projetosFinalizados);
+    });
+  }, []);
+
   return (
     <div className={style.main}>
       <Header />
@@ -18,21 +40,21 @@ function Dashboard() {
               <ProjetosIcone className={style.icon} />
               <div className={style.text}>
                 <p>Projetos Ativos</p>
-                <span>x</span>
+                <span>{stats.projetosAtivos}</span>
               </div>
             </div>
             <div className={style.projetos__finalizados}>
               <Check className={style.icon} />
               <div className={style.text}>
                 <p>Projetos Finalizados</p>
-                <span>x</span>
+                <span>{stats.projetosFinalizados}</span>
               </div>
             </div>
             <div className={style.voluntario__ativos}>
               <Usuario className={style.icon} />
               <div className={style.text}>
                 <p>Voluntários Ativos</p>
-                <span>x</span>
+                <span>{stats.voluntariosAtivos}</span>
               </div>
             </div>
           </div>
@@ -43,22 +65,24 @@ function Dashboard() {
               <h1>Voluntários Ativos em Projetos</h1>
             </div>
             <div className={style.list}>
-              <div className={style.voluntario}>
-                <div className={style.voluntario__icon}>
-                  <div className={style.icon} />
-                </div>
-                <div className={style.voluntario__info}>
-                  <p>Alex</p>
-                  <span>Projetos cães</span>
-                </div>
-                <div className={style.voluntario__stats}>
-                  <div className={style.tag}>
-                    <p>Ativo</p>
+              {voluntariosAtivos.map(convite => (
+                <div key={convite.id} className={style.voluntario}>
+                  <div className={style.voluntario__icon}>
+                    <div className={style.icon} />
+                  </div>
+                  <div className={style.voluntario__info}>
+                    <p>{convite.voluntario?.nome}</p>
+                    <span>{convite.projeto?.nome}</span>
+                  </div>
+                  <div className={style.voluntario__stats}>
+                    <div className={style.tag}>
+                      <p>Ativo</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-            <Link to="/voluntarios/ong" className={style.container__button}>
+            <Link to="/ong/voluntarios" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>
@@ -68,22 +92,26 @@ function Dashboard() {
               <h1>Voluntários Disponíveis</h1>
             </div>
             <div className={style.list}>
-              <div className={style.voluntario}>
-                <div className={style.voluntario__icon}>
-                  <div className={style.icon} />
-                </div>
-                <div className={style.voluntario__info}>
-                  <p>Alex</p>
-                  <span>Habilidades</span>
-                </div>
-                <div className={style.voluntario__stats}>
-                  <div className={style.tag}>
-                    <p>Ativo</p>
+              {voluntariosDisponiveis.map(convite => (
+                <div key={convite.id} className={style.voluntario}>
+                  <div className={style.voluntario__icon}>
+                    <div className={style.icon} />
+                  </div>
+                  <div className={style.voluntario__info}>
+                    <p>{convite.voluntario?.nome}</p>
+                    <span>
+                      {convite.voluntario?.habilidades?.map((h: DashboardHabilidade) => h.descricao).join(', ')}
+                    </span>
+                  </div>
+                  <div className={style.voluntario__stats}>
+                    <div className={style.tag}>
+                      <p>Disponível</p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-            <Link to="/voluntarios/ong" className={style.container__button}>
+            <Link to="/ong/voluntarios" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>
@@ -92,43 +120,45 @@ function Dashboard() {
         <div className={style.dashboard__lista_projetos}>
           <div className={style.container__projetos_ativos}>
             <div className={style.title__projetos}>
-              <h1>Voluntários Ativos em Projetos</h1>
+              <h1>Projetos Ativos</h1>
             </div>
             <div className={style.list}>
-              <div className={style.projeto}>
-                <div className={style.projeto__info}>
-                  <p>Titulo do projeto</p>
-                  <span>Descrição do projeto...</span>
+              {projetosAtivos.map(projeto => (
+                <div key={projeto.id} className={style.projeto}>
+                  <div className={style.projeto__info}>
+                    <p>{projeto.nome}</p>
+                  </div>
+                  <div className={style.projeto__data}>
+                    <p>{new Date(projeto.data_inicio!).toLocaleDateString()}</p>
+                  </div>
                 </div>
-                <div className={style.projeto__data}>
-                  <p>02/01/2025</p>
-                </div>
-              </div>
+              ))}
             </div>
-            <div className={style.container__button}>
+            <Link to="/ong/projetos" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
-            </div>
+            </Link>
           </div>
           <div className={style.container__projetos_finalizados}>
             <div className={style.title__projetos}>
-              <h1>Voluntários Ativos em Projetos</h1>
+              <h1>Projetos Finalizados</h1>
             </div>
             <div className={style.list}>
-              <div className={style.projeto}>
-                <div className={style.projeto__info}>
-                  <p>Titulo do projeto</p>
-                  <span>Descrição do projeto...</span>
+              {projetosFinalizados.map(projeto => (
+                <div key={projeto.id} className={style.projeto}>
+                  <div className={style.projeto__info}>
+                    <p>{projeto.nome}</p>
+                  </div>
+                  <div className={style.projeto__data}>
+                    <p>{new Date(projeto.data_final!).toLocaleDateString()}</p>
+                  </div>
                 </div>
-                <div className={style.projeto__data}>
-                  <p>02/01/2025</p>
-                </div>
-              </div>
+              ))}
             </div>
-            <div className={style.container__button}>
+            <Link to="/ong/projetos" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
-            </div>
+            </Link>
           </div>
         </div>
       </div>

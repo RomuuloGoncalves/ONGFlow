@@ -1,3 +1,5 @@
+import type { DashboardHabilidade } from "./habilidade";
+
 export interface Voluntario {
   id: number;
   nome: string;
@@ -25,4 +27,10 @@ export interface VoluntarioCadastro {
 export interface VoluntarioLogin {
   email: string;
   password: string;
+}
+
+export interface DashboardVoluntario {
+  id: number;
+  nome: string;
+  habilidades?: DashboardHabilidade[];
 }

@@ -1,6 +1,6 @@
 import { Ong } from "./ong";
-import { Projeto } from "./projeto";
-import { Voluntario } from "./voluntario";
+import { Projeto, DashboardProjeto } from "./projeto";
+import { Voluntario, DashboardVoluntario } from "./voluntario";
 
 export interface Convite {
   id: number;
@@ -16,4 +16,10 @@ export interface Convite {
   ong: Ong;
   voluntario: Voluntario;
   projeto?: Projeto;
+}
+
+export interface DashboardConvite {
+  id: number;
+  voluntario: DashboardVoluntario;
+  projeto?: DashboardProjeto;
 }

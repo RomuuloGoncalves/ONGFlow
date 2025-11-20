@@ -9,6 +9,7 @@ use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\HabilidadeController;
 use App\Http\Controllers\ConviteController;
 use App\Http\Controllers\EnderecoController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::prefix('voluntarios')->group(function () {
@@ -36,6 +37,7 @@ Route::prefix('ongs')->group(function () {
     Route::post('/login', [AuthController::class, 'loginOng']);
 
     Route::middleware('auth:sanctum')->group(function() {
+        Route::get('/dashboard', [DashboardController::class, 'index']);
         Route::get('/projetos', [ProjetoController::class, 'getProjetosDaOngLogada']);
         Route::get('/{id}', [OngController::class, 'show']);
         Route::put('/{id}', [OngController::class, 'update']);
