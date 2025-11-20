@@ -28,6 +28,8 @@ interface Voluntario {
 function ListagemVoluntario() {
   const [isModalExibirOpen, setIsModalExibirOpen] = useState(false);
   const [voluntarios, setVoluntarios] = useState<Voluntario[]>([]);
+  const [voluntarioSelecionado, setVoluntarioSelecionado] =
+    useState<Voluntario | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [textPesquisa, setTextPesquisa] = useState("");
@@ -35,6 +37,11 @@ function ListagemVoluntario() {
 
   const { showToast } = useCustomToast();
   const itemsPerPage = 4;
+
+  const handleOpenModal = (voluntario: Voluntario) => {
+    setVoluntarioSelecionado(voluntario);
+    setIsModalExibirOpen(true);
+  };
 
   useEffect(() => {
     const fetchVoluntarios = async () => {
@@ -49,7 +56,7 @@ function ListagemVoluntario() {
       }
     };
     fetchVoluntarios();
-  }, []);
+  }, [showToast]);
 
   const voluntariosFiltrados = voluntarios.filter((v) => {
     const nomeMatch = v.nome.toLowerCase().includes(textPesquisa.toLowerCase());
@@ -68,10 +75,13 @@ function ListagemVoluntario() {
 
   return (
     <div className={style.main}>
-      <ModalExibirVoluntario
-        isOpen={isModalExibirOpen}
-        setIsOpen={setIsModalExibirOpen}
-      />
+      {voluntarioSelecionado && (
+        <ModalExibirVoluntario
+          isOpen={isModalExibirOpen}
+          setIsOpen={setIsModalExibirOpen}
+          voluntario={voluntarioSelecionado}
+        />
+      )}
       <Header />
       <div className={style.listagem__voluntario}>
         <div className={style.listagem__voluntario_title}>
@@ -136,7 +146,7 @@ function ListagemVoluntario() {
                   <div
                     key={v.id}
                     className={style.card}
-                    onClick={() => setIsModalExibirOpen(true)}
+                    onClick={() => handleOpenModal(v)}
                   >
                     <div className={style.card__title}>
                       <div className={style.card__title_tag}>

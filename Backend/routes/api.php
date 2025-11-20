@@ -36,6 +36,7 @@ Route::prefix('ongs')->group(function () {
     Route::post('/login', [AuthController::class, 'loginOng']);
 
     Route::middleware('auth:sanctum')->group(function() {
+        Route::get('/projetos', [ProjetoController::class, 'getProjetosDaOngLogada']);
         Route::get('/{id}', [OngController::class, 'show']);
         Route::put('/{id}', [OngController::class, 'update']);
         Route::delete('/{id}', [OngController::class, 'destroy']);

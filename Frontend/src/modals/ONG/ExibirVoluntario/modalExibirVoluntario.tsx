@@ -3,69 +3,95 @@ import { Convite } from "@/assets/icons/Convite";
 import style from "./modalExibirVoluntario.module.css";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Relogio } from "@/assets/icons/Relogio";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import api from "@/services/api";
+import useCustomToast from "@/components/ui/use-toast";
+import Loading from "@/components/Loading/Loading";
+
+interface Voluntario {
+  id: number;
+  nome: string;
+  bio: string;
+  status: string;
+  telefone: string;
+  habilidades: { descricao: string }[];
+  endereco?: {
+    cidade: string;
+    estado: string;
+  };
+}
+
+interface Projeto {
+  id: number;
+  nome: string;
+  descricao: string;
+  data_inicio: string;
+}
 
 interface Modalprops {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  voluntario: Voluntario | null;
 }
 
-const habilidades = [
-  {
-    id: 1,
-    habilidades: ["Organização", "Comunicação", "Logística", "Telecomunicação"],
-  },
-];
+export default function ModalExibirVoluntario({
+  isOpen,
+  setIsOpen,
+  voluntario,
+}: Modalprops) {
+  const [projetos, setProjetos] = useState<Projeto[]>([]);
+  const [isLoadingProjetos, setIsLoadingProjetos] = useState(false);
+  const { showToast } = useCustomToast();
 
-export default function ModalExibirVoluntario({isOpen,setIsOpen,}: Modalprops) {
-    useEffect(() => {
-      if (isOpen) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "auto";
-      }
-      return () => {
-        document.body.style.overflow = "auto";
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      const fetchProjetos = async () => {
+        setIsLoadingProjetos(true);
+        try {
+          const response = await api.get("/ongs/projetos");
+          setProjetos(response.data.data);
+        } catch (error) {
+          showToast("Erro ao carregar os projetos da ONG.", "error");
+        } finally {
+          setIsLoadingProjetos(false);
+        }
       };
-    }, [isOpen]);
-  if (!isOpen) return null;
+      fetchProjetos();
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen, showToast]);
+
+  if (!isOpen || !voluntario) return null;
 
   return (
     <div className={style.modal__overlay} onClick={() => setIsOpen(false)}>
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={style.modal__header}>
-          <h1>Nome Voluntario</h1>
+          <h1>{voluntario.nome}</h1>
           <Fechar onClick={() => setIsOpen(false)} />
         </div>
 
         <div className={style.modal__body}>
           <div className={style.about}>
             <p>Sobre</p>
-            <span>
-              Descrição Descrição Descrição Descrição Descrição
-              DescriçãoDescrição Descrição
-            </span>
+            <span>{voluntario.bio}</span>
           </div>
           <div className={style.card__habilities}>
             <p>Habilidades</p>
             <div className={style.habilities}>
-              {habilidades
-                .flatMap((item) => item.habilidades.slice(0, 2))
-                .map((hab, i) => (
-                  <div key={i} className={style.badge}>
-                    <span>{hab}</span>
-                  </div>
-                ))}
-              {habilidades.some((item) => item.habilidades.length > 2) && (
+              {(voluntario.habilidades || []).slice(0, 3).map((hab, i) => (
+                <div key={i} className={style.badge}>
+                  <span>{hab.descricao}</span>
+                </div>
+              ))}
+              {(voluntario.habilidades?.length || 0) > 3 && (
                 <div className={style.badge}>
-                  <span>
-                    +
-                    {habilidades.reduce(
-                      (acc, item) =>
-                        acc + Math.max(item.habilidades.length - 3, 0),
-                      0
-                    )}
-                  </span>
+                  <span>+{(voluntario.habilidades?.length || 0) - 3}</span>
                 </div>
               )}
             </div>
@@ -74,11 +100,15 @@ export default function ModalExibirVoluntario({isOpen,setIsOpen,}: Modalprops) {
           <div className={style.location__phone}>
             <div className={style.location}>
               <p>Localização</p>
-              <span>asdasdad</span>
+              <span>
+                {voluntario.endereco
+                  ? `${voluntario.endereco.cidade} - ${voluntario.endereco.estado}`
+                  : "Não informado"}
+              </span>
             </div>
             <div className={style.phone}>
               <p>Telefone</p>
-              <span>asdasdadas</span>
+              <span>{voluntario.telefone}</span>
             </div>
           </div>
 
@@ -89,34 +119,37 @@ export default function ModalExibirVoluntario({isOpen,setIsOpen,}: Modalprops) {
             </div>
 
             <div className={style.project__body}>
-              {[1, 2, 3].map((id) => (
-                <div key={id} className={style.card}>
-                  <div className={style.card__header}>
-                    <h1>Nome Projeto</h1>
-                  </div>
-                  <div className={style.card__body}>
-                    <div className={style.description}>
-                      <p>
-                        585858585858 585858 585858 858 858 858858858858
-                        858858858858858858858858858858858858858858858 858
-                        85885885 85885885 85885885 85885885 85885885 85885885
-                        vv85885885 85885885 85885885 85885885 85885885 85885885
-                        85885885 85885885 85885885 85885885v858858858858858
-                      </p>
+              {isLoadingProjetos ? (
+                <Loading />
+              ) : projetos.length > 0 ? (
+                projetos.map((projeto) => (
+                  <div key={projeto.id} className={style.card}>
+                    <div className={style.card__header}>
+                      <h1>{projeto.nome}</h1>
                     </div>
-                    <div className={style.date__hour}>
-                      <Relogio className={style.icon} />
-                      <p>Inicio: dd/mm/aaaa, 00:00</p>
+                    <div className={style.card__body}>
+                      <div className={style.description}>
+                        <p>{projeto.descricao}</p>
+                      </div>
+                      <div className={style.date__hour}>
+                        <Relogio className={style.icon} />
+                        <p>
+                          Início:{" "}
+                          {new Date(projeto.data_inicio).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                    <div className={style.card__footer}>
+                      <button className={style.buttonConvidar}>
+                        <Convite className={style.icon} />
+                        Convidar para esse projeto
+                      </button>
                     </div>
                   </div>
-                  <div className={style.card__footer}>
-                    <button className={style.buttonConvidar}>
-                      <Convite className={style.icon} />
-                      Convidar para esse projeto
-                    </button>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p>Nenhum projeto ativo encontrado para esta ONG.</p>
+              )}
             </div>
           </div>
         </div>

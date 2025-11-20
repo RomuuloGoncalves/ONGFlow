@@ -19,6 +19,36 @@ class ProjetoController extends Controller
         return response()->json($projetos);
     }
 
+    public function getProjetosDaOngLogada(Request $request)
+    {
+        $ong = $request->user();
+
+        if (!$ong) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Acesso não autorizado. A ONG não está logada.',
+            ], 401); // 401 Unauthorized
+        }
+
+        try {
+            $projetos = Projeto::where('id_ong', $ong->id)->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Projetos da ONG logada encontrados com sucesso!',
+                'data' => $projetos,
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao buscar os projetos.',
+                'error' => $e->getMessage(),
+            ], 500); // Erro interno
+        }
+    }
+
+
     /**
      * Store a newly created resource in storage.
      */

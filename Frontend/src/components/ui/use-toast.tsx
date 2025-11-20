@@ -2,11 +2,12 @@
 
 import { CircleCheckIcon, XIcon } from "lucide-react"
 import { toast } from "sonner"
+import { useCallback } from "react"
 
 import { Button } from "@/components/ui/button"
 
 const useCustomToast = () => {
-  const showToast = (message: string, type: "success" | "error") => {
+  const showToast = useCallback((message: string, type: "success" | "error") => {
     toast.custom((t) => (
       <div
         className={`w-full rounded-md border px-4 py-3 shadow-lg sm:w-[var(--width)] ${
@@ -57,7 +58,7 @@ const useCustomToast = () => {
         </div>
       </div>
     ))
-  }
+  }, [])
 
   return { showToast }
 }
