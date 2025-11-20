@@ -40,6 +40,7 @@ Route::prefix('ongs')->group(function () {
         Route::put('/{id}', [OngController::class, 'update']);
         Route::delete('/{id}', [OngController::class, 'destroy']);
         Route::post('/logout', [AuthController::class, 'logout']);
+        Route::get('/{idOng}/projetos', [ProjetoController::class, 'getProjetosPorOng']);
     });
 });
 

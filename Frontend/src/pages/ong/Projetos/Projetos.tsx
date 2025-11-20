@@ -12,21 +12,8 @@ import Loading from "@/components/Loading/Loading";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Mais } from "@/assets/icons/Mais";
-
-interface Projeto {
-  id: number;
-  nome: string;
-  descricao: string;
-  status: "andamento" | "finalizado";
-  telefone: string;
-  habilidades: { descricao: string }[];
-  ong?: {
-    endereco?: {
-      cidade: string;
-      estado: string;
-    };
-  };
-}
+import type { Projeto } from "@/interfaces/projeto";
+import projetoService from "@/services/projetoService";
 
 function Projetos() {
   const [isModalProjetosFinalizadosOpen, setIsModalProjetosFinalizadosOpen] =
@@ -41,83 +28,30 @@ function Projetos() {
 
   const itemsPerPage = 4;
 
-  // --- Simulação de listagem fake ---
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setProjetos([
-        {
-          id: 1,
-          nome: "Educa Jovem",
-          descricao:
-            "Projeto educacional voltado ao reforço escolar em comunidades.",
-          status: "andamento",
-          telefone: "(11) 90000-0001",
-          habilidades: [{ descricao: "Ensino" }, { descricao: "Empatia" }],
-          ong: { endereco: { cidade: "São Paulo", estado: "SP" } },
-        },
-        {
-          id: 2,
-          nome: "Verde Futuro",
-          descricao: "Ações ambientais e de reflorestamento urbano.",
-          status: "finalizado",
-          telefone: "(21) 91111-1111",
-          habilidades: [
-            { descricao: "Sustentabilidade" },
-            { descricao: "Organização" },
-          ],
-          ong: { endereco: { cidade: "Rio de Janeiro", estado: "RJ" } },
-        },
-        {
-          id: 3,
-          nome: "Saúde em Ação",
-          descricao:
-            "Campanhas de prevenção e atendimento básico à saúde.",
-          status: "andamento",
-          telefone: "(31) 92222-2222",
-          habilidades: [
-            { descricao: "Comunicação" },
-            { descricao: "Empatia" },
-          ],
-          ong: { endereco: { cidade: "Belo Horizonte", estado: "MG" } },
-        },
-        {
-          id: 4,
-          nome: "Tech Solidário",
-          descricao:
-            "Oficinas de tecnologia para jovens em situação de vulnerabilidade.",
-          status: "andamento",
-          telefone: "(41) 93333-3333",
-          habilidades: [
-            { descricao: "React" },
-            { descricao: "Lógica de Programação" },
-          ],
-          ong: { endereco: { cidade: "Curitiba", estado: "PR" } },
-        },
-        {
-          id: 5,
-          nome: "Alimente Esperança",
-          descricao: "Distribuição de cestas básicas e combate à fome.",
-          status: "finalizado",
-          telefone: "(85) 94444-4444",
-          habilidades: [
-            { descricao: "Logística" },
-            { descricao: "Empatia" },
-          ],
-          ong: { endereco: { cidade: "Fortaleza", estado: "CE" } },
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+    const fetchProjetos = async () => {
+      try {
+        const userData = localStorage.getItem("user");
+        if (userData) {
+          const user = JSON.parse(userData);
+          const response = await projetoService.getProjetosPorOng(user.id);
+          setProjetos(response.data.data);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar projetos:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjetos();
   }, []);
 
   // --- Filtro + busca ---
   const projetosFiltrados = projetos.filter((p) => {
     const nomeMatch = p.nome.toLowerCase().includes(textPesquisa.toLowerCase());
     const statusMatch =
-      filtro === "Todos"
-        ? true
-        : p.status.toLowerCase() === filtro.toLowerCase();
+      filtro === "Todos" ? true : p.status.toLowerCase() === filtro.toLowerCase();
     return nomeMatch && statusMatch;
   });
 
@@ -127,7 +61,7 @@ function Projetos() {
 
   // --- Ações ---
   const handleCardClick = (projeto: Projeto) => {
-    if (projeto.status === "finalizado") {
+    if (projeto.status === "concluido") {
       setIsModalProjetosFinalizadosOpen(true);
     } else {
       setIsModalProjetosAndamentoOpen(true);
@@ -148,7 +82,7 @@ function Projetos() {
                 <div className={style.text}>
                   <p>Projetos Ativos</p>
                   <span>
-                    {projetos.filter((p) => p.status === "andamento").length}
+                    {projetos.filter((p) => p.status === "em andamento").length}
                   </span>
                 </div>
               </div>
@@ -158,7 +92,7 @@ function Projetos() {
                 <div className={style.text}>
                   <p>Projetos Finalizados</p>
                   <span>
-                    {projetos.filter((p) => p.status === "finalizado").length}
+                    {projetos.filter((p) => p.status === "concluido").length}
                   </span>
                 </div>
               </div>
@@ -184,17 +118,14 @@ function Projetos() {
                   onChange={(e) => setTextPesquisa(e.target.value)}
                 />
                 <div className={style.container__criar_projeto}>
-                  <Link
-                    className={style.buttonCriarProjeto}
-                    to = "/criar/projeto/ong"
-                  >
+                  <Link className={style.buttonCriarProjeto} to="/criar/projeto/ong">
                     <Mais className={style.icon} />
                   </Link>
                 </div>
               </div>
 
               <div className={style.container__tags}>
-                {["Todos", "andamento", "finalizado"].map((tag) => (
+                {["Todos", "em andamento", "concluido"].map((tag) => (
                   <button
                     key={tag}
                     onClick={() => {
@@ -216,9 +147,7 @@ function Projetos() {
             ) : (
               <div className={style.container__table_body}>
                 {paginatedItems.length === 0 ? (
-                  <p className={style.alertMensage}>
-                    Ops! Nenhum projeto encontrado.
-                  </p>
+                  <p className={style.alertMensage}>Ops! Nenhum projeto encontrado.</p>
                 ) : (
                   paginatedItems.map((p) => (
                     <div
@@ -247,13 +176,11 @@ function Projetos() {
                       </div>
 
                       <div className={style.habilidades}>
-                        {(p.habilidades || [])
-                          .slice(0, 3)
-                          .map((hab, i) => (
-                            <div key={i} className={style.badge}>
-                              <p>{hab.descricao}</p>
-                            </div>
-                          ))}
+                        {(p.habilidades || []).slice(0, 3).map((hab, i) => (
+                          <div key={i} className={style.badge}>
+                            <p>{hab.descricao}</p>
+                          </div>
+                        ))}
                         {(p.habilidades?.length || 0) > 3 && (
                           <div className={style.badge}>
                             <p>+{(p.habilidades?.length || 0) - 3}</p>
@@ -269,9 +196,7 @@ function Projetos() {
             <div className={style.container__table_footer}>
               <Pagination
                 currentPage={currentPage}
-                totalPages={Math.ceil(
-                  projetosFiltrados.length / itemsPerPage
-                )}
+                totalPages={Math.ceil(projetosFiltrados.length / itemsPerPage)}
                 onPageChange={(page) => setCurrentPage(page)}
               />
             </div>
