@@ -15,7 +15,7 @@ class VoluntarioController extends Controller
      */
     public function index()
     {
-        $voluntarios = Voluntario::all();
+        $voluntarios = Voluntario::with(['habilidades', 'endereco'])->get();
 
         return response()->json($voluntarios);
     }

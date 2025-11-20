@@ -9,19 +9,19 @@ import { Pesquisa } from "@/assets/icons/Pesquisa";
 import Loading from "@/components/Loading/Loading";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Telefone } from "@/assets/icons/Telefone";
+import api from "@/services/api";
+import useCustomToast from "@/components/ui/use-toast";
 
 interface Voluntario {
   id: number;
   nome: string;
-  descricao: string;
+  bio: string;
   status: string;
   telefone: string;
   habilidades: { descricao: string }[];
-  ong?: {
-    endereco?: {
-      cidade: string;
-      estado: string;
-    };
+  endereco?: {
+    cidade: string;
+    estado: string;
   };
 }
 
@@ -33,80 +33,22 @@ function ListagemVoluntario() {
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
 
+  const { showToast } = useCustomToast();
   const itemsPerPage = 4;
 
-  // Dados fictícios
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setVoluntarios([
-        {
-          id: 1,
-          nome: "Lucas Nogueira",
-          descricao: "Desenvolvedor Front-end com interesse em UI/UX.",
-          status: "aceito",
-          telefone: "(11) 91234-5678",
-          habilidades: [
-            { descricao: "React.js" },
-            { descricao: "Figma" },
-            { descricao: "CSS" },
-          ],
-          ong: { endereco: { cidade: "São Paulo", estado: "SP" } },
-        },
-        {
-          id: 2,
-          nome: "Mariana Silva",
-          descricao: "Estudante de engenharia e apaixonada por voluntariado.",
-          status: "pendente",
-          telefone: "(21) 99876-5432",
-          habilidades: [
-            { descricao: "Comunicação" },
-            { descricao: "Organização" },
-          ],
-          ong: { endereco: { cidade: "Rio de Janeiro", estado: "RJ" } },
-        },
-        {
-          id: 3,
-          nome: "Pedro Almeida",
-          descricao: "Voluntário experiente em projetos sociais e esportivos.",
-          status: "andamento",
-          telefone: "(31) 97777-2233",
-          habilidades: [
-            { descricao: "Gestão" },
-            { descricao: "Trabalho em equipe" },
-          ],
-          ong: { endereco: { cidade: "Belo Horizonte", estado: "MG" } },
-        },
-        {
-          id: 4,
-          nome: "Ana Clara",
-          descricao: "Professora de inglês e voluntária em ONGs educacionais.",
-          status: "concluido",
-          telefone: "(41) 95555-3322",
-          habilidades: [
-            { descricao: "Inglês" },
-            { descricao: "Ensino" },
-            { descricao: "Empatia" },
-          ],
-          ong: { endereco: { cidade: "Curitiba", estado: "PR" } },
-        },
-        {
-          id: 5,
-          nome: "João Victor",
-          descricao: "Designer e ilustrador com foco em causas sociais.",
-          status: "aceito",
-          telefone: "(85) 96666-7788",
-          habilidades: [
-            { descricao: "Design Gráfico" },
-            { descricao: "Photoshop" },
-            { descricao: "Ilustração" },
-            { descricao: "Criatividade" },
-          ],
-          ong: { endereco: { cidade: "Fortaleza", estado: "CE" } },
-        },
-      ]);
-      setIsLoading(false);
-    }, 1000);
+    const fetchVoluntarios = async () => {
+      try {
+        setIsLoading(true);
+        const response = await api.get("/voluntarios");
+        setVoluntarios(response.data);
+      } catch (error) {
+        showToast("Erro ao carregar os voluntários.", "error");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchVoluntarios();
   }, []);
 
   const voluntariosFiltrados = voluntarios.filter((v) => {
@@ -140,7 +82,7 @@ function ListagemVoluntario() {
               <div className={style.text}>
                 <p>Voluntários Ativos</p>
                 <span>
-                  {voluntarios.filter((v) => v.status === "aceito").length}
+                  {voluntarios.filter((v) => v.status === "ativo").length}
                 </span>
               </div>
             </div>
@@ -167,7 +109,7 @@ function ListagemVoluntario() {
               />
             </div>
             <div className={style.container__tags}>
-              {["Todos", "ativo", "disponivel"].map((tag) => (
+              {["Todos", "ativo", "inativo"].map((tag) => (
                 <button
                   key={tag}
                   onClick={() => setFiltro(tag)}
@@ -204,15 +146,15 @@ function ListagemVoluntario() {
                     </div>
 
                     <div className={style.card__descricao}>
-                      <p>{v.descricao}</p>
+                      <p>{v.bio}</p>
                     </div>
 
                     {/* Localização */}
                     <div className={style.card__location}>
                       <Localizacao className={style.icon} />
                       <p>
-                        {v.ong?.endereco
-                          ? `${v.ong.endereco.cidade} - ${v.ong.endereco.estado}`
+                        {v.endereco
+                          ? `${v.endereco.cidade} - ${v.endereco.estado}`
                           : "Localização não informada"}
                       </p>
                     </div>
