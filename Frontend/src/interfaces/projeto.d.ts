@@ -1,3 +1,4 @@
+import { Endereco } from "./endereco";
 import { Habilidade } from "./habilidade";
 import { Ong } from "./ong";
 
@@ -11,4 +12,5 @@ export interface Projeto {
   status: "pendente" | "em andamento" | "concluido";
   habilidades?: Habilidade[];
   ong?: Ong;
+  endereco?: Endereco;
 }

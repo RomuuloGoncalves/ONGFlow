@@ -16,6 +16,11 @@ class ProjetoHabilidadeSeeder extends Seeder
             'Mutirão de Limpeza na Praia' => ['Trabalho em equipe', 'Educação ambiental'],
             'Feira de Adoção de Animais' => ['Comunicação interpessoal', 'Empatia'],
             'Campanha do Agasalho' => ['Organização de eventos', 'Trabalho em equipe'],
+            'Horta Comunitária no Bairro Sol Nascente' => ['Sustentabilidade e ecologia','Educação ambiental','Trabalho em equipe'],
+            'Digitalização de Documentos Históricos' => ['Trabalho administrativo','Suporte técnico em TI','Análise de dados'],
+            'Cineclube Semanal para a Terceira Idade' => ['Organização de atividades culturais','Comunicação interpessoal','Empatia'],
+            'Reforma da Quadra de Esportes Local' => ['Trabalho em equipe','Liderança de equipes','Organização de eventos'],
+            'Oficina de Música para Jovens Carentes' => ['Música e canto','Organização de atividades culturais','Ensino e tutoria'],
         ];
 
         foreach ($associacoes as $nomeProjeto => $habilidadesDescricao) {

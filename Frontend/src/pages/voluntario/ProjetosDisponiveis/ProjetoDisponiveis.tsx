@@ -1,83 +1,56 @@
 import Header from "@/components/Voluntario/Header/Header";
 import style from "./ProjetosDisponiveis.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Convite } from "@/assets/icons/Convite";
 import ModalVoluntarioProjetos from "@/modals/Voluntarios/VoluntarioProjetos/modalVoluntarioProjetos";
-
-// Nome da API(json) tem que ser projetos
-const projetos = [
-  {
-    id: 1,
-    titulo: "Campanha de Arrecadação de Alimentos",
-    descricao: "Ensinar reutilização de materiais recicláveis",
-    localizacao: "São Paulo - SP",
-    habilidades: ["Organização", "Comunicação", "Logística", "Telecomunicação"],
-  },
-  {
-    id: 2,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 3,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 4,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 5,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-  {
-    id: 6,
-    titulo: "Mutirão de Limpeza Ambiental",
-    descricao: "Limpeza de rios e parques",
-    localizacao: "Rio de Janeiro - RJ",
-    habilidades: ["Trabalho em equipe", "Esforço físico"],
-  },
-];
+import projetoService from "@/services/projetoService";
+import type { Projeto } from "@/interfaces/projeto";
 
 function HomeVoluntario() {
+  const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [textPesquisa, setTextPesquisa] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProjeto, setSelectedProjeto] = useState<Projeto | null>(null);
+
+  useEffect(() => {
+    projetoService.getProjetos()
+      .then(response => {
+        setProjetos(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar projetos:', error);
+      });
+  }, []);
 
   const itemsPerPage = 4;
 
-  // Aplica filtro por status e pesquisa
   const projetosFiltrados = projetos.filter((p) => {
     const pesquisa = textPesquisa.toLowerCase();
+    const localizacao = p.ong?.endereco ? `${p.ong.endereco.cidade} - ${p.ong.endereco.estado}`.toLowerCase() : '';
     return (
-      p.titulo.toLowerCase().includes(pesquisa) ||
-      p.localizacao.toLowerCase().includes(pesquisa)
+      p.nome.toLowerCase().includes(pesquisa) ||
+      localizacao.includes(pesquisa)
     );
   });
 
-  // Paginação
   const start = (currentPage - 1) * itemsPerPage;
   const paginatedItems = projetosFiltrados.slice(start, start + itemsPerPage);
+
+  const handleCardClick = (projeto: Projeto) => {
+    setSelectedProjeto(projeto);
+    setIsModalOpen(true);
+  };
 
   return (
     <>
       <ModalVoluntarioProjetos
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
+        projeto={selectedProjeto}
       />
       <Header />
       <div className={style.container__title}>
@@ -111,29 +84,35 @@ function HomeVoluntario() {
               <div
                 key={item.id}
                 className={style.card}
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => handleCardClick(item)}
               >
                 <div className={style.card__title}>
-                  <h1>{item.titulo}</h1>
+                  <h1>{item.nome}</h1>
                 </div>
                 <div className={style.card__descricao}>
                   <p>{item.descricao}</p>
                 </div>
-                <div className={style.card__location}>
-                  <Localizacao className={style.icon} />
-                  <p>{item.localizacao}</p>
-                </div>
+                {item.ong?.endereco && (
+                  <div className={style.card__location}>
+                    <Localizacao className={style.icon} />
+                    <p>{`${item.ong.endereco.cidade} - ${item.ong.endereco.estado}`}</p>
+                  </div>
+                )}
                 <div className={style.habilidades}>
-                  {item.habilidades.slice(0, 3).map((hab, i) => (
-                    <div key={i} className={style.badge}>
-                      <p>{hab}</p>
-                    </div>
-                  ))}
+                  {item.habilidades && (
+                    <>
+                      {item.habilidades.slice(0, 3).map((hab, i) => (
+                        <div key={i} className={style.badge}>
+                          <p>{hab.descricao}</p>
+                        </div>
+                      ))}
 
-                  {item.habilidades.length > 3 && (
-                    <div className={style.badge}>
-                      <p>+{item.habilidades.length - 3}</p>
-                    </div>
+                      {item.habilidades.length > 3 && (
+                        <div className={style.badge}>
+                          <p>+{item.habilidades.length - 3}</p>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
                 <div className={style.buttonInvite}>

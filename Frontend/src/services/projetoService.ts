@@ -10,6 +10,9 @@ const projetoService = {
   getProjetosPorOng: (idOng: number): AxiosPromise<ProjetosResponse> => {
     return serverService.get<ProjetosResponse>(`/ongs/${idOng}/projetos`);
   },
+  getProjetos: (): AxiosPromise<Projeto[]> => {
+    return serverService.get<Projeto[]>('/projetos');
+  }
 };
 
 export default projetoService;

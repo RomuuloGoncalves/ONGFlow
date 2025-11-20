@@ -14,7 +14,7 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $projetos = Projeto::all();
+        $projetos = Projeto::with(['habilidades', 'ong.endereco', 'endereco'])->get();
 
         return response()->json($projetos);
     }
@@ -78,7 +78,7 @@ class ProjetoController extends Controller
     public function show(string $id)
     {
         try {
-            $projeto = Projeto::find($id);
+            $projeto = Projeto::with(['habilidades', 'ong.endereco', 'endereco'])->find($id);
 
             if($projeto){
 
