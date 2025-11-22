@@ -31,7 +31,13 @@ const voluntarioService = {
     return api.put<ApiResponse<Voluntario>>(`/voluntarios/${id}`, dados);
   },
 
+  getVoluntariosPorProjeto: (id: number): AxiosPromise<ApiResponse<Voluntario[]>> => {
+    return api.get<ApiResponse<Voluntario[]>>(`/projetos/${id}/voluntarios`);
+  },
 
+  getVoluntariosCompativeis: (id: number): AxiosPromise<ApiResponse<Voluntario[]>> => {
+    return api.get<ApiResponse<Voluntario[]>>(`/projetos/${id}/voluntarios-compativeis`);
+  },
 };
 
 export default voluntarioService;

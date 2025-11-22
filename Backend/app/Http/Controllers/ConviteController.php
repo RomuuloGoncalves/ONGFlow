@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Convite\StoreRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\ProjetoVoluntarioController;
 
@@ -19,6 +20,26 @@ class ConviteController extends Controller
             ->get();
 
         return response()->json($convites);
+    }
+
+    public function getCandidaturas(Request $request)
+    {
+        try {
+            $ong = Auth::user();
+            $candidaturas = Convite::with(['projeto', 'voluntario'])
+                ->where('id_ong', $ong->id)
+                ->where('iniciador', 'voluntario')
+                ->where('status', 'pendente')
+                ->get();
+
+            return response()->json($candidaturas);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocorreu um erro no servidor ao buscar as candidaturas.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function aceitar(string $id)
@@ -66,7 +87,16 @@ class ConviteController extends Controller
     public function store(StoreRequest $request)
     {
         try {
-            $convite = Convite::create($request->validated());
+            $validatedData = $request->validated();
+
+            $convite = new Convite;
+            $convite->iniciador = $validatedData['iniciador'];
+            $convite->status = $validatedData['status'];
+            $convite->mensagem = $validatedData['mensagem'];
+            $convite->id_ong = $validatedData['id_ong'];
+            $convite->id_voluntario = $validatedData['id_voluntario'];
+            $convite->id_projeto = $validatedData['id_projeto'];
+            $convite->save();
 
             return response()->json([
                 'success' => true,

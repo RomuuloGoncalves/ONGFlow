@@ -15,6 +15,7 @@ class Convite extends Model
 
     protected $fillable = [
         'iniciador',
+        'status',
         'mensagem',
         'data_criacao',
         'data_resposta',

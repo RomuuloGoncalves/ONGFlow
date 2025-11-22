@@ -3,187 +3,117 @@
 namespace App\Http\Controllers;
 
 use App\Models\Projeto;
+use App\Models\Voluntario;
 use Illuminate\Http\Request;
-use App\Http\Requests\Projeto\StoreRequest;
-use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ProjetoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $projetos = Projeto::with(['habilidades', 'ong.endereco', 'endereco'])->get();
-
+        $projetos = Projeto::with(['habilidades', 'ong.endereco'])->get();
         return response()->json($projetos);
-    }
-
-    public function getProjetosDaOngLogada(Request $request)
-    {
-        $ong = $request->user();
-
-        if (!$ong) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Acesso não autorizado. A ONG não está logada.',
-            ], 401); // 401 Unauthorized
-        }
-
-        try {
-            $projetos = Projeto::where('id_ong', $ong->id)->get();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Projetos da ONG logada encontrados com sucesso!',
-                'data' => $projetos,
-            ], 200);
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro no servidor ao buscar os projetos.',
-                'error' => $e->getMessage(),
-            ], 500); // Erro interno
-        }
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRequest $request)
-    {
-        try {
-            $projeto = Projeto::create($request->validated());
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Projeto cadastrado com sucesso!',
-                'data' => $projeto,
-            ], 201); // 201 Created
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro no servidor ao salvar o projeto.',
-                'error' => $e->getMessage(),
-            ], 500); // Erro interno
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        try {
-            $projeto = Projeto::with(['habilidades', 'ong.endereco', 'endereco'])->find($id);
-
-            if($projeto){
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Projeto encontrado com sucesso!',
-                    'data' => $projeto,
-                ], 200); // 200 OK
-            }else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Projeto não encontrado.',
-                ], 404); // 404 Not Found
-            }
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro no servidor ao excluir o projeto.',
-                'error' => $e->getMessage(),
-            ], 500); // Erro interno
-        }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(StoreRequest $request, string $id)
-    {
-        try {
-            $projeto = Projeto::findOrFail($id);
-            $projeto->update($request->validated());
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Projeto atualizado com sucesso!',
-                'data' => $projeto,
-            ], 200); // 200 OK
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro no servidor ao salvar o projeto.',
-                'error' => $e->getMessage(),
-            ], 500); // Erro interno
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        try {
-            $projeto = projeto::find($id);
-
-            if($projeto){
-                $projeto->delete();
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Projeto excluído com sucesso!',
-                    'data' => $projeto,
-                ], 200); // 200 OK
-            }else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Projeto não encontrado.',
-                ], 404); // 404 Not Found
-            }
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro no servidor ao excluir o projeto.',
-                'error' => $e->getMessage(),
-            ], 500); // Erro interno
-        }
     }
 
     public function getProjetosPorOng(string $idOng)
     {
-        try {
-            $projetos = Projeto::where('id_ong', $idOng)->with(['habilidades', 'ong.endereco'])->get();
+        $projetos = Projeto::with(['habilidades', 'ong.endereco'])->where('id_ong', $idOng)->get();
+        return response()->json($projetos);
+    }
 
-            if($projetos){
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Projetos da ONG encontrados com sucesso!',
-                    'data' => $projetos,
-                ], 200); // 200 OK
-            }else{
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Projetos da ONG não encontrados.',
-                ], 404); // 404 Not Found
-            }
-
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Ocorreu um erro no servidor ao buscar os projetos da ONG.',
-                'error' => $e->getMessage(),
-            ], 500); // Erro interno
+    public function store(Request $request)
+    {
+        $projeto = Projeto::create($request->all());
+        if ($request->has('habilidades')) {
+            $projeto->habilidades()->sync($request->habilidades);
         }
+        $projeto->load(['habilidades', 'ong.endereco']);
+        return response()->json($projeto, 201);
+    }
+
+    public function show(string $id)
+    {
+        $projeto = Projeto::with(['habilidades', 'ong.endereco'])->find($id);
+        return response()->json($projeto);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $projeto = Projeto::find($id);
+        $projeto->update($request->all());
+        if ($request->has('habilidades')) {
+            $habilidades = $request->input('habilidades');
+            $habilidadeIds = [];
+            foreach ($habilidades as $habilidadeDescricao) {
+                $habilidade = \App\Models\Habilidade::where('descricao', $habilidadeDescricao)->first();
+                if ($habilidade) {
+                    $habilidadeIds[] = $habilidade->id;
+                }
+            }
+            $projeto->habilidades()->sync($habilidadeIds);
+        }
+        $projeto->load(['habilidades', 'ong.endereco']);
+        return response()->json($projeto);
+    }
+
+    public function destroy(string $id)
+    {
+        Projeto::destroy($id);
+        return response()->json(null, 204);
+    }
+
+    public function getVoluntarios(string $id)
+    {
+        $projeto = Projeto::find($id);
+        $voluntarios = $projeto->voluntarios()->with('habilidades')->get();
+        return response()->json($voluntarios);
+    }
+
+    public function getVoluntariosCompativeis(string $id)
+    {
+        $projeto = Projeto::with('habilidades', 'voluntarios')->find($id);
+        $habilidadesProjetoIds = $projeto->habilidades->pluck('id');
+        $voluntariosNoProjetoIds = $projeto->voluntarios->pluck('id');
+
+        $voluntariosCompatíveis = Voluntario::with('habilidades')
+            ->whereHas('habilidades', function ($query) use ($habilidadesProjetoIds) {
+                $query->whereIn('habilidades.id', $habilidadesProjetoIds);
+            })
+            ->whereNotIn('id', $voluntariosNoProjetoIds)
+            ->get();
+        
+        return response()->json($voluntariosCompatíveis);
+    }
+
+    public function adicionarVoluntario(Request $request, string $id)
+    {
+        $voluntarioId = $request->input('voluntario_id');
+
+        $exists = DB::table('projeto_voluntario')
+                        ->where('id_projeto', $id)
+                        ->where('id_voluntario', $voluntarioId)
+                        ->exists();
+
+        if ($exists) {
+            return response()->json(['message' => 'Voluntário já está no projeto'], 409); 
+        }
+
+        DB::table('projeto_voluntario')->insert([
+            'id_projeto' => $id,
+            'id_voluntario' => $voluntarioId,
+            'id_convite' => null, 
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return response()->json(['message' => 'Voluntário adicionado com sucesso']);
+    }
+
+    public function removerVoluntario(string $id, string $voluntarioId)
+    {
+        $projeto = Projeto::find($id);
+        $projeto->voluntarios()->detach($voluntarioId);
+
+        return response()->json(['message' => 'Voluntário removido com sucesso']);
     }
 }

@@ -37,8 +37,8 @@ Route::prefix('ongs')->group(function () {
     Route::post('/login', [AuthController::class, 'loginOng']);
 
     Route::middleware('auth:sanctum')->group(function() {
+        Route::get('candidaturas', [ConviteController::class, 'getCandidaturas']);
         Route::get('/dashboard', [DashboardController::class, 'index']);
-        Route::get('/projetos', [ProjetoController::class, 'getProjetosDaOngLogada']);
         Route::get('/{id}', [OngController::class, 'show']);
         Route::put('/{id}', [OngController::class, 'update']);
         Route::delete('/{id}', [OngController::class, 'destroy']);
@@ -54,6 +54,10 @@ Route::prefix('projetos')->group(function () {
     Route::get('/{id}', [ProjetoController::class, 'show']);
     Route::put('/{id}', [ProjetoController::class, 'update']);
     Route::delete('/{id}', [ProjetoController::class, 'destroy']);
+    Route::get('/{id}/voluntarios', [ProjetoController::class, 'getVoluntarios']);
+    Route::get('/{id}/voluntarios-compativeis', [ProjetoController::class, 'getVoluntariosCompativeis']);
+    Route::post('/{id}/voluntarios', [ProjetoController::class, 'adicionarVoluntario']);
+    Route::delete('/{id}/voluntarios/{idVoluntario}', [ProjetoController::class, 'removerVoluntario']);
 
 });
 

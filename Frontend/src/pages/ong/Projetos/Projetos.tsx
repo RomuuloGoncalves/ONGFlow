@@ -13,7 +13,7 @@ import { Localizacao } from "@/assets/icons/Localizacao";
 import { Pagination } from "@/components/Pagination/Pagination";
 import { Mais } from "@/assets/icons/Mais";
 import type { Projeto } from "@/interfaces/projeto";
-import projetoService from "@/services/projetoService";
+import { getProjetosPorOng } from "@/services/projetoService";
 
 function Projetos() {
   const [isModalProjetosFinalizadosOpen, setIsModalProjetosFinalizadosOpen] =
@@ -21,6 +21,7 @@ function Projetos() {
   const [isModalProjetosAndamentoOpen, setIsModalProjetosAndamentoOpen] =
     useState(false);
   const [projetos, setProjetos] = useState<Projeto[]>([]);
+  const [selectedProjeto, setSelectedProjeto] = useState<Projeto | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
@@ -30,15 +31,21 @@ function Projetos() {
 
   useEffect(() => {
     const fetchProjetos = async () => {
+      setIsLoading(true);
       try {
         const userData = localStorage.getItem("user");
         if (userData) {
           const user = JSON.parse(userData);
-          const response = await projetoService.getProjetosPorOng(user.id);
-          setProjetos(response.data.data);
+          const response = await getProjetosPorOng(user.id);
+          if (Array.isArray(response.data)) {
+            setProjetos(response.data);
+          } else {
+            setProjetos([]);
+          }
         }
       } catch (error) {
         console.error("Erro ao buscar projetos:", error);
+        setProjetos([]);
       } finally {
         setIsLoading(false);
       }
@@ -48,7 +55,7 @@ function Projetos() {
   }, []);
 
   // --- Filtro + busca ---
-  const projetosFiltrados = projetos.filter((p) => {
+  const projetosFiltrados = (projetos || []).filter((p) => {
     const nomeMatch = p.nome.toLowerCase().includes(textPesquisa.toLowerCase());
     const statusMatch =
       filtro === "Todos" ? true : p.status.toLowerCase() === filtro.toLowerCase();
@@ -61,6 +68,7 @@ function Projetos() {
 
   // --- Ações ---
   const handleCardClick = (projeto: Projeto) => {
+    setSelectedProjeto(projeto);
     if (projeto.status === "concluido") {
       setIsModalProjetosFinalizadosOpen(true);
     } else {
@@ -82,7 +90,7 @@ function Projetos() {
                 <div className={style.text}>
                   <p>Projetos Ativos</p>
                   <span>
-                    {projetos.filter((p) => p.status === "em andamento").length}
+                    {(projetos || []).filter((p) => p.status === "em andamento").length}
                   </span>
                 </div>
               </div>
@@ -92,7 +100,7 @@ function Projetos() {
                 <div className={style.text}>
                   <p>Projetos Finalizados</p>
                   <span>
-                    {projetos.filter((p) => p.status === "concluido").length}
+                    {(projetos || []).filter((p) => p.status === "concluido").length}
                   </span>
                 </div>
               </div>
@@ -101,7 +109,7 @@ function Projetos() {
                 <Usuario className={style.icon} />
                 <div className={style.text}>
                   <p>Total de Projetos</p>
-                  <span>{projetos.length}</span>
+                  <span>{projetos?.length || 0}</span>
                 </div>
               </div>
             </div>
@@ -207,10 +215,12 @@ function Projetos() {
       <ModalProjetosFinalizados
         isOpen={isModalProjetosFinalizadosOpen}
         setIsOpen={setIsModalProjetosFinalizadosOpen}
+        projeto={selectedProjeto}
       />
       <ModalProjetosAndamento
         isOpen={isModalProjetosAndamentoOpen}
         setIsOpen={setIsModalProjetosAndamentoOpen}
+        projeto={selectedProjeto}
       />
     </>
   );

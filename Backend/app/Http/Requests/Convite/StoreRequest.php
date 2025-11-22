@@ -25,12 +25,12 @@ class StoreRequest extends FormRequest
     {
         return [
             'iniciador' => ['required', 'in:ong,voluntario'],
-            'status' => ['sometimes', 'in:pendente,aceito,recusado'],
+            'status' => ['required', 'in:pendente,aceito,recusado'],
             'mensagem' => ['required', 'string', 'max:1000'],
             'data_resposta' => ['nullable', 'date', 'after_or_equal:data_criacao'],
-            'ongs_id' => ['required', 'integer', 'exists:ongs,id'],
-            'voluntarios_id' => ['required', 'integer', 'exists:voluntarios,id'],
-            'projetos_id' => ['required', 'integer', 'exists:projetos,id'],
+            'id_ong' => ['required', 'integer', 'exists:ongs,id'],
+            'id_voluntario' => ['required', 'integer', 'exists:voluntarios,id'],
+            'id_projeto' => ['required', 'integer', 'exists:projetos,id'],
         ];
     }
 
@@ -45,6 +45,7 @@ class StoreRequest extends FormRequest
             'iniciador.required' => 'É necessário especificar quem iniciou o convite (ong ou voluntario).',
             'iniciador.in' => 'O iniciador do convite deve ser "ong" ou "voluntario".',
 
+            'status.required' => 'O status do convite é obrigatório.',
             'status.in' => 'O status do convite é inválido. Valores aceitos: pendente, aceito, recusado.',
 
             'mensagem.required' => 'O campo mensagem é obrigatório.',
@@ -53,17 +54,17 @@ class StoreRequest extends FormRequest
             'data_resposta.date' => 'O formato da data de resposta é inválido.',
             'data_resposta.after_or_equal' => 'A data de resposta não pode ser anterior à data de criação.',
 
-            'ongs_id.required' => 'O ID da ONG é obrigatório.',
-            'ongs_id.integer' => 'O ID da ONG deve ser um número inteiro.',
-            'ongs_id.exists' => 'A ONG selecionada não existe.',
+            'id_ong.required' => 'O ID da ONG é obrigatório.',
+            'id_ong.integer' => 'O ID da ONG deve ser um número inteiro.',
+            'id_ong.exists' => 'A ONG selecionada não existe.',
 
-            'voluntarios_id.required' => 'O ID do voluntário é obrigatório.',
-            'voluntarios_id.integer' => 'O ID do voluntário deve ser um número inteiro.',
-            'voluntarios_id.exists' => 'O voluntário selecionado não existe.',
+            'id_voluntario.required' => 'O ID do voluntário é obrigatório.',
+            'id_voluntario.integer' => 'O ID do voluntário deve ser um número inteiro.',
+            'id_voluntario.exists' => 'O voluntário selecionado não existe.',
 
-            'projetos_id.required' => 'O ID do projeto é obrigatório.',
-            'projetos_id.integer' => 'O ID do projeto deve ser um número inteiro.',
-            'projetos_id.exists' => 'O projeto selecionado não existe.',
+            'id_projeto.required' => 'O ID do projeto é obrigatório.',
+            'id_projeto.integer' => 'O ID do projeto deve ser um número inteiro.',
+            'id_projeto.exists' => 'O projeto selecionado não existe.',
         ];
     }
 

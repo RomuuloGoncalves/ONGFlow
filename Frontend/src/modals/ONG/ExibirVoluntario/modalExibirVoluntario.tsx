@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import api from "@/services/api";
 import useCustomToast from "@/components/ui/use-toast";
 import Loading from "@/components/Loading/Loading";
+import { enviarConvite } from "@/services/conviteService";
 
 interface Voluntario {
   id: number;
@@ -26,6 +27,7 @@ interface Projeto {
   nome: string;
   descricao: string;
   data_inicio: string;
+  id_ong: number;
 }
 
 interface Modalprops {
@@ -41,6 +43,7 @@ export default function ModalExibirVoluntario({
 }: Modalprops) {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
   const [isLoadingProjetos, setIsLoadingProjetos] = useState(false);
+  const [convitesEnviados, setConvitesEnviados] = useState<number[]>([]);
   const { showToast } = useCustomToast();
 
   useEffect(() => {
@@ -49,9 +52,16 @@ export default function ModalExibirVoluntario({
       const fetchProjetos = async () => {
         setIsLoadingProjetos(true);
         try {
-          const response = await api.get("/ongs/projetos");
-          setProjetos(response.data.data);
+          const userData = localStorage.getItem("user");
+          if (userData) {
+            const user = JSON.parse(userData);
+            const response = await api.get(`/ongs/${user.id}/projetos`);
+            setProjetos(response.data);
+          } else {
+             throw new Error("Usuário não encontrado no localStorage");
+          }
         } catch (error) {
+          console.log(error);
           showToast("Erro ao carregar os projetos da ONG.", "error");
         } finally {
           setIsLoadingProjetos(false);
@@ -65,6 +75,28 @@ export default function ModalExibirVoluntario({
       document.body.style.overflow = "auto";
     };
   }, [isOpen, showToast]);
+
+  const handleEnviarConvite = async (projeto: Projeto) => {
+    if (!voluntario) return;
+
+    const payload = {
+      iniciador: "ong" as const,
+      status: "pendente" as const,
+      mensagem: `Você foi convidado para o projeto: ${projeto.nome}`,
+      id_ong: projeto.id_ong,
+      id_voluntario: voluntario.id,
+      id_projeto: projeto.id,
+    };
+
+    try {
+      await enviarConvite(payload);
+      showToast("Convite enviado com sucesso!", "success");
+      setConvitesEnviados((prev) => [...prev, projeto.id]);
+    } catch (error) {
+      console.error(error);
+      showToast("Erro ao enviar convite. Tente novamente.", "error");
+    }
+  };
 
   if (!isOpen || !voluntario) return null;
 
@@ -140,9 +172,15 @@ export default function ModalExibirVoluntario({
                       </div>
                     </div>
                     <div className={style.card__footer}>
-                      <button className={style.buttonConvidar}>
+                      <button
+                        className={style.buttonConvidar}
+                        onClick={() => handleEnviarConvite(projeto)}
+                        disabled={convitesEnviados.includes(projeto.id)}
+                      >
                         <Convite className={style.icon} />
-                        Convidar para esse projeto
+                        {convitesEnviados.includes(projeto.id)
+                          ? "Convite Enviado"
+                          : "Convidar para esse projeto"}
                       </button>
                     </div>
                   </div>

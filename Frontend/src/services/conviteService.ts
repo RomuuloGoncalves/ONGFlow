@@ -6,20 +6,33 @@ interface ConviteActionResponse {
   message: string;
 }
 
-const conviteService = {
-  getConvitesVoluntario: (
-    idVoluntario: number
-  ): AxiosPromise<Convite[]> => {
-    return api.get<Convite[]>(`/voluntarios/${idVoluntario}/convites`);
-  },
+export interface ConvitePayload {
+  iniciador: 'voluntario' | 'ong';
+  status: 'pendente';
+  mensagem: string;
+  id_ong: number;
+  id_voluntario: number;
+  id_projeto: number;
+}
 
-  aceitarConvite: (idConvite: number): AxiosPromise<ConviteActionResponse> => {
-    return api.put<ConviteActionResponse>(`/convites/${idConvite}/aceitar`);
-  },
-
-  recusarConvite: (idConvite: number): AxiosPromise<ConviteActionResponse> => {
-    return api.put<ConviteActionResponse>(`/convites/${idConvite}/recusar`);
-  },
+export const getConvitesVoluntario = (
+  idVoluntario: number
+): AxiosPromise<Convite[]> => {
+  return api.get<Convite[]>(`/voluntarios/${idVoluntario}/convites`);
 };
 
-export default conviteService;
+export const getCandidaturasOng = (): AxiosPromise<Convite[]> => {
+  return api.get<Convite[]>("/ongs/candidaturas");
+};
+
+export const enviarConvite = (data: ConvitePayload): AxiosPromise<Convite> => {
+  return api.post<Convite>('/convites', data);
+};
+
+export const aceitarConvite = (idConvite: number): AxiosPromise<ConviteActionResponse> => {
+  return api.put<ConviteActionResponse>(`/convites/${idConvite}/aceitar`);
+};
+
+export const recusarConvite = (idConvite: number): AxiosPromise<ConviteActionResponse> => {
+  return api.put<ConviteActionResponse>(`/convites/${idConvite}/recusar`);
+};

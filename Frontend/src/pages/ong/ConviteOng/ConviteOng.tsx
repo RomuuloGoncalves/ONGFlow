@@ -6,8 +6,7 @@ import { Check } from "@/assets/icons/Check";
 import { Telefone } from "@/assets/icons/Telefone";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Relogio } from "@/assets/icons/Relogio";
-import { Localizacao } from "@/assets/icons/Localizacao";
-import ConviteService from "@/services/conviteService";
+import { getCandidaturasOng, aceitarConvite, recusarConvite } from "@/services/conviteService";
 import Loading from "@/components/Loading/Loading";
 import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { useState, useEffect } from "react";
@@ -16,61 +15,68 @@ import type { Convite } from "@/interfaces/convite";
 function ConviteOng() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filtro, setFiltro] = useState("Todos");
   const [textPesquisa, setTextPesquisa] = useState("");
-  const [convites, setConvites] = useState<Convite[]>([]);
+  const [candidaturas, setCandidaturas] = useState<Convite[]>([]);
 
   const itemsPerPage = 6;
 
   useEffect(() => {
-    async function fetchConvites() {
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
-      if (user && user.id) {
-        try {
-          const response = await ConviteService.getConvitesVoluntario(user.id);
-          setConvites(response.data);
-        } catch (error) {
-          console.error("Erro ao buscar convites:", error);
-        } finally {
-          setIsLoading(false);
-        }
+    async function fetchCandidaturas() {
+      try {
+        const response = await getCandidaturasOng();
+        setCandidaturas(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar candidaturas:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
-    fetchConvites();
-  }, []);
-  // Simula carregamento
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(timer);
+    fetchCandidaturas();
   }, []);
 
-  // Reseta página ao mudar filtro ou pesquisa
   useEffect(() => {
     setCurrentPage(1);
-  }, [filtro, textPesquisa]);
+  }, [textPesquisa]);
 
-  const convitesFiltrados = convites.filter((c) => {
-    if (!c.projeto) return false;
+  const handleAceitar = async (id: number) => {
+    try {
+      await aceitarConvite(id);
+      setCandidaturas(candidaturas.filter(c => c.id !== id));
+    } catch (error) {
+      console.error("Erro ao aceitar candidatura:", error);
+    }
+  };
+
+  const handleRecusar = async (id: number) => {
+    try {
+      await recusarConvite(id);
+      setCandidaturas(candidaturas.filter(c => c.id !== id));
+    } catch (error) {
+      console.error("Erro ao recusar candidatura:", error);
+    }
+  };
+
+  const candidaturasFiltradas = candidaturas.filter((c) => {
+    if (!c.projeto || !c.voluntario) return false;
     const pesquisa = textPesquisa.toLowerCase();
-    const statusValido = filtro === "Todos" || c.status === filtro;
-    const pesquisaValida =
+    return (
       c.projeto.nome.toLowerCase().includes(pesquisa) ||
-      (c.projeto.ong?.nome_fantasia.toLowerCase().includes(pesquisa) ?? false);
-    return statusValido && pesquisaValida;
+      c.voluntario.nome.toLowerCase().includes(pesquisa)
+    );
   });
 
   const start = (currentPage - 1) * itemsPerPage;
-  const paginatedItems = convitesFiltrados.slice(start, start + itemsPerPage);
+  const paginatedItems = candidaturasFiltradas.slice(start, start + itemsPerPage);
 
   return (
     <div className={style.main}>
       <Header />
       <div className={style.convite}>
         <div className={style.convite__title}>
-          <h1>Convites</h1>
+          <h1>Candidaturas Recebidas</h1>
           <p>
-            Envie convites e descubra quem está pronto para se juntar a você.
-            Acompanhe as respostas, veja quem aceitou e forme sua equipe ideal.
+            Acompanhe os voluntários que se candidataram aos seus projetos.
+            Aceite ou recuse as candidaturas para formar sua equipe.
           </p>
         </div>
         <div className={style.container__table}>
@@ -80,52 +86,10 @@ function ConviteOng() {
               <input
                 type="text"
                 className={style.search}
-                placeholder="Filtrar por ONG ou projeto"
+                placeholder="Filtrar por voluntário ou projeto"
                 value={textPesquisa}
                 onChange={(e) => setTextPesquisa(e.target.value)}
               />
-            </div>
-            <div className={style.container__tags}>
-              <button
-                onClick={() => setFiltro("Todos")}
-                className={`${style.button} ${
-                  filtro === "Todos" ? style.active : ""
-                }`}
-              >
-                Todos
-              </button>
-              <button
-                onClick={() => setFiltro("pendente")}
-                className={`${style.button} ${
-                  filtro === "pendente" ? style.active : ""
-                }`}
-              >
-                Pendentes
-              </button>
-              <button
-                onClick={() => setFiltro("aceito")}
-                className={`${style.button} ${
-                  filtro === "aceito" ? style.active : ""
-                }`}
-              >
-                Aceitos
-              </button>
-              <button
-                onClick={() => setFiltro("recusado")}
-                className={`${style.button} ${
-                  filtro === "recusado" ? style.active : ""
-                }`}
-              >
-                Recusados
-              </button>
-              <button
-                onClick={() => setFiltro("cancelado")}
-                className={`${style.button} ${
-                  filtro === "cancelado" ? style.active : ""
-                }`}
-              >
-                Cancelados
-              </button>
             </div>
           </div>
           {isLoading ? (
@@ -134,22 +98,19 @@ function ConviteOng() {
             <div className={style.container__table_body}>
               {paginatedItems.length === 0 ? (
                 <p className={style.alertMensage}>
-                  Ops! Não encontramos nenhum convite.
+                  Nenhuma candidatura recebida até o momento.
                 </p>
               ) : (
                 paginatedItems.map((item) => (
                   <div key={item.id} className={style.card}>
                     <div className={style.card__title}>
-                      <div className={style.card__title_tag}>
-                        <p>{item.status}</p>
-                      </div>
                       <h1>{item.projeto?.nome}</h1>
                     </div>
                     <div className={style.card__descricao}>
-                      <p>{item.projeto?.descricao}</p>
+                      <p>{item.mensagem}</p>
                     </div>
                     <div className={style.habilidades}>
-                      {(item.projeto?.habilidades || []).map((hab, i) => (
+                      {(item.voluntario?.habilidades || []).map((hab, i) => (
                         <div key={i} className={style.badge}>
                           <p>{hab.descricao}</p>
                         </div>
@@ -158,10 +119,8 @@ function ConviteOng() {
                     <div className={style.container__details}>
                       <div className={style.card__location_date}>
                         <p>
-                          <Localizacao className={style.icon} />
-                          {item.projeto?.ong?.endereco
-                            ? `${item.projeto.ong.endereco.cidade} - ${item.projeto.ong.endereco.estado}`
-                            : "Localização não disponível"}
+                          <Usuario className={style.icon} />
+                          {item.voluntario?.nome}
                         </p>
                         <p>
                           <Relogio className={style.icon} />
@@ -170,36 +129,21 @@ function ConviteOng() {
                       </div>
                       <div className={style.card__ong_phone}>
                         <p>
-                          <Usuario className={style.icon} />
-                          {item.projeto?.ong?.nome_fantasia}
-                        </p>
-                        <p>
                           <Telefone className={style.icon} />
-                          {item.projeto?.ong?.telefone
-                            ? item.projeto.ong.telefone
-                            : "Telefone não disponível"}
+                          {item.voluntario?.telefone ?? "Não informado"}
                         </p>
                       </div>
                     </div>
-                    <div
-                      className={style.container__buttons}
-                      style={{
-                        display:
-                          item.iniciador.toLocaleLowerCase() === "ong" &&
-                          item.status.toLocaleLowerCase() === "pendente"
-                            ? "flex"
-                            : "none",
-                      }}
-                    >
+                    <div className={style.container__buttons}>
                       <button
                         className={`${style.button} ${style.buttonAccept}`}
-                        // onClick={() => aceitarConvite(item.id)}
+                        onClick={() => handleAceitar(item.id)}
                       >
                         <Check className={style.icon} /> Aceitar
                       </button>
                       <button
                         className={`${style.button} ${style.buttonDecline}`}
-                        // onClick={() => recusarConvite(item.id)}
+                        onClick={() => handleRecusar(item.id)}
                       >
                         <Lixo className={style.icon} /> Recusar
                       </button>
@@ -213,7 +157,7 @@ function ConviteOng() {
           <div className={style.container__table_footer}>
             <Pagination
               currentPage={currentPage}
-              totalPages={Math.ceil(convitesFiltrados.length / itemsPerPage)}
+              totalPages={Math.ceil(candidaturasFiltradas.length / itemsPerPage)}
               onPageChange={(page) => setCurrentPage(page)}
             />
           </div>

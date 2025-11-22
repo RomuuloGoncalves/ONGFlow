@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Relogio } from "@/assets/icons/Relogio";
 import { Check } from "@/assets/icons/Check";
 import { Lixo } from "@/assets/icons/Lixo";
-import ConviteService from "@/services/conviteService";
+import { getConvitesVoluntario, aceitarConvite, recusarConvite } from "@/services/conviteService";
 import type { Convite } from "@/interfaces/convite";
 import Loading from "@/components/Loading/Loading";
 
@@ -27,13 +27,15 @@ function ConviteVoluntario() {
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       if (user && user.id) {
         try {
-          const response = await ConviteService.getConvitesVoluntario(user.id);
+          const response = await getConvitesVoluntario(user.id);
           setConvites(response.data);
         } catch (error) {
           console.error("Erro ao buscar convites:", error);
         } finally {
           setIsLoading(false);
         }
+      } else {
+        setIsLoading(false);
       }
     }
     fetchConvites();
@@ -52,9 +54,9 @@ function ConviteVoluntario() {
     return statusValido && pesquisaValida;
   });
 
-  const aceitarConvite = async (id: number) => {
+  const handleAceitarConvite = async (id: number) => {
     try {
-      await ConviteService.aceitarConvite(id);
+      await aceitarConvite(id);
       setConvites((prev) =>
         prev.map((c) => (c.id === id ? { ...c, status: "aceito" } : c))
       );
@@ -62,9 +64,9 @@ function ConviteVoluntario() {
       console.error("Erro ao aceitar convite", error);
     }
   };
-  const recusarConvite = async (id: number) => {
+  const handleRecusarConvite = async (id: number) => {
     try {
-      await ConviteService.recusarConvite(id);
+      await recusarConvite(id);
       setConvites((prev) =>
         prev.map((c) => (c.id === id ? { ...c, status: "recusado" } : c))
       );
@@ -211,13 +213,13 @@ function ConviteVoluntario() {
                   >
                     <button
                       className={`${style.button} ${style.buttonAccept}`}
-                      onClick={() => aceitarConvite(item.id)}
+                      onClick={() => handleAceitarConvite(item.id)}
                     >
                       <Check className={style.icon} /> Aceitar
                     </button>
                     <button
                       className={`${style.button} ${style.buttonDecline}`}
-                      onClick={() => recusarConvite(item.id)}
+                      onClick={() => handleRecusarConvite(item.id)}
                     >
                       <Lixo className={style.icon} /> Recusar
                     </button>

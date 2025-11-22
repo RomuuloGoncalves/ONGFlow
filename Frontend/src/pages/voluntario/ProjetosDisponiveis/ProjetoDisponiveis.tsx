@@ -6,8 +6,9 @@ import { Pesquisa } from "@/assets/icons/Pesquisa";
 import { Localizacao } from "@/assets/icons/Localizacao";
 import { Convite } from "@/assets/icons/Convite";
 import ModalVoluntarioProjetos from "@/modals/Voluntarios/VoluntarioProjetos/modalVoluntarioProjetos";
-import projetoService from "@/services/projetoService";
+import { getProjetos } from "@/services/projetoService";
 import type { Projeto } from "@/interfaces/projeto";
+import { enviarConvite, type ConvitePayload } from "@/services/conviteService";
 
 function HomeVoluntario() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
@@ -15,9 +16,11 @@ function HomeVoluntario() {
   const [textPesquisa, setTextPesquisa] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProjeto, setSelectedProjeto] = useState<Projeto | null>(null);
+  const [candidaturasEnviadas, setCandidaturasEnviadas] = useState<number[]>([]);
+
 
   useEffect(() => {
-    projetoService.getProjetos()
+    getProjetos()
       .then(response => {
         setProjetos(response.data);
       })
@@ -25,6 +28,41 @@ function HomeVoluntario() {
         console.error('Erro ao buscar projetos:', error);
       });
   }, []);
+
+  const handleCandidaturaClick = async (event: React.MouseEvent, projeto: Projeto) => {
+    event.stopPropagation(); // Impede que o modal seja aberto
+
+    if (!projeto.ong?.id || !projeto.id) {
+      alert("Não foi possível identificar a ONG ou o projeto.");
+      return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const idVoluntarioLogado = user.id; 
+
+    if (!idVoluntarioLogado) {
+      alert("Voluntário não identificado. Faça o login novamente.");
+      return;
+    }
+
+    const payload: ConvitePayload = {
+      iniciador: 'voluntario',
+      status: 'pendente',
+      mensagem: `Candidatura para o projeto: ${projeto.nome}`,
+      id_ong: projeto.ong.id,
+      id_voluntario: idVoluntarioLogado,
+      id_projeto: projeto.id,
+    };
+
+    try {
+      await enviarConvite(payload);
+      alert('Candidatura enviada com sucesso!');
+      setCandidaturasEnviadas(prev => [...prev, projeto.id]);
+    } catch (error) {
+      console.error('Erro ao enviar candidatura:', error);
+      alert('Falha ao enviar candidatura. Tente novamente.');
+    }
+  };
 
   const itemsPerPage = 4;
 
@@ -116,9 +154,12 @@ function HomeVoluntario() {
                   )}
                 </div>
                 <div className={style.buttonInvite}>
-                  <button>
+                <button 
+                  onClick={(e) => handleCandidaturaClick(e, item)}
+                  disabled={candidaturasEnviadas.includes(item.id)}
+                >
                     <Convite className={style.icon} />
-                    Candidatar
+                    {candidaturasEnviadas.includes(item.id) ? 'Enviado' : 'Candidatar'}
                   </button>
                 </div>
               </div>

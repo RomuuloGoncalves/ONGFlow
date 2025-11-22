@@ -3,131 +3,116 @@ import { Menor } from "@/assets/icons/Menor";
 import style from "./EditarProjeto.module.css";
 import SelectInput from "@/components/Voluntario/MultiSelect";
 import DateCalendar from "@/components/ui/DateCalendar";
-import Clock from "@/components/ui/Clock";
 import { Fechar } from "@/assets/icons/Fechar";
 import { Salvar } from "@/assets/icons/Salvar";
+import { useNavigate, useParams } from "react-router-dom";
+import { getProjeto, updateProjeto, getHabilidades, getVoluntariosDoProjeto, getVoluntariosCompativeis, adicionarVoluntarioAoProjeto, removerVoluntarioDoProjeto } from "@/services/projetoService";
+import useCustomToast from "@/components/ui/use-toast";
+import type { Habilidade } from "@/interfaces/habilidade";
+import type { Voluntario } from "@/interfaces/voluntario";
 import { Usuario } from "@/assets/icons/Usuario";
-import { useNavigate } from "react-router-dom";
-
-// 🔹 Dados falsos de voluntários
-const VOLUNTARIOS_FAKE = [
-  {
-    id: 1,
-    nome: "Ana Souza",
-    habilidades: ["Comunicação interpessoal", "Empatia", "Trabalho em equipe"],
-  },
-  {
-    id: 2,
-    nome: "Carlos Lima",
-    habilidades: ["Gestão de projetos", "Coordenação de voluntários"],
-  },
-  {
-    id: 3,
-    nome: "Marina Costa",
-    habilidades: ["Design gráfico", "Criação de conteúdo digital"],
-  },
-  {
-    id: 4,
-    nome: "Paulo Henrique",
-    habilidades: ["Sustentabilidade e ecologia"],
-  },
-];
-
-// 🔹 Exemplo de projeto já existente
-const PROJETO_EXISTENTE = {
-  nome: "Mutirão de Limpeza Urbana",
-  descricao: "Projeto voltado à limpeza e conscientização ambiental na cidade.",
-  localizacao: "Praça Central - Belo Horizonte",
-  dataInicio: new Date("2025-11-10"),
-  horaInicio: "09:30",
-  habilidades: ["Sustentabilidade e ecologia"],
-  voluntariosSelecionados: [
-    {
-      id: 4,
-      nome: "Paulo Henrique",
-      habilidades: ["Sustentabilidade e ecologia"],
-    },
-  ],
-};
 
 function EditarProjeto() {
-  const [nome, setNome] = useState(PROJETO_EXISTENTE.nome);
-  const [descricao, setDescricao] = useState(PROJETO_EXISTENTE.descricao);
-  const [localizacao, setLocalizacao] = useState(PROJETO_EXISTENTE.localizacao);
-  const [dataInicio, setDataInicio] = useState<Date | null>(
-    PROJETO_EXISTENTE.dataInicio
-  );
-  const [horaInicio, setHoraInicio] = useState(PROJETO_EXISTENTE.horaInicio);
-  const [habilidadesSelecionadas, setHabilidadesSelecionadas] = useState<
-    string[]
-  >(PROJETO_EXISTENTE.habilidades);
-  const [voluntariosSelecionados, setVoluntariosSelecionados] = useState<any[]>(
-    PROJETO_EXISTENTE.voluntariosSelecionados
-  );
-  const [voluntariosCompatíveis, setVoluntariosCompatíveis] = useState<any[]>(
-    []
-  );
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [dataInicio, setDataInicio] = useState<Date | null>(null);
+  const [habilidadesSelecionadas, setHabilidadesSelecionadas] = useState<string[]>([]);
+  const [allHabilidades, setAllHabilidades] = useState<Habilidade[]>([]);
+  const [voluntariosNoProjeto, setVoluntariosNoProjeto] = useState<Voluntario[]>([]);
+  const [voluntariosCompatíveis, setVoluntariosCompatíveis] = useState<Voluntario[]>([]);
+
   const navigate = useNavigate();
-  
+  const { id } = useParams<{ id: string }>();
+  const { showToast } = useCustomToast();
 
-  // 🔹 Atualiza lista de compatíveis sempre que habilidades mudam
+  const fetchProjectData = async () => {
+    if (!id) return;
+    try {
+      const [projetoResponse, habilidadesResponse, voluntariosProjetoResponse, voluntariosCompativeisResponse] = await Promise.all([
+        getProjeto(Number(id)),
+        getHabilidades(),
+        getVoluntariosDoProjeto(Number(id)),
+        getVoluntariosCompativeis(Number(id))
+      ]);
+
+      const projeto = projetoResponse.data;
+      setNome(projeto.nome);
+      setDescricao(projeto.descricao);
+      setDataInicio(new Date(projeto.data_inicio));
+      if (projeto.habilidades) {
+        setHabilidadesSelecionadas(projeto.habilidades.map((h: Habilidade) => h.descricao));
+      }
+
+      setAllHabilidades(habilidadesResponse.data || []);
+      setVoluntariosNoProjeto(voluntariosProjetoResponse.data || []);
+      setVoluntariosCompatíveis(voluntariosCompativeisResponse.data || []);
+
+    } catch (error) {
+      console.error("Erro ao carregar dados do projeto:", error);
+      showToast("Falha ao carregar dados do projeto", "error");
+    }
+  };
+
   useEffect(() => {
-    const filtrados = VOLUNTARIOS_FAKE.filter(
-      (vol) =>
-        vol.habilidades.some((hab) => habilidadesSelecionadas.includes(hab)) &&
-        !voluntariosSelecionados.some((sel) => sel.id === vol.id)
-    );
-    setVoluntariosCompatíveis(filtrados);
-  }, [habilidadesSelecionadas, voluntariosSelecionados]);
+    fetchProjectData();
+  }, [id, showToast]);
 
+  const handleSalvarProjeto = async () => {
+    if (!id) return;
 
-  // 🔹 Convidar voluntário (move dos compatíveis para selecionados)
-  const handleConvidar = (voluntario: any) => {
-    if (!voluntariosSelecionados.some((v) => v.id === voluntario.id)) {
-      setVoluntariosSelecionados([...voluntariosSelecionados, voluntario]);
-      setVoluntariosCompatíveis(
-        voluntariosCompatíveis.filter((v) => v.id !== voluntario.id)
-      );
-      console.log("Voluntário adicionado:", voluntario.nome);
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const idOng = user.id;
+
+    if (!nome || !descricao || !dataInicio) {
+        showToast("Todos os campos obrigatórios devem ser preenchidos.", "error");
+        return;
     }
-  };
-
-  // 🔹 Remover voluntário (volta para lista compatível se ainda for relevante)
-  const handleRemover = (id: number) => {
-    const removido = voluntariosSelecionados.find((v) => v.id === id);
-    const atualizados = voluntariosSelecionados.filter((v) => v.id !== id);
-    setVoluntariosSelecionados(atualizados);
-
-    if (
-      removido &&
-      habilidadesSelecionadas.some((hab) => removido.habilidades.includes(hab))
-    ) {
-      setVoluntariosCompatíveis([...voluntariosCompatíveis, removido]);
-    }
-
-    console.log("🗑️ Voluntário removido:", removido?.nome);
-  };
-
-  // 🔹 Simula salvar o projeto atualizado
-  const handleSalvarProjeto = () => {
-    const projetoAtualizado = {
+    
+    const payload = {
       nome,
       descricao,
-      localizacao,
-      dataInicio: dataInicio ? dataInicio.toLocaleDateString("pt-BR") : "",
-      horaInicio,
+      data_inicio: dataInicio.toISOString().split('T')[0], // Formato YYYY-MM-DD
+      id_ong: idOng,
       habilidades: habilidadesSelecionadas,
-      voluntariosSelecionados,
     };
 
-    console.log("Projeto atualizado com sucesso!");
-    console.log(projetoAtualizado);
-    alert("Projeto atualizado com sucesso! Veja no console.log ");
+    try {
+      await updateProjeto(Number(id), payload);
+      showToast("Projeto atualizado com sucesso!", "success");
+      navigate("/projetos/ong");
+    } catch (error) {
+      console.error("Erro ao salvar o projeto:", error);
+      showToast("Erro ao salvar projeto. Tente novamente.", "error");
+    }
+  };
+
+  const handleConvidar = async (voluntario: Voluntario) => {
+    if (!id) return;
+    try {
+      await adicionarVoluntarioAoProjeto(Number(id), voluntario.id);
+      showToast(`${voluntario.nome} foi adicionado ao projeto!`, "success");
+      fetchProjectData(); // Re-fetch all data to ensure consistency
+    } catch (error) {
+      console.error("Erro ao adicionar voluntário:", error);
+      showToast("Erro ao adicionar voluntário.", "error");
+    }
+  };
+
+  const handleRemover = async (voluntario: Voluntario) => {
+    if (!id) return;
+    try {
+      await removerVoluntarioDoProjeto(Number(id), voluntario.id);
+      showToast(`${voluntario.nome} foi removido do projeto.`, "success");
+      fetchProjectData(); // Re-fetch all data to ensure consistency
+    } catch (error) {
+      console.error("Erro ao remover voluntário:", error);
+      showToast("Erro ao remover voluntário.", "error");
+    }
   };
 
   return (
     <div className={style.main}>
-      <div className={style.actionButton}  onClick={() => navigate("/projetos/ong")}>
+      <div className={style.actionButton} onClick={() => navigate("/projetos/ong")}>
         <Menor className={style.icon} />
         <p>Voltar para lista de projetos</p>
       </div>
@@ -137,14 +122,13 @@ function EditarProjeto() {
       </div>
 
       <div className={style.container__form}>
-        {/* FORMULÁRIO */}
         <div className={style.form}>
           <div className={style.form__header}>
             <h1>Editar Informações</h1>
           </div>
 
           <div className={style.form__body}>
-            <div className={style.name}>
+          <div className={style.name}>
               <label>Nome do projeto</label>
               <input
                 type="text"
@@ -163,67 +147,57 @@ function EditarProjeto() {
               />
             </div>
 
-            {/* SelectInput */}
             <div className={style.habilities}>
-              <SelectInput
+               <SelectInput
+                options={allHabilidades.map(h => h.descricao)}
+                value={habilidadesSelecionadas}
                 onChange={(values) => setHabilidadesSelecionadas(values)}
-              />{" "}
-            </div>
-
-            <div className={style.location}>
-              <label>Localização</label>
-              <input
-                type="text"
-                placeholder="Digite a localização do projeto"
-                value={localizacao}
-                onChange={(e) => setLocalizacao(e.target.value)}
               />
             </div>
 
             <div className={style.date__time}>
               <div className={style.date}>
                 <label>Data Início</label>
-                <DateCalendar onChange={(value) => setDataInicio(value)} />
-              </div>
-              <div className={style.time}>
-                <label>Hora Início</label>
-                <Clock onChange={(value) => setHoraInicio(value)} />
+                <DateCalendar 
+                  value={dataInicio} 
+                  onChange={setDataInicio} 
+                />
               </div>
             </div>
+
           </div>
 
           <div className={style.form__footer}>
-            <button className={`${style.button} ${style.buttonCancel}`}>
+            <button 
+              className={`${style.button} ${style.buttonCancel}`}
+              onClick={() => navigate("/projetos/ong")} >
               <Fechar />
               Cancelar
             </button>
             <button
               onClick={handleSalvarProjeto}
-              className={`${style.button} ${style.buttonSave}`}
-            >
+              className={`${style.button} ${style.buttonSave}`}>
               <Salvar />
               Salvar
             </button>
           </div>
         </div>
 
-        {/* LISTAS */}
         <div className={style.container__list}>
-          {/* Voluntários Selecionados */}
-          {voluntariosSelecionados.length > 0 && (
-            <div className={style.list__voluntarios_selecionados}>
+          {/* Voluntários no Projeto */}
+          <div className={style.list__voluntarios_selecionados}>
               <div className={style.list__header}>
                 <Usuario />
-                <p>Voluntários Selecionados</p>
+                <p>Voluntários no Projeto</p>
               </div>
               <div className={style.list__body}>
-                {voluntariosSelecionados.map((vol) => (
+                {Array.isArray(voluntariosNoProjeto) && voluntariosNoProjeto.map((vol) => (
                   <div key={vol.id} className={style.card}>
                     <div className={style.card__header}>
                       <h1>{vol.nome}</h1>
                       <p
                         className={style.removerButton}
-                        onClick={() => handleRemover(vol.id)}
+                        onClick={() => handleRemover(vol)}
                       >
                         Remover
                       </p>
@@ -231,9 +205,9 @@ function EditarProjeto() {
                     <div className={style.card__body}>
                       <p>Habilidades:</p>
                       <div className={style.habilities}>
-                        {vol.habilidades.map((hab: string, i: number) => (
+                        {(vol.habilidades || []).map((hab: any, i: number) => (
                           <div key={i} className={style.badge}>
-                            <span>{hab}</span>
+                            <span>{hab.descricao}</span>
                           </div>
                         ))}
                       </div>
@@ -242,42 +216,39 @@ function EditarProjeto() {
                 ))}
               </div>
             </div>
-          )}
 
           {/* Voluntários Compatíveis */}
-          {voluntariosCompatíveis.length > 0 && (
-            <div className={style.list__voluntarios_compativeis}>
-              <div className={style.list__header}>
-                <Usuario />
-                <p>Voluntários Compatíveis</p>
-              </div>
-              <div className={style.list__body}>
-                {voluntariosCompatíveis.map((vol) => (
-                  <div key={vol.id} className={style.card}>
-                    <div className={style.card__header}>
-                      <h1>{vol.nome}</h1>
-                      <p
-                        className={style.convidarButton}
-                        onClick={() => handleConvidar(vol)}
-                      >
-                        Convidar
-                      </p>
-                    </div>
-                    <div className={style.card__body}>
-                      <p>Habilidades:</p>
-                      <div className={style.habilities}>
-                        {vol.habilidades.map((hab: string, i: number) => (
-                          <div key={i} className={style.badge}>
-                            <span>{hab}</span>
-                          </div>
-                        ))}
-                      </div>
+          <div className={style.list__voluntarios_compativeis}>
+            <div className={style.list__header}>
+              <Usuario />
+              <p>Voluntários Compatíveis</p>
+            </div>
+            <div className={style.list__body}>
+              {Array.isArray(voluntariosCompatíveis) && voluntariosCompatíveis.map((vol) => (
+                <div key={vol.id} className={style.card}>
+                  <div className={style.card__header}>
+                    <h1>{vol.nome}</h1>
+                    <p
+                      className={style.convidarButton}
+                      onClick={() => handleConvidar(vol)}
+                    >
+                      Convidar
+                    </p>
+                  </div>
+                  <div className={style.card__body}>
+                    <p>Habilidades:</p>
+                    <div className={style.habilities}>
+                      {(vol.habilidades || []).map((hab: any, i: number) => (
+                        <div key={i} className={style.badge}>
+                          <span>{hab.descricao}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

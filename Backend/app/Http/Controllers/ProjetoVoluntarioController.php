@@ -10,6 +10,19 @@ class ProjetoVoluntarioController extends Controller
     public function store($id_voluntario, $id_projeto, $id_convite)
     {
         try {
+            // Verifica se o voluntário já está no projeto
+            $existing = DB::table('projeto_voluntario')
+                ->where('id_voluntario', $id_voluntario)
+                ->where('id_projeto', $id_projeto)
+                ->exists();
+
+            if ($existing) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Este voluntário já está no projeto.',
+                ], 409); // 409 Conflict
+            }
+
             DB::table('projeto_voluntario')->insert([
                 'id_voluntario' => $id_voluntario,
                 'id_projeto' => $id_projeto,

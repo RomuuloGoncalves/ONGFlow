@@ -1,19 +1,24 @@
 "use client";
 
 import { DateField } from "@/components/ui/datefield-rac";
-import { useState } from "react";
+import React from "react";
 
 interface DateCalendarProps {
-  onChange?: (date: Date | null) => void;
+  value: Date | null;
+  onChange: (date: Date | null) => void;
 }
 
-export default function DateCalendar({ onChange }: DateCalendarProps) {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
+export default function DateCalendar({ value, onChange }: DateCalendarProps) {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = e.target.value ? new Date(e.target.value) : null;
-    setSelectedDate(newDate);
-    onChange?.(newDate);
+    const dateString = e.target.value;
+    if (dateString) {
+      // Create date in local timezone to avoid off-by-one day issues
+      const [year, month, day] = dateString.split('-').map(Number);
+      const newDate = new Date(year, month - 1, day);
+      onChange(newDate);
+    } else {
+      onChange(null);
+    }
   };
 
   return (
@@ -21,7 +26,7 @@ export default function DateCalendar({ onChange }: DateCalendarProps) {
       <DateField className="*:not-first:mt-2">
         <input
           type="date"
-          value={selectedDate ? selectedDate.toISOString().split("T")[0] : ""}
+          value={value ? value.toISOString().split("T")[0] : ""}
           onChange={handleDateChange}
           className="border rounded-lg p-2 outline-none focus:ring-2 focus:ring-blue-500"
         />

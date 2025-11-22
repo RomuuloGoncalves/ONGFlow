@@ -37,7 +37,7 @@ function App() {
           <Route path="/convite/ong" element={<ConviteOng />} />
           <Route path="/perfil/ong" element={<PerfilOng />} />
           <Route path="/criar/projeto/ong" element={<CriarProjeto />} />
-          <Route path="/editar/projeto/ong" element={<EditarProjeto />} />
+          <Route path="/editar/projeto/ong/:id" element={<EditarProjeto />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

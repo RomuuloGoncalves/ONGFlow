@@ -1,18 +1,52 @@
-import serverService from './serverService';
-import type { Projeto } from '../interfaces/projeto';
-import type { AxiosPromise } from 'axios';
+import api from "./api";
+import type { Projeto } from "../interfaces/projeto";
+import type { Habilidade } from "../interfaces/habilidade";
+import type { Voluntario } from "../interfaces/voluntario";
+import type { AxiosPromise } from "axios";
 
 interface ProjetosResponse {
   data: Projeto[];
 }
 
-const projetoService = {
-  getProjetosPorOng: (idOng: number): AxiosPromise<ProjetosResponse> => {
-    return serverService.get<ProjetosResponse>(`/ongs/${idOng}/projetos`);
-  },
-  getProjetos: (): AxiosPromise<Projeto[]> => {
-    return serverService.get<Projeto[]>('/projetos');
-  }
+interface VoluntariosResponse {
+  data: Voluntario[];
+}
+
+export const getProjetosPorOng = (idOng: number): AxiosPromise<ProjetosResponse> => {
+  return api.get<ProjetosResponse>(`/ongs/${idOng}/projetos`);
 };
 
-export default projetoService;
+export const getProjetos = (): AxiosPromise<Projeto[]> => {
+  return api.get<Projeto[]>("/projetos");
+};
+
+export const getProjeto = (id: number): AxiosPromise<any> => {
+  return api.get<any>(`/projetos/${id}`);
+};
+
+export const updateProjeto = (id: number, data: any): AxiosPromise<Projeto> => {
+  return api.put<Projeto>(`/projetos/${id}`, data);
+};
+
+export const getHabilidades = (): AxiosPromise<any> => {
+  return api.get<any>("/habilidades");
+};
+
+export const getVoluntariosDoProjeto = (id: number): AxiosPromise<VoluntariosResponse> => {
+  return api.get<VoluntariosResponse>(`/projetos/${id}/voluntarios`);
+};
+
+export const getVoluntariosCompativeis = (id: number): AxiosPromise<VoluntariosResponse> => {
+  return api.get<VoluntariosResponse>(`/projetos/${id}/voluntarios-compativeis`);
+};
+
+export const adicionarVoluntarioAoProjeto = (id: number, voluntarioId: number): AxiosPromise<any> => {
+  return api.post(`/projetos/${id}/voluntarios`, { voluntario_id: voluntarioId });
+};
+
+export const removerVoluntarioDoProjeto = (id: number, voluntarioId: number): AxiosPromise<any> => {
+  return api.delete(`/projetos/${id}/voluntarios/${voluntarioId}`);
+};
+
+export const adicionarVoluntario = adicionarVoluntarioAoProjeto;
+export const removerVoluntario = removerVoluntarioDoProjeto;

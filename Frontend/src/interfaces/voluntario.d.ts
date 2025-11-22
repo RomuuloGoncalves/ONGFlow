@@ -12,6 +12,7 @@ export interface Voluntario {
   status: string;
   bio: string;
   id_endereco: number;
+  habilidades?: DashboardHabilidade[];
 }
 
 export interface VoluntarioCadastro {

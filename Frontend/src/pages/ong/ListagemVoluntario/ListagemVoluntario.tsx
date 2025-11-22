@@ -48,7 +48,7 @@ function ListagemVoluntario() {
       try {
         setIsLoading(true);
         const response = await api.get("/voluntarios");
-        setVoluntarios(response.data);
+        setVoluntarios(response.data || []);
       } catch (error) {
         showToast("Erro ao carregar os voluntários.", "error");
       } finally {
