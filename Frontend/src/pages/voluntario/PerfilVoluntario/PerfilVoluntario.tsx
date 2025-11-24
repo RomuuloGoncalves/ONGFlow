@@ -2,8 +2,6 @@ import Header from "@/components/Voluntario/Header/Header";
 import style from "./PerfilVoluntario.module.css";
 import { useEffect, useState } from "react";
 import SelectInput from "@/components/Voluntario/MultiSelect";
-
-// Icons
 import { Usuario } from "@/assets/icons/Usuario";
 import { Email } from "@/assets/icons/Email";
 import { Telefone } from "@/assets/icons/Telefone";

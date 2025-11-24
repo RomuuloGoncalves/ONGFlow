@@ -5,6 +5,7 @@ namespace App\Http\Requests\Ong;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -23,15 +24,16 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $ongId = $this->route('id');
         return [
-            'email' => ['required', 'email', 'unique:ongs,email', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('ongs', 'email')->ignore($ongId)],
+            'cnpj'  => ['required', 'string', 'max:18', Rule::unique('ongs', 'cnpj')->ignore($ongId)],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['nullable', 'string', 'min:8'],
             'nome' => ['required', 'string', 'max:255'],
             'nome_fantasia' => ['string', 'max:255'],
-            'cnpj' => ['required', 'string', 'digits:14', 'unique:ongs,cnpj'],
             'data_fundacao' => ['required', 'date', 'before:today'],
-            'sigla' => ['required', 'string', 'max:255'],
+            'sigla' => ['nullable', 'string', 'max:255'],
         ];
     }
 
@@ -47,7 +49,7 @@ class StoreRequest extends FormRequest
             'email.unique' => 'Este e-mail de email já está em uso por outra ONG.',
             'email.email' => 'Por favor, insira um endereço de e-mail válido para o email.',
 
-            'password.required' => 'O campo senha é obrigatório.',
+            // 'password.required' => 'O campo senha é obrigatório.',
             'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
             // 'password.confirmed' => 'A confirmação de senha não corresponde.',
 
@@ -63,7 +65,7 @@ class StoreRequest extends FormRequest
             'data_fundacao.date' => 'O formato da data de fundação é inválido.',
             'data_fundacao.before' => 'A data de fundação deve ser uma data anterior a hoje.',
 
-            'sigla.required' => 'O campo sigla é obrigatório.',
+            // 'sigla.required' => 'O campo sigla é obrigatório.',
         ];
     }
 
