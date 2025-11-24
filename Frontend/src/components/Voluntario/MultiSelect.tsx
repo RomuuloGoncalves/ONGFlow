@@ -1,27 +1,32 @@
 import { Label } from "@/components/ui/label";
 import MultipleSelector, { type Option } from "@/components/ui/multiselect";
+import type { Habilidade } from "@/interfaces/habilidade";
 
 interface SelectInputProps {
-  options?: string[];
-  value?: string[];
-  onChange?: (values: string[]) => void;
+  options?: Habilidade[];
+  value?: number[];
+  onChange?: (values: number[]) => void;
 }
+// console.log("HABILIDADES", habilidades)
 
-export default function SelectInput({ 
-  options = [], 
-  value = [], 
-  onChange 
+export default function SelectInput({
+  options = [],
+  value = [],
+  onChange
 }: SelectInputProps) {
-  
-  // Converte as opções de string[] para Option[]
-  const mappedOptions: Option[] = options.map(opt => ({ value: opt, label: opt }));
-  
-  // Converte os valores selecionados de string[] para Option[]
-  const selectedValues: Option[] = value.map(v => ({ value: v, label: v }));
+
+  const mappedOptions: Option[] = options.map(opt => ({
+    value: String(opt.id),
+    label: opt.descricao
+  }));
+
+  const selectedValues: Option[] = value.map(v => ({
+    value: String(v),
+    label: options.find(opt => opt.id === v)?.descricao || ""
+  }));
 
   const handleChange = (selected: Option[]) => {
-    // Converte de volta para string[] antes de notificar o componente pai
-    const values = selected.map((opt) => opt.label);
+    const values = selected.map(opt => Number(opt.value));
     onChange?.(values);
   };
 
@@ -30,13 +35,15 @@ export default function SelectInput({
       <Label>Habilidades</Label>
       <MultipleSelector
         commandProps={{ label: "Selecione as Habilidades" }}
-        defaultOptions={mappedOptions}
-        placeholder="Selecione as habilidades necessárias"
+        options={mappedOptions}
+        placeholder="Selecione as habilidades"
         value={selectedValues}
         onChange={handleChange}
         hideClearAllButton
         hidePlaceholderWhenSelected
-        emptyIndicator={<p className="text-center text-sm">Sem resultados encontrados</p>}
+        emptyIndicator={
+          <p className="text-center text-sm">Sem resultados encontrados</p>
+        }
       />
     </div>
   );

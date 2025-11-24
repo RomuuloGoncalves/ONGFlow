@@ -56,10 +56,16 @@ class Voluntario extends Authenticatable
         return $this->belongsToMany(Ong::class, 'ong_voluntario', 'id_voluntario', 'id_ong');
     }
 
-    public function habilidades()
-    {
-        return $this->belongsToMany(Habilidade::class, 'voluntario_habilidade', 'id_voluntario', 'id_habilidade');
-    }
+public function habilidades()
+{
+    return $this->belongsToMany(
+        Habilidade::class,
+        'voluntario_habilidade',
+        'id_voluntario',
+        'id_habilidade'
+    );
+}
+
 
     public function projetos()
     {

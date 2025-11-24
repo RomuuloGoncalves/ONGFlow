@@ -106,7 +106,7 @@ public function update(Request $request, string $id)
         $validated = $request->validate([
             'nome' => ['sometimes', 'string', 'max:255'],
             'email' => ['sometimes', 'email', Rule::unique('voluntarios')->ignore($voluntario->id), 'max:255'],
-            'cpf' => ['sometimes', 'string', 'digits:11', Rule::unique('voluntarios')->ignore($voluntario->id)],
+            'cpf' => ['nullable', 'string', 'max:14', Rule::unique('voluntarios')->ignore($voluntario->id)],
             'data_nascimento' => ['sometimes', 'date', 'before:today'],
             'telefone' => ['sometimes', 'string', 'digits_between:10,15'],
             'password' => ['sometimes', 'string', 'min:8'],

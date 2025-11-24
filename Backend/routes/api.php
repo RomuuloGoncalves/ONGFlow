@@ -10,7 +10,7 @@ use App\Http\Controllers\HabilidadeController;
 use App\Http\Controllers\ConviteController;
 use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\VoluntarioHabilidadeController;
 
 Route::prefix('voluntarios')->group(function () {
 
@@ -91,6 +91,19 @@ Route::prefix('enderecos')->group(function () {
     Route::put('/{id}', [EnderecoController::class, 'update']);
     Route::delete('/{id}', [EnderecoController::class, 'destroy']);
 
+});
+
+
+Route::prefix('voluntariohabilidades')->group(function () {
+
+    Route::get('/', [VoluntarioHabilidadeController::class, 'index']);
+    Route::post('/', [VoluntarioHabilidadeController::class, 'store']);
+    Route::get('/{id}', [VoluntarioHabilidadeController::class, 'show']);
+    Route::put('/{id}', [VoluntarioHabilidadeController::class, 'update']);
+    Route::delete('/{id}', [VoluntarioHabilidadeController::class, 'destroy']);
+    Route::get('/voluntario/{id}', [VoluntarioHabilidadeController::class, 'habilidadesVoluntario']);
+    Route::post('/lote', [VoluntarioHabilidadeController::class, 'storeMany']);
+    Route::post('/sync/{id}', [VoluntarioHabilidadeController::class, 'syncHabilidades']);
 });
 
 require __DIR__.'/test_routes.php';

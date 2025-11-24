@@ -16,7 +16,9 @@ import voluntarioService from "@/services/voluntarioService";
 import type { Endereco } from "@/interfaces/endereco";
 import enderecoService from "@/services/enderecoService";
 import type { Voluntario } from "@/interfaces/voluntario";
-
+import type { Habilidade } from "@/interfaces/habilidade";
+import { getHabilidades } from "@/services/projetoService";
+import voluntarioHabilidadeService from "@/services/voluntarioHabilidade";
 // falta a parte das habilidades
 function PerfilVoluntario() {
 
@@ -44,6 +46,9 @@ const [endereco, setEndereco] = useState<Endereco>({
   estado: '',
 });
 
+const [habilidades, setHabilidades] = useState<Habilidade[]>([]);
+const [selectedHabilidades, setSelectedHabilidades] = useState<number[]>([]);
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
     if (userData) {
@@ -59,6 +64,7 @@ const [endereco, setEndereco] = useState<Endereco>({
         id_endereco: userData.id_endereco || "",
       }));
     }
+
 if (userData.id_endereco) {
         enderecoService.getEndereco(userData.id_endereco).then((res) => {
           const enderecoData = res.data.data;
@@ -74,57 +80,67 @@ if (userData.id_endereco) {
           });
         });
       }
-  }, []);
+  async function fetchHabilidades() {
+    try {
+      const response = await getHabilidades();
+      setHabilidades(response.data); 
+    } catch (error) {
+      console.error("Erro ao carregar habilidades:", error);
+    }
+  }
 
-  // async function handleSubmit(e: React.FormEvent) {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await voluntarioService.updateVoluntario(voluntario.id, voluntario);
+  fetchHabilidades();
 
-  //     localStorage.setItem("user", JSON.stringify(response.data.data));
+  async function carregarHabilidades() {
+    try {
+      const response = await voluntarioHabilidadeService.getByVoluntario(userData.id);
+      
+      const lista = response.data.data;
+      const ids = lista.map((h: any) => h.id);
 
-  //   } catch (error) {
-  //     console.error("Erro ao atualizar voluntário:", error);
-  //   }
+      setSelectedHabilidades(ids);
+    } catch (error) {
+      console.error("Erro ao carregar habilidades:", error);
+    }
+  }
 
-  //   try {
-  //     if (endereco.id) {
-  //       const responseEndereco = await enderecoService.updateEndereco(endereco.id, endereco);
-  //       console.log("Endereço atualizado com sucesso!", responseEndereco.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Erro ao atualizar endereço:", error);
-  //   }
-  // }
+  if (userData.id) {
+    carregarHabilidades();
+  }
 
-  async function handleSubmit(e: React.FormEvent) {
+}, []);
+
+async function handleSubmit(e: React.FormEvent) {
   e.preventDefault();
 
   try {
     let enderecoId = endereco.id;
 
     if (enderecoId) {
-      const responseEndereco = await enderecoService.updateEndereco(enderecoId, endereco);
-      console.log("Endereço atualizado com sucesso!", responseEndereco.data);
-    } 
-    else {
+      await enderecoService.updateEndereco(enderecoId, endereco);
+    } else {
       const responseNovoEndereco = await enderecoService.createEndereco(endereco);
       enderecoId = responseNovoEndereco.data.data.id;
-      console.log("Novo endereço criado com sucesso!", responseNovoEndereco.data);
-
       voluntario.id_endereco = enderecoId;
-      console.log("id_endereco", voluntario.id_endereco)
     }
 
-    const responseVoluntario = await voluntarioService.updateVoluntario(voluntario.id, voluntario);
+    const responseVoluntario = await voluntarioService.updateVoluntario(
+      voluntario.id,
+      voluntario
+    );
+
     localStorage.setItem("user", JSON.stringify(responseVoluntario.data.data));
 
     console.log("Voluntário atualizado com sucesso!");
+        await voluntarioHabilidadeService.syncHabilidades(
+      voluntario.id,
+      selectedHabilidades
+    );
+
   } catch (error) {
-    console.error("Erro ao atualizar voluntário ou endereço:", error);
+    console.error("Erro ao atualizar voluntário, endereço ou habilidades:", error);
   }
 }
-
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -290,7 +306,12 @@ if (userData.id_endereco) {
             />
           </div>
           {/* Habilidade */}
-          <SelectInput />
+          <SelectInput
+            options={habilidades}
+            value={selectedHabilidades}
+            onChange={(values) => setSelectedHabilidades(values)}
+          />
+
           <hr />
           <div className={style.container__buttons}>
             {/* Btn */}
