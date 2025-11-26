@@ -23,9 +23,21 @@ class ProjetoController extends Controller
 
     public function store(Request $request)
     {
-        $projeto = Projeto::create($request->all());
+        $data = $request->all();
+        $data['status'] = 'ativo';
+
+        $projeto = Projeto::create($data);
+
         if ($request->has('habilidades')) {
-            $projeto->habilidades()->sync($request->habilidades);
+            $habilidades = $request->input('habilidades');
+            $habilidadeIds = [];
+            foreach ($habilidades as $habilidadeDescricao) {
+                $habilidade = \App\Models\Habilidade::where('descricao', $habilidadeDescricao)->first();
+                if ($habilidade) {
+                    $habilidadeIds[] = $habilidade->id;
+                }
+            }
+            $projeto->habilidades()->sync($habilidadeIds);
         }
         $projeto->load(['habilidades', 'ong.endereco']);
         return response()->json($projeto, 201);

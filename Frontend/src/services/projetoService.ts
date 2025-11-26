@@ -25,6 +25,10 @@ export const getProjeto = (id: number): AxiosPromise<any> => {
   return api.get<any>(`/projetos/${id}`);
 };
 
+export const createProjeto = (data: any): AxiosPromise<Projeto> => {
+  return api.post<Projeto>('/projetos', data);
+};
+
 export const updateProjeto = (id: number, data: any): AxiosPromise<Projeto> => {
   return api.put<Projeto>(`/projetos/${id}`, data);
 };
