@@ -16,44 +16,45 @@ function EditarProjeto() {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [dataInicio, setDataInicio] = useState<Date | null>(null);
-  const [habilidadesSelecionadas, setHabilidadesSelecionadas] = useState<string[]>([]);
+  const [habilidadesSelecionadas, setHabilidadesSelecionadas] = useState<number[]>([]);
   const [allHabilidades, setAllHabilidades] = useState<Habilidade[]>([]);
   const [voluntariosNoProjeto, setVoluntariosNoProjeto] = useState<Voluntario[]>([]);
   const [voluntariosCompatíveis, setVoluntariosCompatíveis] = useState<Voluntario[]>([]);
+  const [voluntariosParaConvidar, setVoluntariosParaConvidar] = useState<Voluntario[]>([]);
 
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { showToast } = useCustomToast();
 
-  const fetchProjectData = async () => {
-    if (!id) return;
-    try {
-      const [projetoResponse, habilidadesResponse, voluntariosProjetoResponse, voluntariosCompativeisResponse] = await Promise.all([
-        getProjeto(Number(id)),
-        getHabilidades(),
-        getVoluntariosDoProjeto(Number(id)),
-        getVoluntariosCompativeis(Number(id))
-      ]);
-
-      const projeto = projetoResponse.data;
-      setNome(projeto.nome);
-      setDescricao(projeto.descricao);
-      setDataInicio(new Date(projeto.data_inicio));
-      if (projeto.habilidades) {
-        setHabilidadesSelecionadas(projeto.habilidades.map((h: Habilidade) => h.descricao));
-      }
-
-      setAllHabilidades(habilidadesResponse.data || []);
-      setVoluntariosNoProjeto(voluntariosProjetoResponse.data || []);
-      setVoluntariosCompatíveis(voluntariosCompativeisResponse.data || []);
-
-    } catch (error) {
-      console.error("Erro ao carregar dados do projeto:", error);
-      showToast("Falha ao carregar dados do projeto", "error");
-    }
-  };
-
   useEffect(() => {
+    const fetchProjectData = async () => {
+      if (!id) return;
+      try {
+        const [projetoResponse, habilidadesResponse, voluntariosProjetoResponse, voluntariosCompativeisResponse] = await Promise.all([
+          getProjeto(Number(id)),
+          getHabilidades(),
+          getVoluntariosDoProjeto(Number(id)),
+          getVoluntariosCompativeis(Number(id))
+        ]);
+
+        const projeto = projetoResponse.data;
+        setNome(projeto.nome);
+        setDescricao(projeto.descricao);
+        setDataInicio(new Date(projeto.data_inicio));
+        if (projeto.habilidades) {
+          setHabilidadesSelecionadas(projeto.habilidades.map((h: Habilidade) => h.id));
+        }
+
+        setAllHabilidades(habilidadesResponse.data || []);
+        setVoluntariosNoProjeto(voluntariosProjetoResponse.data.data || []);
+        setVoluntariosCompatíveis(voluntariosCompativeisResponse.data || []);
+
+      } catch (error) {
+        console.error("Erro ao carregar dados do projeto:", error);
+        showToast("Falha ao carregar dados do projeto", "error");
+      }
+    };
+
     fetchProjectData();
   }, [id, showToast]);
 
@@ -67,18 +68,27 @@ function EditarProjeto() {
         showToast("Todos os campos obrigatórios devem ser preenchidos.", "error");
         return;
     }
+
+    const habilidadesDescricoes = habilidadesSelecionadas.map(id => {
+      const habilidade = allHabilidades.find(h => h.id === id);
+      return habilidade ? habilidade.descricao : '';
+    }).filter(Boolean);
     
     const payload = {
       nome,
       descricao,
-      data_inicio: dataInicio.toISOString().split('T')[0], // Formato YYYY-MM-DD
+      data_inicio: dataInicio.toISOString().split('T')[0],
       id_ong: idOng,
-      habilidades: habilidadesSelecionadas,
+      habilidades: habilidadesDescricoes,
     };
 
     try {
+      for (const voluntario of voluntariosParaConvidar) {
+        await adicionarVoluntarioAoProjeto(Number(id), voluntario.id);
+      }
+
       await updateProjeto(Number(id), payload);
-      showToast("Projeto atualizado com sucesso!", "success");
+      showToast("Projeto atualizado e convites enviados com sucesso!", "success");
       navigate("/projetos/ong");
     } catch (error) {
       console.error("Erro ao salvar o projeto:", error);
@@ -86,16 +96,14 @@ function EditarProjeto() {
     }
   };
 
-  const handleConvidar = async (voluntario: Voluntario) => {
-    if (!id) return;
-    try {
-      await adicionarVoluntarioAoProjeto(Number(id), voluntario.id);
-      showToast(`${voluntario.nome} foi adicionado ao projeto!`, "success");
-      fetchProjectData(); // Re-fetch all data to ensure consistency
-    } catch (error) {
-      console.error("Erro ao adicionar voluntário:", error);
-      showToast("Erro ao adicionar voluntário.", "error");
-    }
+  const handleConvidar = (voluntario: Voluntario) => {
+    setVoluntariosParaConvidar(prev => [...prev, voluntario]);
+    setVoluntariosCompatíveis(prev => prev.filter(v => v.id !== voluntario.id));
+  };
+
+  const handleCancelarConvite = (voluntario: Voluntario) => {
+    setVoluntariosCompatíveis(prev => [...prev, voluntario]);
+    setVoluntariosParaConvidar(prev => prev.filter(v => v.id !== voluntario.id));
   };
 
   const handleRemover = async (voluntario: Voluntario) => {
@@ -103,7 +111,12 @@ function EditarProjeto() {
     try {
       await removerVoluntarioDoProjeto(Number(id), voluntario.id);
       showToast(`${voluntario.nome} foi removido do projeto.`, "success");
-      fetchProjectData(); // Re-fetch all data to ensure consistency
+      const [voluntariosProjetoResponse, voluntariosCompativeisResponse] = await Promise.all([
+        getVoluntariosDoProjeto(Number(id)),
+        getVoluntariosCompativeis(Number(id))
+      ]);
+      setVoluntariosNoProjeto(voluntariosProjetoResponse.data.data || []);
+      setVoluntariosCompatíveis(voluntariosCompativeisResponse.data || []);
     } catch (error) {
       console.error("Erro ao remover voluntário:", error);
       showToast("Erro ao remover voluntário.", "error");
@@ -149,9 +162,9 @@ function EditarProjeto() {
 
             <div className={style.habilities}>
                <SelectInput
-                options={allHabilidades.map(h => h.descricao)}
+                options={allHabilidades}
                 value={habilidadesSelecionadas}
-                onChange={(values) => setHabilidadesSelecionadas(values)}
+                onChange={(values: number[]) => setHabilidadesSelecionadas(values)}
               />
             </div>
 
@@ -184,6 +197,41 @@ function EditarProjeto() {
         </div>
 
         <div className={style.container__list}>
+          {/* Voluntários a Convidar */}
+          {voluntariosParaConvidar.length > 0 && (
+            <div className={style.list__voluntarios_convidar}>
+              <div className={style.list__header}>
+                <Usuario />
+                <p>Voluntários a Convidar</p>
+              </div>
+              <div className={style.list__body}>
+                {voluntariosParaConvidar.map((vol) => (
+                  <div key={vol.id} className={style.card}>
+                    <div className={style.card__header}>
+                      <h1>{vol.nome}</h1>
+                      <p
+                        className={style.cancelarButton}
+                        onClick={() => handleCancelarConvite(vol)}
+                      >
+                        Cancelar
+                      </p>
+                    </div>
+                    <div className={style.card__body}>
+                      <p>Habilidades:</p>
+                      <div className={style.habilities}>
+                        {(vol.habilidades || []).map((hab: any, i: number) => (
+                          <div key={i} className={style.badge}>
+                            <span>{hab.descricao}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Voluntários no Projeto */}
           <div className={style.list__voluntarios_selecionados}>
               <div className={style.list__header}>
@@ -224,7 +272,7 @@ function EditarProjeto() {
               <p>Voluntários Compatíveis</p>
             </div>
             <div className={style.list__body}>
-              {Array.isArray(voluntariosCompatíveis) && voluntariosCompatíveis.map((vol) => (
+              {Array.isArray(voluntariosCompatíveis) && voluntariosCompatíveis.map((vol: Voluntario) => (
                 <div key={vol.id} className={style.card}>
                   <div className={style.card__header}>
                     <h1>{vol.nome}</h1>

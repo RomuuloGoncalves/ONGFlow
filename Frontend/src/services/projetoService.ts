@@ -3,7 +3,6 @@ import type { Projeto } from "../interfaces/projeto";
 import type { Habilidade } from "../interfaces/habilidade";
 import type { Voluntario } from "../interfaces/voluntario";
 import type { AxiosPromise } from "axios";
-import type { ApiResponse } from "@/interfaces/apiResponse";
 
 interface ProjetosResponse {
   data: Projeto[];
@@ -41,8 +40,8 @@ export const getVoluntariosDoProjeto = (id: number): AxiosPromise<VoluntariosRes
   return api.get<VoluntariosResponse>(`/projetos/${id}/voluntarios`);
 };
 
-export const getVoluntariosCompativeis = (id: number): AxiosPromise<VoluntariosResponse> => {
-  return api.get<VoluntariosResponse>(`/projetos/${id}/voluntarios-compativeis`);
+export const getVoluntariosCompativeis = (id: number): AxiosPromise<Voluntario[]> => {
+  return api.get<Voluntario[]>(`/projetos/${id}/voluntarios-compativeis`);
 };
 
 export const adicionarVoluntarioAoProjeto = (id: number, voluntarioId: number): AxiosPromise<any> => {

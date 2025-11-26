@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Projeto;
 use App\Models\Voluntario;
+use App\Models\Convite;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -99,26 +100,38 @@ class ProjetoController extends Controller
 
     public function adicionarVoluntario(Request $request, string $id)
     {
+        $projeto = Projeto::findOrFail($id);
         $voluntarioId = $request->input('voluntario_id');
 
-        $exists = DB::table('projeto_voluntario')
-                        ->where('id_projeto', $id)
-                        ->where('id_voluntario', $voluntarioId)
-                        ->exists();
-
-        if ($exists) {
-            return response()->json(['message' => 'Voluntário já está no projeto'], 409); 
+        $conviteExistente = Convite::where('id_projeto', $projeto->id)
+                                    ->where('id_voluntario', $voluntarioId)
+                                    ->whereIn('status', ['pendente', 'aceito'])
+                                    ->exists();
+        
+        if ($conviteExistente) {
+            return response()->json(['message' => 'Voluntário já foi convidado ou já faz parte do projeto.'], 409);
         }
 
-        DB::table('projeto_voluntario')->insert([
-            'id_projeto' => $id,
+        $convite = Convite::create([
+            'id_projeto' => $projeto->id,
             'id_voluntario' => $voluntarioId,
-            'id_convite' => null, 
-            'created_at' => now(),
-            'updated_at' => now(),
+            'data_convite' => now(),
+            'status' => 'pendente',
         ]);
 
-        return response()->json(['message' => 'Voluntário adicionado com sucesso']);
+        try {
+            $projeto->voluntarios()->attach($voluntarioId, [
+                'id_convite' => $convite->id,
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            $convite->delete();
+            return response()->json(['message' => 'Ocorreu um erro ao tentar associar o voluntário ao projeto.'], 500);
+        }
+
+        return response()->json([
+            'message' => 'Convite enviado com sucesso!',
+            'convite' => $convite,
+        ], 201);
     }
 
     public function removerVoluntario(string $id, string $voluntarioId)
