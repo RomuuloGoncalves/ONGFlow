@@ -158,7 +158,8 @@
             .voluntario__info {
               width: 50%;
               height: 100%;
-
+              text-overflow: ellipsis;
+              white-space: nowrap;
               p {
                 font-weight: 600;
                 color: var(--secondary-dark-grey-900);
