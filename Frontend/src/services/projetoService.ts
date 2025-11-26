@@ -45,7 +45,10 @@ export const getVoluntariosCompativeis = (id: number): AxiosPromise<Voluntario[]
 };
 
 export const adicionarVoluntarioAoProjeto = (id: number, voluntarioId: number): AxiosPromise<any> => {
-  return api.post(`/projetos/${id}/voluntarios`, { voluntario_id: voluntarioId });
+  return api.post(`/projetos/${id}/voluntarios`, { 
+    voluntario_id: voluntarioId, 
+    iniciador: 'ong' 
+  });
 };
 
 export const removerVoluntarioDoProjeto = (id: number, voluntarioId: number): AxiosPromise<any> => {
