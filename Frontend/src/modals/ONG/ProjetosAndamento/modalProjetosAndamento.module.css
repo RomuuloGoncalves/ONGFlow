@@ -9,8 +9,8 @@
     justify-content: space-between;
     align-items: center;
 
-    .icon{
-        cursor: pointer;
+    .icon {
+      cursor: pointer;
     }
 
     h1 {
@@ -70,6 +70,12 @@
         font-size: 12px;
         box-shadow: --shadow-5;
 
+        span {
+          white-space: nowrap;
+          overflow: hidden; 
+          text-overflow: ellipsis; 
+        }
+
         @media (max-width: 520px) {
           min-width: 80px;
           height: 25px;
@@ -120,7 +126,6 @@
         }
       }
     }
-
   }
   .modal__footer {
     width: 100%;
@@ -145,21 +150,21 @@
       cursor: pointer;
       box-shadow: var(--shadow-5);
       color: var(--secondary-primary-white);
-      
-      @media (max-width:425px) {
-          min-width: 80px;
-          font-size: 12px;
-        }
-    }
-    
-    .buttonDelete{
-        background-color: #ff0000;
+
+      @media (max-width: 425px) {
+        min-width: 80px;
+        font-size: 12px;
+      }
     }
 
-    .buttonEdit{
-        background-color: var(--secondary-primary-white);
-        border: .5px solid #D2D2D2;
-        color: var(--secondary-primary-black);  
+    .buttonDelete {
+      background-color: #ff0000;
+    }
+
+    .buttonEdit {
+      background-color: var(--secondary-primary-white);
+      border: 0.5px solid #d2d2d2;
+      color: var(--secondary-primary-black);
     }
   }
 }

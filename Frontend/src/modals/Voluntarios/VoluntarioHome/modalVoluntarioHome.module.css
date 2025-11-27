@@ -1,4 +1,4 @@
-@import '@/style/global.css';
+@import "@/style/global.css";
 .modal {
   .modal__header {
     width: 100%;
@@ -68,6 +68,12 @@
           font-size: 12px;
           box-shadow: --shadow-5;
 
+          span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
           @media (max-width: 425px) {
             min-width: 80px;
             height: 25px;
@@ -79,7 +85,8 @@
       }
     }
 
-    .status__location,.ong__phone {
+    .status__location,
+    .ong__phone {
       width: 100%;
       min-height: 50px;
       display: flex;

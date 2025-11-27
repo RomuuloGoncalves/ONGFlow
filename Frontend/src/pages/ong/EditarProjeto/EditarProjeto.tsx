@@ -220,7 +220,7 @@ function EditarProjeto() {
                       <p>Habilidades:</p>
                       <div className={style.habilities}>
                         {(vol.habilidades || []).map((hab: any, i: number) => (
-                          <div key={i} className={style.badge}>
+                          <div key={i} className={style.badge} title={hab.descricao}>
                             <span>{hab.descricao}</span>
                           </div>
                         ))}
@@ -254,7 +254,7 @@ function EditarProjeto() {
                       <p>Habilidades:</p>
                       <div className={style.habilities}>
                         {(vol.habilidades || []).map((hab: any, i: number) => (
-                          <div key={i} className={style.badge}>
+                          <div key={i} className={style.badge} title={hab.descricao}>
                             <span>{hab.descricao}</span>
                           </div>
                         ))}
@@ -287,7 +287,7 @@ function EditarProjeto() {
                     <p>Habilidades:</p>
                     <div className={style.habilities}>
                       {(vol.habilidades || []).map((hab: any, i: number) => (
-                        <div key={i} className={style.badge}>
+                        <div key={i} className={style.badge} title={hab.descricao}>
                           <span>{hab.descricao}</span>
                         </div>
                       ))}

@@ -111,7 +111,7 @@ function ConviteOng() {
                     </div>
                     <div className={style.habilidades}>
                       {(item.voluntario?.habilidades || []).map((hab, i) => (
-                        <div key={i} className={style.badge}>
+                        <div key={i} className={style.badge} title={hab.descricao}>
                           <p>{hab.descricao}</p>
                         </div>
                       ))}

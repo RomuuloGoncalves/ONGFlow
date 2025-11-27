@@ -13,7 +13,7 @@ function PublicHome() {
         </nav>
       </header>
 
-      <main className={styles.conteudoPrincipal}>
+      <div className={styles.conteudoPrincipal}>
         <div className={styles.blocoTexto}>
           <h2 className={styles.titulo}>
             Onde a vontade de ajudar encontra a oportunidade.
@@ -29,7 +29,7 @@ function PublicHome() {
         <div className={styles.containerImagem}>
           <img src={ONGFlowImagem} alt="Voluntários e ONGs se conectando" className={styles.imagemApresentacao} />
         </div>
-      </main>
+      </div>
     </div>
   );
 }

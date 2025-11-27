@@ -78,6 +78,12 @@
   font-weight: 500;
   font-size: 12px;
   box-shadow: var(--shadow-5);
+
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .location__phone {
@@ -220,19 +226,20 @@
     flex-direction: column;
     gap: 1rem;
   }
-  .location, .phone {
-      width: 100%;
+  .location,
+  .phone {
+    width: 100%;
   }
 }
 
-@media(max-width: 425px){
+@media (max-width: 425px) {
   .modal__body p {
     font-size: 12px;
   }
   .modal__body span {
     font-size: 10px;
   }
-  .card__header h1{
+  .card__header h1 {
     font-size: 14px;
   }
   .buttonConvidar {

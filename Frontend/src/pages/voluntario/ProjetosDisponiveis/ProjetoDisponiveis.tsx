@@ -140,7 +140,7 @@ function HomeVoluntario() {
                   {item.habilidades && (
                     <>
                       {item.habilidades.slice(0, 3).map((hab, i) => (
-                        <div key={i} className={style.badge}>
+                        <div key={i} className={style.badge} title={hab.descricao}>
                           <p>{hab.descricao}</p>
                         </div>
                       ))}

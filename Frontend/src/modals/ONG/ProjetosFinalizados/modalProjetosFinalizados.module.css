@@ -65,7 +65,11 @@
         font-weight: 500;
         font-size: 12px;
         box-shadow: --shadow-5;
-
+        span {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
         @media (max-width: 520px) {
           min-width: 80px;
           height: 25px;
@@ -212,7 +216,7 @@
       color: var(--secondary-primary-white);
       background-color: #ff0000;
 
-      @media (max-width:425px) {
+      @media (max-width: 425px) {
         min-width: 80px;
         font-size: 12px;
       }

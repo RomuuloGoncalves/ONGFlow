@@ -5,8 +5,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  gap: 30px;
   padding: 20px 10px;
   margin: 0 auto;
 
@@ -21,7 +20,7 @@
     display: flex;
     gap: 10px;
     cursor: pointer;
-    
+
     .icon {
       color: #4b4b4b;
     }
@@ -324,7 +323,11 @@
                   font-weight: 500;
                   font-size: 12px;
                   box-shadow: --shadow-5;
-
+                  span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
                   @media (max-width: 520px) {
                     min-width: 70px;
                     height: 25px;

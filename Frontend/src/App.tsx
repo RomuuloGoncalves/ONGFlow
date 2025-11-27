@@ -39,7 +39,7 @@ function App() {
           <Route path="/criar/projeto/ong" element={<CriarProjeto />} />
           <Route path="/editar/projeto/ong/:id" element={<EditarProjeto />} />
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />}  />
       </Routes>
     </Router>
   );

@@ -321,7 +321,11 @@
                   font-weight: 500;
                   font-size: 12px;
                   box-shadow: --shadow-5;
-
+                  span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
                   @media (max-width: 520px) {
                     min-width: 70px;
                     height: 25px;

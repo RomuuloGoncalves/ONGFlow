@@ -185,7 +185,7 @@ function Projetos() {
 
                       <div className={style.habilidades}>
                         {(p.habilidades || []).slice(0, 3).map((hab, i) => (
-                          <div key={i} className={style.badge}>
+                          <div key={i} className={style.badge} title={hab.descricao}>
                             <p>{hab.descricao}</p>
                           </div>
                         ))}
