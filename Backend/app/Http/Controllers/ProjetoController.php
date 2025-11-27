@@ -94,22 +94,22 @@ class ProjetoController extends Controller
             })
             ->whereNotIn('id', $voluntariosNoProjetoIds)
             ->get();
-        
+
         return response()->json($voluntariosCompatíveis);
     }
 
     public function adicionarVoluntario(Request $request, string $id)
     {
         $request->validate([
-            'voluntario_id' => 'required|exists:voluntarios,id',
+            'id_voluntario' => 'required|exists:voluntarios,id',
             'iniciador' => 'required|string|in:ong,voluntario',
         ]);
 
         $projeto = Projeto::findOrFail($id);
-        $voluntarioId = $request->input('voluntario_id');
+        $voluntarioId = $request->input('id_voluntario');
 
         // Check if volunteer is already in the project
-        $voluntarioNoProjeto = $projeto->voluntarios()->where('voluntario_id', $voluntarioId)->exists();
+        $voluntarioNoProjeto = $projeto->voluntarios()->where('id_voluntario', $voluntarioId)->exists();
         // if ($voluntarioNoProjeto) {
         //      return response()->json(['message' => 'Este voluntário já faz parte do projeto.'], 409);
         // }
@@ -119,7 +119,7 @@ class ProjetoController extends Controller
                                     ->where('id_voluntario', $voluntarioId)
                                     ->where('status', 'pendente')
                                     ->exists();
-        
+
         // if ($conviteExistente) {
         //     return response()->json(['message' => 'Um convite para este voluntário já está pendente.'], 409);
         // }

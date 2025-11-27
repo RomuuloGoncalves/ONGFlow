@@ -10,7 +10,7 @@ class VoluntarioHabilidade extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'voluntario_id',
-        'habilidade_id'
+        'id_voluntario',
+        'id_habilidade'
     ];
 }

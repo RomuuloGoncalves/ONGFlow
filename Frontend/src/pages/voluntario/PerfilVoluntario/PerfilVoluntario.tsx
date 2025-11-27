@@ -17,6 +17,7 @@ import type { Voluntario } from "@/interfaces/voluntario";
 import type { Habilidade } from "@/interfaces/habilidade";
 import { getHabilidades } from "@/services/projetoService";
 import voluntarioHabilidadeService from "@/services/voluntarioHabilidade";
+import useCustomToast from "@/components/ui/use-toast";
 // falta a parte das habilidades
 function PerfilVoluntario() {
 
@@ -46,6 +47,8 @@ const [endereco, setEndereco] = useState<Endereco>({
 
 const [habilidades, setHabilidades] = useState<Habilidade[]>([]);
 const [selectedHabilidades, setSelectedHabilidades] = useState<number[]>([]);
+
+  const { showToast } = useCustomToast();
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user") || "{}");
@@ -129,17 +132,26 @@ async function handleSubmit(e: React.FormEvent) {
 
     localStorage.setItem("user", JSON.stringify(responseVoluntario.data.data));
 
-    console.log("Voluntário atualizado com sucesso!");
-        await voluntarioHabilidadeService.syncHabilidades(
+      await voluntarioHabilidadeService.syncHabilidades(
       voluntario.id,
       selectedHabilidades
+
     );
 
-  } catch (error) {
-    console.error("Erro ao atualizar voluntário, endereço ou habilidades:", error);
+    showToast("Informações atualizadas com sucesso!", "success");
+
+  } catch (error: any) {
+    const erros: any = error.response.data.errors;
+    for (const atributo in erros) {
+      if (erros.hasOwnProperty(atributo)) {
+        erros[atributo].forEach((erro: string) => {
+        showToast(erro, "error");
+      });
+      }
+  }
+
   }
 }
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
