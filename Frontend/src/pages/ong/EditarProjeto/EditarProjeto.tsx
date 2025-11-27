@@ -97,7 +97,13 @@ function EditarProjeto() {
   };
 
   const handleConvidar = (voluntario: Voluntario) => {
-    setVoluntariosParaConvidar(prev => [...prev, voluntario]);
+    try {
+      adicionarVoluntarioAoProjeto(Number(id), voluntario.id);
+      showToast(`${voluntario.nome} foi convidado com sucesso!.`, "success");
+    } catch (error) {
+      showToast(`Erro ao convidar voluntário.`, "error");
+    }
+    // setVoluntariosParaConvidar(prev => [...prev, voluntario]);
     setVoluntariosCompatíveis(prev => prev.filter(v => v.id !== voluntario.id));
   };
 
