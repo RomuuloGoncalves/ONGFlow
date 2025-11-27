@@ -12,14 +12,24 @@ import type { DashboardConvite } from "@/interfaces/convite";
 import type { DashboardHabilidade } from "@/interfaces/habilidade";
 
 function Dashboard() {
-  const [stats, setStats] = useState({ projetosAtivos: 0, projetosFinalizados: 0, voluntariosAtivos: 0 });
-  const [voluntariosAtivos, setVoluntariosAtivos] = useState<DashboardConvite[]>([]);
-  const [voluntariosDisponiveis, setVoluntariosDisponiveis] = useState<DashboardConvite[]>([]);
+  const [stats, setStats] = useState({
+    projetosAtivos: 0,
+    projetosFinalizados: 0,
+    voluntariosAtivos: 0,
+  });
+  const [voluntariosAtivos, setVoluntariosAtivos] = useState<
+    DashboardConvite[]
+  >([]);
+  const [voluntariosDisponiveis, setVoluntariosDisponiveis] = useState<
+    DashboardConvite[]
+  >([]);
   const [projetosAtivos, setProjetosAtivos] = useState<DashboardProjeto[]>([]);
-  const [projetosFinalizados, setProjetosFinalizados] = useState<DashboardProjeto[]>([]);
+  const [projetosFinalizados, setProjetosFinalizados] = useState<
+    DashboardProjeto[]
+  >([]);
 
   useEffect(() => {
-    dashboardService.getDashboardData().then(response => {
+    dashboardService.getDashboardData().then((response) => {
       const data = response.data;
       setStats(data.stats);
       setVoluntariosAtivos(data.voluntariosAtivos);
@@ -65,7 +75,7 @@ function Dashboard() {
               <h1>Voluntários Ativos em Projetos</h1>
             </div>
             <div className={style.list}>
-              {voluntariosAtivos.map(convite => (
+              {voluntariosAtivos.map((convite) => (
                 <div key={convite.id} className={style.voluntario}>
                   <div className={style.voluntario__icon}>
                     <div className={style.icon} />
@@ -82,7 +92,7 @@ function Dashboard() {
                 </div>
               ))}
             </div>
-            <Link to="/ong/voluntarios" className={style.container__button}>
+            <Link to="/voluntarios/ong" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>
@@ -92,7 +102,7 @@ function Dashboard() {
               <h1>Voluntários Disponíveis</h1>
             </div>
             <div className={style.list}>
-              {voluntariosDisponiveis.map(convite => (
+              {voluntariosDisponiveis.map((convite) => (
                 <div key={convite.id} className={style.voluntario}>
                   <div className={style.voluntario__icon}>
                     <div className={style.icon} />
@@ -100,7 +110,9 @@ function Dashboard() {
                   <div className={style.voluntario__info}>
                     <p>{convite.voluntario?.nome}</p>
                     <span>
-                      {convite.voluntario?.habilidades?.map((h: DashboardHabilidade) => h.descricao).join(', ')}
+                      {convite.voluntario?.habilidades
+                        ?.map((h: DashboardHabilidade) => h.descricao)
+                        .join(", ")}
                     </span>
                   </div>
                   <div className={style.voluntario__stats}>
@@ -111,7 +123,7 @@ function Dashboard() {
                 </div>
               ))}
             </div>
-            <Link to="/ong/voluntarios" className={style.container__button}>
+            <Link to="/voluntarios/ong" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>
@@ -123,8 +135,11 @@ function Dashboard() {
               <h1>Projetos Ativos</h1>
             </div>
             <div className={style.list}>
-              {projetosAtivos.map(projeto => (
+              {projetosAtivos.map((projeto) => (
                 <div key={projeto.id} className={style.projeto}>
+                  <div className={style.projeto__icon}>
+                    <div className={style.icon} />
+                  </div>
                   <div className={style.projeto__info}>
                     <p>{projeto.nome}</p>
                   </div>
@@ -134,7 +149,7 @@ function Dashboard() {
                 </div>
               ))}
             </div>
-            <Link to="/ong/projetos" className={style.container__button}>
+            <Link to="/projetos/ong" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>
@@ -144,7 +159,7 @@ function Dashboard() {
               <h1>Projetos Finalizados</h1>
             </div>
             <div className={style.list}>
-              {projetosFinalizados.map(projeto => (
+              {projetosFinalizados.map((projeto) => (
                 <div key={projeto.id} className={style.projeto}>
                   <div className={style.projeto__info}>
                     <p>{projeto.nome}</p>
@@ -155,7 +170,7 @@ function Dashboard() {
                 </div>
               ))}
             </div>
-            <Link to="/ong/projetos" className={style.container__button}>
+            <Link to="/projetos/ong" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>

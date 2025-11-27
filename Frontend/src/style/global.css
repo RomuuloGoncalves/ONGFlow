@@ -261,4 +261,17 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 6px;     /* vertical */
+  height: 6px;    /* horizontal */
+}
 
+::-webkit-scrollbar-thumb {
+  background: var(--primary-purple-blue-800);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 10px;
+}

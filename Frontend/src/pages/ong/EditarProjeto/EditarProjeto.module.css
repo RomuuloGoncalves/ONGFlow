@@ -188,7 +188,8 @@
         }
 
         .buttonSave {
-          background-color: #2bff00;
+          background-color: #24bb06;
+          cursor: pointer;
         }
       }
     }

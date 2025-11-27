@@ -133,6 +133,7 @@
 
       .card {
         width: 580px;
+        height: 300px;
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -265,8 +266,9 @@
           min-height: 40px;
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 10px;
-          margin-top: auto; /* Empurra os botões para o final do card */
+          margin-top: 10px;
 
           @media (max-width: 425px) {
             flex-direction: column;
