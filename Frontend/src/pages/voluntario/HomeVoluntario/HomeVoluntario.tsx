@@ -112,14 +112,6 @@ function HomeVoluntario() {
             >
               Recusados
             </button>
-            <button
-              onClick={() => setFiltro("concluido")}
-              className={`${style.button} ${
-                filtro === "concluido" ? style.active : ""
-              }`}
-            >
-              Cancelados
-            </button>
           </div>
         </div>
 

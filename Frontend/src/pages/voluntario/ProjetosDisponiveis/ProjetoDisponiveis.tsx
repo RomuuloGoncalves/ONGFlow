@@ -9,6 +9,7 @@ import ModalVoluntarioProjetos from "@/modals/Voluntarios/VoluntarioProjetos/mod
 import { getProjetos } from "@/services/projetoService";
 import type { Projeto } from "@/interfaces/projeto";
 import { enviarConvite, type ConvitePayload } from "@/services/conviteService";
+import useCustomToast from "@/components/ui/use-toast";
 
 function HomeVoluntario() {
   const [projetos, setProjetos] = useState<Projeto[]>([]);
@@ -18,6 +19,7 @@ function HomeVoluntario() {
   const [selectedProjeto, setSelectedProjeto] = useState<Projeto | null>(null);
   const [candidaturasEnviadas, setCandidaturasEnviadas] = useState<number[]>([]);
 
+  const { showToast } = useCustomToast();
 
   useEffect(() => {
     getProjetos()
@@ -56,11 +58,11 @@ function HomeVoluntario() {
 
     try {
       await enviarConvite(payload);
-      alert('Candidatura enviada com sucesso!');
+      showToast("Candidatura enviada com sucesso!","success");
       setCandidaturasEnviadas(prev => [...prev, projeto.id]);
     } catch (error) {
       console.error('Erro ao enviar candidatura:', error);
-      alert('Falha ao enviar candidatura. Tente novamente.');
+      showToast('Falha ao enviar candidatura. Tente novamente.',"error");
     }
   };
 

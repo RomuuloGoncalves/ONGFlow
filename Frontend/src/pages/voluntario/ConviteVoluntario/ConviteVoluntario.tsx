@@ -138,14 +138,6 @@ function ConviteVoluntario() {
             >
               Recusados
             </button>
-            <button
-              onClick={() => setFiltro("cancelado")}
-              className={`${style.button} ${
-                filtro === "cancelado" ? style.active : ""
-              }`}
-            >
-              Cancelados
-            </button>
           </div>
         </div>
         {isLoading ? (
