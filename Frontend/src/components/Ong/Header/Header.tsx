@@ -61,7 +61,7 @@ const Header = () => {
             <span className="w-7 h-7 flex items-center justify-center">
               <Logout />
             </span>
-            Log Out
+            Sair
           </Link>
         </div>
       </aside>
@@ -118,7 +118,7 @@ const Header = () => {
               <span className="w-7 h-7 flex items-center justify-center">
                 <Logout />
               </span>
-              Log Out
+              Sair
             </Link>
           </div>
         </div>

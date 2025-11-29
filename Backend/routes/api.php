@@ -12,6 +12,12 @@ use App\Http\Controllers\EnderecoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VoluntarioHabilidadeController;
 
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
 Route::prefix('voluntarios')->group(function () {
 
     Route::get('/', [VoluntarioController::class, 'index']);
@@ -22,7 +28,6 @@ Route::prefix('voluntarios')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [VoluntarioController::class, 'show']);
         Route::get('/{id}/projetos', [VoluntarioController::class, 'projetos']);
-        Route::post('/logout', [AuthController::class, 'logout']);
         Route::delete('/{id}', [VoluntarioController::class, 'destroy']);
         Route::put('/{id}', [VoluntarioController::class, 'update']);
         Route::get('/{idVoluntario}/convites', [ConviteController::class, 'index']);
@@ -42,7 +47,6 @@ Route::prefix('ongs')->group(function () {
         Route::get('/{id}', [OngController::class, 'show']);
         Route::put('/{id}', [OngController::class, 'update']);
         Route::delete('/{id}', [OngController::class, 'destroy']);
-        Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/{idOng}/projetos', [ProjetoController::class, 'getProjetosPorOng']);
     });
 });
