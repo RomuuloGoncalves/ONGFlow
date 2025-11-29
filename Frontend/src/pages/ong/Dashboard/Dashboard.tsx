@@ -99,7 +99,7 @@ function Dashboard() {
           </div>
           <div className={style.container__voluntario_disponiveis}>
             <div className={style.title__voluntario}>
-              <h1>Voluntários Disponíveis</h1>
+              <h1>Candidaturas Pendentes</h1>
             </div>
             <div className={style.list}>
               {voluntariosDisponiveis.map((convite) => (
@@ -123,7 +123,7 @@ function Dashboard() {
                 </div>
               ))}
             </div>
-            <Link to="/voluntarios/ong" className={style.container__button}>
+            <Link to="/convite/ong" className={style.container__button}>
               Ver Todos
               <Maior className={style.icon} />
             </Link>

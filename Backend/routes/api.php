@@ -80,7 +80,7 @@ Route::prefix('convites')->group(function () {
     Route::put('/{id}/aceitar', [ConviteController::class, 'aceitar']);
     Route::put('/{id}/recusar', [ConviteController::class, 'recusar']);
     Route::delete('/{id}', [ConviteController::class, 'destroy']);
-
+    Route::get('/pendente/{id_projeto}/{id_voluntario}', [ConviteController::class, 'verificarConvitePendente']);
 });
 
 Route::prefix('enderecos')->group(function () {

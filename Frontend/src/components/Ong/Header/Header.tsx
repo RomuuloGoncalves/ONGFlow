@@ -16,7 +16,7 @@ const Header = () => {
     { to: "/dashboard/ong", label: "Dashboard", icon: <Dashboard /> },
     { to: "/projetos/ong", label: "Projetos", icon: <ProjetosIcone /> },
     { to: "/voluntarios/ong", label: "Voluntários", icon: <Usuario /> },
-    { to: "/convite/ong", label: "Convites", icon: <Convite /> },
+    { to: "/convite/ong", label: "Candidaturas", icon: <Convite /> },
     { to: "/perfil/ong", label: "Perfil", icon: <Usuario /> },
   ];
 

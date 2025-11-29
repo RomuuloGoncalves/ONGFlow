@@ -109,13 +109,6 @@ function ConviteOng() {
                     <div className={style.card__descricao}>
                       <p>{item.mensagem}</p>
                     </div>
-                    {/* <div className={style.habilidades}>
-                      {(item.voluntario?.habilidades || []).map((hab, i) => (
-                        <div key={i} className={style.badge} title={hab.descricao}>
-                          <p>{hab.descricao}</p>
-                        </div>
-                      ))}
-                    </div> */}
                     <div className={style.container__details}>
                       <div className={style.card__location_date}>
                         <p>
@@ -133,6 +126,13 @@ function ConviteOng() {
                           {item.voluntario?.telefone ?? "Não informado"}
                         </p>
                       </div>
+                    </div>
+                    <div className={style.habilidades}>
+                      {(item.voluntario?.habilidades || []).map((hab, i) => (
+                        <div key={i} className={style.badge} title={hab.descricao}>
+                          <p>{hab.descricao}</p>
+                        </div>
+                      ))}
                     </div>
                     <div className={style.container__buttons}>
                       <button
