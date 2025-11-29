@@ -1,0 +1,47 @@
+
+services:
+  - type: web
+    name: ongflow-backend
+    env: php
+    plan: free
+    rootDir: ./Backend
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      php artisan config:clear
+      php artisan route:clear
+      php artisan migrate --force
+    startCommand: php artisan serve --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromService:
+          type: psql
+          name: ongflow-db
+          property: host
+      - key: DB_PORT
+        fromService:
+          type: psql
+          name: ongflow-db
+          property: port
+      - key: DB_DATABASE
+        fromService:
+          type: psql
+          name: ongflow-db
+          property: database
+      - key: DB_USERNAME
+        fromService:
+          type: psql
+          name: ongflow-db
+          property: user
+      - key: DB_PASSWORD
+        fromService:
+          type: psql
+          name: ongflow-db
+          property: password
+      - key: APP_KEY
+        generateValue: true
+
+  - type: psql
+    name: ongflow-db
+    plan: free
