@@ -1,5 +1,5 @@
-# Use a imagem oficial do PHP 8.2
-FROM php:8.2-fpm
+# Use uma imagem de linha de comando mais simples
+FROM php:8.2-cli
 
 # Define o diretório de trabalho
 WORKDIR /var/www
@@ -25,9 +25,8 @@ COPY Backend/ .
 # Roda o composer install para baixar as dependências do PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Ajusta as permissões para as pastas do Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+# Limpa todos os caches do Laravel para garantir que as variáveis de ambiente sejam lidas corretamente
+RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
 
 # Expõe a porta que o Laravel vai usar
 EXPOSE 10000
