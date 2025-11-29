@@ -111,3 +111,7 @@ Route::prefix('voluntariohabilidades')->group(function () {
 });
 
 require __DIR__.'/test_routes.php';
+
+Route::get('/hello', function () {
+    return response()->json(['message' => 'Hello World! A API esta no ar.'], 200);
+});
