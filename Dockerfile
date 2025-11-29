@@ -28,3 +28,9 @@ RUN composer install --no-dev --optimize-autoloader
 # Ajusta as permissões para as pastas do Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
+
+# Expõe a porta que o Laravel vai usar
+EXPOSE 10000
+
+# Comando para iniciar a aplicação
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
