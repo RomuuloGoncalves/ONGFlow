@@ -1,3 +1,8 @@
+databases:
+  - name: ongflow-db
+    plan: free
+    databaseName: ongflow
+    user: ongflow_user
 
 services:
   - type: web
@@ -12,37 +17,27 @@ services:
       php artisan migrate --force
     startCommand: php artisan serve --host 0.0.0.0 --port $PORT
     envVars:
+      - key: APP_KEY
+        generateValue: true
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
-        fromService:
-          type: postgres
+        fromDatabase:
           name: ongflow-db
           property: host
       - key: DB_PORT
-        fromService:
-          type: postgres
+        fromDatabase:
           name: ongflow-db
           property: port
       - key: DB_DATABASE
-        fromService:
-          type: postgres
+        fromDatabase:
           name: ongflow-db
           property: database
       - key: DB_USERNAME
-        fromService:
-          type: postgres
+        fromDatabase:
           name: ongflow-db
           property: user
       - key: DB_PASSWORD
-        fromService:
-          type: postgres
+        fromDatabase:
           name: ongflow-db
           property: password
-      - key: APP_KEY
-        generateValue: true
-
-  - type: postgres
-    name: ongflow-db
-    plan: free
-    postgresMajorVersion: "14"
