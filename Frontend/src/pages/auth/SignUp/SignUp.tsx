@@ -9,6 +9,7 @@ import voluntarioService from '../../../services/voluntarioService';
 import ongService from '../../../services/ongService';
 import type { OngCadastro } from '../../../interfaces/ong';
 import type { VoluntarioCadastro } from '../../../interfaces/voluntario';
+import LoadingButton from "@/components/LoadingButton/LoadingButton"
 
 function SignUp() {
   const IconeSetaEsquerda = () => (
@@ -20,9 +21,11 @@ function SignUp() {
   const [dadosFormulario, setDadosFormulario] = useState({});
   const [errors, setErrors] = useState({});
   const { showToast } = useCustomToast();
+  const [loading, setLoading] = useState(false);
 
   const manipularSubmit = async (evento: React.FormEvent) => {
     evento.preventDefault();
+    setLoading(true);
 
     try {
       if (tipoCadastro === 'VOLUNTARIO') {
@@ -43,6 +46,8 @@ function SignUp() {
       } else { // Para tratar problemas com o servidor
         showToast('Ocorreu um erro inesperado. Tente novamente mais tarde.', 'error');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,8 +91,19 @@ function SignUp() {
           <p className={styles.linkLogin}>Já tem conta? <Link to="/login">Faça Login</Link></p>
 
           <div className={styles.containerBotaoSubmit}>
-            <button type="submit" className={styles.botaoSubmit}>
-              Cadastrar-se
+            <button
+              type="submit"
+              className={styles.botaoSubmit}
+              disabled={loading}
+            >
+              {loading ? (
+                  <div className={styles.loadingSmall}>
+                      <LoadingButton />
+                      <span>Cadastrando...</span>
+                  </div>
+              ) : (
+                "Cadastre-se"
+              )}
             </button>
           </div>
         </form>

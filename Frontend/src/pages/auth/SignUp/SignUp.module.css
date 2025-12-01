@@ -186,16 +186,37 @@
 }
 
 .botaoSubmit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   background-color: var(--cor-link);
   color: var(--cor-texto-claro);
   border: none;
-  padding: 1rem;
+  padding: .5rem;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   font-size: 1rem;
   font-weight: 600;
   width: 100%;
+  height: 70px;
+}
+
+.loadingSmall .loader {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.loadingSmall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.loadingSmall p {
+  display: none;
 }
 
 .botaoSubmit:hover {

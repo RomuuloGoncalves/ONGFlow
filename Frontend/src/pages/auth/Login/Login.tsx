@@ -105,6 +105,8 @@ function Login() {
         setErrors({ general: errorMessage });
         showToast(errorMessage, "error");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
