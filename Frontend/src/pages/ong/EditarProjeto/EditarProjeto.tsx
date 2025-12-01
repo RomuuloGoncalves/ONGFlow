@@ -12,9 +12,13 @@ import {
   getHabilidades,
   getVoluntariosDoProjeto,
   getVoluntariosCompativeis,
-  adicionarVoluntarioAoProjeto,
   removerVoluntarioDoProjeto,
 } from "@/services/projetoService";
+import {
+  verificarConvitePendente,
+  enviarConvite,
+  type ConvitePayload,
+} from "@/services/conviteService";
 import useCustomToast from "@/components/ui/use-toast";
 import type { Habilidade } from "@/interfaces/habilidade";
 import type { Voluntario } from "@/interfaces/voluntario";
@@ -107,11 +111,20 @@ function EditarProjeto() {
     };
 
     try {
+      await updateProjeto(Number(id), payload);
+
       for (const voluntario of voluntariosParaConvidar) {
-        await adicionarVoluntarioAoProjeto(Number(id), voluntario.id);
+        const convitePayload: ConvitePayload = {
+          iniciador: "ong",
+          status: "pendente",
+          mensagem: `A ONG ${user.name} te convidou para o projeto ${nome}`,
+          id_ong: idOng,
+          id_voluntario: voluntario.id,
+          id_projeto: Number(id),
+        };
+        await enviarConvite(convitePayload);
       }
 
-      await updateProjeto(Number(id), payload);
       showToast(
         "Projeto atualizado e convites enviados com sucesso!",
         "success"
@@ -123,11 +136,25 @@ function EditarProjeto() {
     }
   };
 
-  const handleConvidar = (voluntario: Voluntario) => {
-    setVoluntariosParaConvidar((prev) => [...prev, voluntario]);
-    setVoluntariosCompatíveis((prev) =>
-      prev.filter((v) => v.id !== voluntario.id)
-    );
+  const handleConvidar = async (voluntario: Voluntario) => {
+    if (!id) return;
+    try {
+      const response = await verificarConvitePendente(
+        Number(id),
+        voluntario.id
+      );
+      if (response.data.status) {
+        showToast("Esse voluntário já possue um convite pendente", "error");
+      } else {
+        setVoluntariosParaConvidar((prev) => [...prev, voluntario]);
+        setVoluntariosCompatíveis((prev) =>
+          prev.filter((v) => v.id !== voluntario.id)
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao verificar convite pendente:", error);
+      showToast("Erro ao verificar convite. Tente novamente.", "error");
+    }
   };
 
   const handleCancelarConvite = (voluntario: Voluntario) => {

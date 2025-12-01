@@ -10,7 +10,7 @@ export interface Ong {
   cnpj: string;
   sigla: string;
   data_fundacao: string;
-  // telefone: string;
+  telefone?: string;
   endereco?: Endereco;
 }
 

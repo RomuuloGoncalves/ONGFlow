@@ -2,9 +2,7 @@ import Header from "@/components/Ong/Header/Header";
 import style from "./PerfilOng.module.css";
 import { Usuario } from "@/assets/icons/Usuario";
 import { Email } from "@/assets/icons/Email";
-import { Telefone } from "@/assets/icons/Telefone";
 import { Localizacao } from "@/assets/icons/Localizacao";
-import { Sobre } from "@/assets/icons/Sobre";
 import { Salvar } from "@/assets/icons/Salvar";
 import { Logout } from "@/assets/icons/Logout";
 import { HashTag } from "@/assets/icons/HashTag";
@@ -13,6 +11,8 @@ import ongService from "@/services/ongService";
 import { useEffect, useState } from "react";
 import type { Endereco } from "@/interfaces/endereco";
 import enderecoService from "@/services/enderecoService";
+import authService from "@/services/authService";
+import { useNavigate } from "react-router-dom";
 
 
 function PerfilOng() {
@@ -39,6 +39,8 @@ function PerfilOng() {
     estado: "",
     cep: "",
   });
+
+  const navigate = useNavigate();
 
   // Pré-carregamento
   useEffect(() => {
@@ -84,6 +86,11 @@ function PerfilOng() {
 
   const handleChangeEndereco = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
+  };
+
+  const handleLogout = async () => {
+    await authService.logout();
+    navigate('/login');
   };
 
 const handleSubmit = async (e: React.FormEvent) => {
@@ -272,7 +279,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <button type="submit" className={style.buttonSave}>
               <Salvar /> Salvar Alterações
             </button>
-            <button type="button" className={style.buttonLogout}>
+            <button type="button" className={style.buttonLogout} onClick={handleLogout}>
               <Logout /> Sair
             </button>
           </div>

@@ -26,7 +26,7 @@ class ConviteController extends Controller
     {
         try {
             $ong = Auth::user();
-            $candidaturas = Convite::with(['projeto', 'voluntario'])
+            $candidaturas = Convite::with(['projeto', 'voluntario.habilidades'])
                 ->where('id_ong', $ong->id)
                 ->where('iniciador', 'voluntario')
                 ->where('status', 'pendente')
@@ -189,5 +189,19 @@ class ConviteController extends Controller
                 'error' => $e->getMessage(),
             ], 500); // Erro interno
         }
+    }
+
+    public function verificarConvitePendente(string $id_projeto, string $id_voluntario)
+    {
+        $convite = Convite::where('id_projeto', $id_projeto)
+            ->where('id_voluntario', $id_voluntario)
+            ->where('status', 'pendente')
+            ->first();
+
+        if ($convite) {
+            return response()->json(['status' => true]);
+        }
+
+        return response()->json(['status' => false]);
     }
 }

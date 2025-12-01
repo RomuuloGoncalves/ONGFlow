@@ -2,8 +2,10 @@ import axios from 'axios';
 import type { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
+const isProduction = import.meta.env.PROD;
+
 const api: AxiosInstance = axios.create({
-  baseURL: '/api'
+  baseURL: isProduction ? 'https://ongflow-backend.onrender.com/api' : '/api'
 });
 
 api.interceptors.request.use(

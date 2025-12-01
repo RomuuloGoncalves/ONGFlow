@@ -16,6 +16,7 @@ import ListagemVoluntario from './pages/ong/ListagemVoluntario/ListagemVoluntari
 import ConviteOng from './pages/ong/ConviteOng/ConviteOng';
 import CriarProjeto from './pages/ong/CriarProjeto/CriarProjeto'
 import EditarProjeto from './pages/ong/EditarProjeto/EditarProjeto';
+import PrivateRoute from './router/PrivateRoute';
 
 function App() {
   return (
@@ -25,20 +26,25 @@ function App() {
           <Route path="/" element={<PublicHome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* Voluntario */}
-          <Route path="/home/voluntario" element={<HomeVoluntario />} />
-          <Route path="/perfil/voluntario" element={<PerfilVoluntario />} />
-          <Route path="/convite/voluntario" element={<ConviteVoluntario />} />
-          <Route path="/projetos/voluntario" element={<ProjetosDisponiveis />} />
-          {/* ONG */}
-          <Route path="/dashboard/ong" element={<DashboardOng/>}/>
-          <Route path="/projetos/ong" element={<ProjetosOng />} />
-          <Route path="/voluntarios/ong" element={<ListagemVoluntario />} />
-          <Route path="/convite/ong" element={<ConviteOng />} />
-          <Route path="/perfil/ong" element={<PerfilOng />} />
-          <Route path="/criar/projeto/ong" element={<CriarProjeto />} />
-          <Route path="/editar/projeto/ong/:id" element={<EditarProjeto />} />
+        
+          <Route element={<PrivateRoute />}>
+            {/* Voluntario */}
+            <Route path="/home/voluntario" element={<HomeVoluntario />} />
+            <Route path="/perfil/voluntario" element={<PerfilVoluntario />} />
+            <Route path="/convite/voluntario" element={<ConviteVoluntario />} />
+            <Route path="/projetos/voluntario" element={<ProjetosDisponiveis />} />
+            
+            {/* ONG */}
+            <Route path="/dashboard/ong" element={<DashboardOng/>}/>
+            <Route path="/projetos/ong" element={<ProjetosOng />} />
+            <Route path="/voluntarios/ong" element={<ListagemVoluntario />} />
+            <Route path="/convite/ong" element={<ConviteOng />} />
+            <Route path="/perfil/ong" element={<PerfilOng />} />
+            <Route path="/criar/projeto/ong" element={<CriarProjeto />} />
+            <Route path="/editar/projeto/ong/:id" element={<EditarProjeto />} />
+          </Route>
         </Route>
+        
         <Route path="*" element={<NotFoundPage />}  />
       </Routes>
     </Router>

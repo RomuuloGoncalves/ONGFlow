@@ -36,3 +36,10 @@ export const aceitarConvite = (idConvite: number): AxiosPromise<ConviteActionRes
 export const recusarConvite = (idConvite: number): AxiosPromise<ConviteActionResponse> => {
   return api.put<ConviteActionResponse>(`/convites/${idConvite}/recusar`);
 };
+
+export const verificarConvitePendente = (
+  idProjeto: number,
+  idVoluntario: number
+): AxiosPromise<{ status: boolean }> => {
+  return api.get<{ status: boolean }>(`/convites/pendente/${idProjeto}/${idVoluntario}`);
+};

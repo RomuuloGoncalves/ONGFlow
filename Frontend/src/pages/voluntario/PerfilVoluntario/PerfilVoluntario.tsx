@@ -18,7 +18,8 @@ import type { Habilidade } from "@/interfaces/habilidade";
 import { getHabilidades } from "@/services/projetoService";
 import voluntarioHabilidadeService from "@/services/voluntarioHabilidade";
 import useCustomToast from "@/components/ui/use-toast";
-// falta a parte das habilidades
+import authService from "@/services/authService";
+
 function PerfilVoluntario() {
 
 const [voluntario, setVoluntario] = useState<Voluntario>({
@@ -167,8 +168,9 @@ async function handleSubmit(e: React.FormEvent) {
 };
 
   const navigate = useNavigate();
-  function handleClickSair() {
-    navigate("/home/voluntario")
+  async function handleClickSair() {
+    await authService.logout();
+    navigate("/login");
   }
 
   return (
@@ -329,7 +331,7 @@ async function handleSubmit(e: React.FormEvent) {
               <Salvar />
               Salvar Alterações
             </button>
-            <button className={style.buttonLogout} onClick={handleClickSair}>
+            <button type="button" className={style.buttonLogout} onClick={handleClickSair}>
               <Logout />
               Sair
             </button>
