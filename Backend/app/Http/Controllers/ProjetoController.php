@@ -83,20 +83,36 @@ class ProjetoController extends Controller
     }
 
     public function getVoluntariosCompativeis(string $id)
-    {
-        $projeto = Projeto::with('habilidades', 'voluntarios')->find($id);
-        $habilidadesProjetoIds = $projeto->habilidades->pluck('id');
-        $voluntariosNoProjetoIds = $projeto->voluntarios->pluck('id');
+{
+    $projeto = Projeto::with('habilidades', 'voluntarios')->find($id);
 
-        $voluntariosCompatíveis = Voluntario::with('habilidades')
-            ->whereHas('habilidades', function ($query) use ($habilidadesProjetoIds) {
-                $query->whereIn('habilidades.id', $habilidadesProjetoIds);
-            })
-            ->whereNotIn('id', $voluntariosNoProjetoIds)
-            ->get();
-
-        return response()->json($voluntariosCompatíveis);
+    if (!$projeto) {
+        return response()->json(['error' => 'Projeto não encontrado'], 404);
     }
+
+    $habilidadesProjetoIds = $projeto->habilidades->pluck('id')->toArray();
+    $voluntariosNoProjetoIds = $projeto->voluntarios->pluck('id')->toArray();
+
+    $voluntariosCompativeis = Voluntario::with('habilidades')
+        ->whereHas('habilidades', function ($query) use ($habilidadesProjetoIds) {
+            $query->whereIn('habilidades.id', $habilidadesProjetoIds);
+        })
+        ->whereNotIn('id', $voluntariosNoProjetoIds)
+        ->get()
+        ->map(function ($voluntario) use ($habilidadesProjetoIds) {
+
+            $voluntario->compatibilidade = $voluntario->habilidades
+                ->pluck('id')
+                ->intersect($habilidadesProjetoIds)
+                ->count();
+
+            return $voluntario;
+        })
+        ->sortByDesc('compatibilidade') 
+        ->values(); 
+    return response()->json($voluntariosCompativeis);
+}
+
 
     public function adicionarVoluntario(Request $request, string $id)
     {
