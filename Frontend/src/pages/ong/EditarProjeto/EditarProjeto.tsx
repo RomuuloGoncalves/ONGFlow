@@ -144,7 +144,7 @@ function EditarProjeto() {
         voluntario.id
       );
       if (response.data.status) {
-        showToast("Esse voluntário já possue um convite pendente", "error");
+        showToast("Esse voluntário já possui um convite pendente", "error");
       } else {
         setVoluntariosParaConvidar((prev) => [...prev, voluntario]);
         setVoluntariosCompatíveis((prev) =>

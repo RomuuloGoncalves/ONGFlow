@@ -87,7 +87,8 @@ if (userData.id_endereco) {
       const response = await getHabilidades();
       setHabilidades(response.data); 
     } catch (error) {
-      showError(error)
+      console.error("Erro ao carregar habilidades", error);
+      showError(error);
     }
   }
 
@@ -102,7 +103,8 @@ if (userData.id_endereco) {
 
       setSelectedHabilidades(ids);
     } catch (error) {
-      showError(error)
+      console.error("Erro ao carregar habilidades", error);
+      showError(error);
     }
   }
 

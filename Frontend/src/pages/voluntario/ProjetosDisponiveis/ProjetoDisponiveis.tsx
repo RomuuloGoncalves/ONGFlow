@@ -8,7 +8,7 @@ import { Convite } from "@/assets/icons/Convite";
 import ModalVoluntarioProjetos from "@/modals/Voluntarios/VoluntarioProjetos/modalVoluntarioProjetos";
 import { getProjetos } from "@/services/projetoService";
 import type { Projeto } from "@/interfaces/projeto";
-import { enviarConvite, type ConvitePayload } from "@/services/conviteService";
+import { enviarConvite, verificarConvitePendente, type ConvitePayload } from "@/services/conviteService";
 import useCustomToast from "@/components/ui/use-toast";
 
 function HomeVoluntario() {
@@ -19,7 +19,6 @@ function HomeVoluntario() {
   const [selectedProjeto, setSelectedProjeto] = useState<Projeto | null>(null);
   const [candidaturasEnviadas, setCandidaturasEnviadas] = useState<number[]>([]);
 
-  const { showToast } = useCustomToast();
 
   useEffect(() => {
     getProjetos()
@@ -30,12 +29,14 @@ function HomeVoluntario() {
         console.error('Erro ao buscar projetos:', error);
       });
   }, []);
+  const { showToast } = useCustomToast();
+
 
   const handleCandidaturaClick = async (event: React.MouseEvent, projeto: Projeto) => {
     event.stopPropagation(); // Impede que o modal seja aberto
 
     if (!projeto.ong?.id || !projeto.id) {
-      alert("Não foi possível identificar a ONG ou o projeto.");
+      showToast("Não foi possível identificar a ONG ou o projeto.", "error");
       return;
     }
 
@@ -43,7 +44,8 @@ function HomeVoluntario() {
     const idVoluntarioLogado = user.id; 
 
     if (!idVoluntarioLogado) {
-      alert("Voluntário não identificado. Faça o login novamente.");
+      console.error("Voluntário não identificado. Faça o login novamente.");
+      showToast("Voluntário não identificado. Faça o login novamente.", "error");
       return;
     }
 
@@ -57,12 +59,20 @@ function HomeVoluntario() {
     };
 
     try {
-      await enviarConvite(payload);
-      showToast("Candidatura enviada com sucesso!","success");
-      setCandidaturasEnviadas(prev => [...prev, projeto.id]);
+      const response = await verificarConvitePendente(
+        projeto.ong.id,
+        Number(user.id)
+      );
+      if (response.data.status) {
+        showToast("Esse projeto já possui uma candidatura pendente", "error");
+      } else {
+        await enviarConvite(payload);
+        setCandidaturasEnviadas(prev => [...prev, projeto.id]);
+        showToast("Candidatura enviado com sucesso!", "success");
+      }
     } catch (error) {
-      console.error('Erro ao enviar candidatura:', error);
-      showToast('Falha ao enviar candidatura. Tente novamente.',"error");
+      console.error("Erro ao verificar convite pendente:", error);
+      showToast("Erro ao verificar convite. Tente novamente.", "error");
     }
   };
 
