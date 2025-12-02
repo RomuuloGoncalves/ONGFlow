@@ -87,7 +87,7 @@ if (userData.id_endereco) {
       const response = await getHabilidades();
       setHabilidades(response.data); 
     } catch (error) {
-      console.error("Erro ao carregar habilidades:", error);
+      showError(error)
     }
   }
 
@@ -102,7 +102,7 @@ if (userData.id_endereco) {
 
       setSelectedHabilidades(ids);
     } catch (error) {
-      console.error("Erro ao carregar habilidades:", error);
+      showError(error)
     }
   }
 
@@ -142,15 +142,7 @@ async function handleSubmit(e: React.FormEvent) {
     showToast("Informações atualizadas com sucesso!", "success");
 
   } catch (error: any) {
-    const erros: any = error.response.data.errors;
-    for (const atributo in erros) {
-      if (erros.hasOwnProperty(atributo)) {
-        erros[atributo].forEach((erro: string) => {
-        showToast(erro, "error");
-      });
-      }
-  }
-
+    showError(error);    
   }
 }
 
@@ -167,11 +159,22 @@ async function handleSubmit(e: React.FormEvent) {
   }));
 };
 
-  const navigate = useNavigate();
-  async function handleClickSair() {
-    await authService.logout();
-    navigate("/login");
-  }
+const navigate = useNavigate();
+async function handleClickSair() {
+  await authService.logout();
+  navigate("/login");
+}
+
+const showError = (error: any) => {
+        const erros: any = error.response.data.errors;
+      for (const atributo in erros) {
+        if (erros.hasOwnProperty(atributo)) {
+          erros[atributo].forEach((erro: string) => {
+          showToast(erro, "error");
+        });
+        }
+    }
+}
 
   return (
     <>

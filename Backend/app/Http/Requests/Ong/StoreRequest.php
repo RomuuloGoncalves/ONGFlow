@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
         $ongId = $this->route('id');
         return [
             'email' => ['required', 'email', 'max:255', Rule::unique('ongs', 'email')->ignore($ongId)],
-            'cnpj'  => ['required', 'string', 'max:18', Rule::unique('ongs', 'cnpj')->ignore($ongId)],
+            'cnpj'  => ['required', 'string', 'digits_between:14,18', Rule::unique('ongs', 'cnpj')->ignore($ongId)],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password' => ['nullable', 'string', 'min:8'],
             'nome' => ['required', 'string', 'max:255'],

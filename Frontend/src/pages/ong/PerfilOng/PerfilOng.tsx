@@ -13,6 +13,7 @@ import type { Endereco } from "@/interfaces/endereco";
 import enderecoService from "@/services/enderecoService";
 import authService from "@/services/authService";
 import { useNavigate } from "react-router-dom";
+import useCustomToast from "@/components/ui/use-toast";
 
 
 function PerfilOng() {
@@ -41,6 +42,7 @@ function PerfilOng() {
   });
 
   const navigate = useNavigate();
+  const { showToast } = useCustomToast();
 
   // Pré-carregamento
   useEffect(() => {
@@ -111,13 +113,23 @@ const handleSubmit = async (e: React.FormEvent) => {
 
     localStorage.setItem("user", JSON.stringify(responseOng.data.data));
 
-    console.log("ONG atualizada com sucesso!");
-    console.log("Perfil atualizado com sucesso!");
-  } catch (error) {
-    console.error("Erro ao atualizar ONG:", error);
-    console.log("Erro ao atualizar o perfil.");
+    showToast("Informações atualizadas com sucesso!", "success");
+
+  } catch (error: any) {
+    showError(error);
   }
 };
+
+const showError = (error: any) => {
+        const erros: any = error.response.data.errors;
+      for (const atributo in erros) {
+        if (erros.hasOwnProperty(atributo)) {
+          erros[atributo].forEach((erro: string) => {
+          showToast(erro, "error");
+        });
+        }
+    }
+}
 
  return (
     <div className={style.main}>
