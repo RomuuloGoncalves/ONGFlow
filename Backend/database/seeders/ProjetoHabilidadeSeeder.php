@@ -11,16 +11,16 @@ class ProjetoHabilidadeSeeder extends Seeder
     public function run(): void
     {
         $associacoes = [
-            'Sopão Solidário no Centro' => ['Trabalho em equipe', 'Organização de eventos'],
-            'Aulas de Reforço Escolar na Comunidade' => ['Ensino e tutoria', 'Comunicação interpessoal'],
-            'Mutirão de Limpeza na Praia' => ['Trabalho em equipe', 'Educação ambiental'],
-            'Feira de Adoção de Animais' => ['Comunicação interpessoal', 'Empatia'],
-            'Campanha do Agasalho' => ['Organização de eventos', 'Trabalho em equipe'],
-            'Horta Comunitária no Bairro Sol Nascente' => ['Sustentabilidade e ecologia','Educação ambiental','Trabalho em equipe'],
-            'Digitalização de Documentos Históricos' => ['Trabalho administrativo','Suporte técnico em TI','Análise de dados'],
-            'Cineclube Semanal para a Terceira Idade' => ['Organização de atividades culturais','Comunicação interpessoal','Empatia'],
-            'Reforma da Quadra de Esportes Local' => ['Trabalho em equipe','Liderança de equipes','Organização de eventos'],
-            'Oficina de Música para Jovens Carentes' => ['Música e canto','Organização de atividades culturais','Ensino e tutoria'],
+            'Sopão Solidário no Centro' => ['Trabalho em Equipe e Colaboração', 'Logística e Distribuição'],
+            'Aulas de Reforço Escolar na Comunidade' => ['Ensino e Capacitação', 'Comunicação e Articulação'],
+            'Mutirão de Limpeza na Praia' => ['Trabalho em Equipe e Colaboração', 'Liderança Comunitária'],
+            'Feira de Adoção de Animais' => ['Comunicação e Articulação', 'Cuidado e Assistência Social'],
+            'Campanha do Agasalho' => ['Organização de Eventos', 'Divulgação e Marketing Social'],
+            'Horta Comunitária no Bairro Sol Nascente' => ['Habilidades Manuais (Cozinhar, Construir)','Ensino e Capacitação','Trabalho em Equipe e Colaboração'],
+            'Digitalização de Documentos Históricos' => ['Habilidades Digitais (Redes Sociais, Design)','Logística e Distribuição','Organização de Eventos'],
+            'Cineclube Semanal para a Terceira Idade' => ['Organização de Eventos','Comunicação e Articulação','Cuidado e Assistência Social'],
+            'Reforma da Quadra de Esportes Local' => ['Trabalho em Equipe e Colaboração','Liderança Comunitária','Habilidades Manuais (Cozinhar, Construir)'],
+            'Oficina de Música para Jovens Carentes' => ['Ensino e Capacitação','Organização de Eventos','Divulgação e Marketing Social'],
         ];
 
         foreach ($associacoes as $nomeProjeto => $habilidadesDescricao) {

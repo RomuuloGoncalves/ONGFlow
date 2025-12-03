@@ -39,6 +39,14 @@ function Dashboard() {
     });
   }, []);
 
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className={style.main}>
       <Header />
@@ -144,7 +152,7 @@ function Dashboard() {
                     <p>{projeto.nome}</p>
                   </div>
                   <div className={style.projeto__data}>
-                    <p>{new Date(projeto.data_inicio!).toLocaleDateString()}</p>
+                    <p>{formatDate(projeto.data_inicio!)}</p>
                   </div>
                 </div>
               ))}
@@ -164,8 +172,8 @@ function Dashboard() {
                   <div className={style.projeto__info}>
                     <p>{projeto.nome}</p>
                   </div>
-                  <div className={style.projeto__data}>
-                    <p>{new Date(projeto.data_final!).toLocaleDateString()}</p>
+                  <div className={style.projeto__data_finalizado}>
+                    <p>{formatDate(projeto.data_fim!)}</p>
                   </div>
                 </div>
               ))}

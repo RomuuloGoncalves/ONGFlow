@@ -5,6 +5,8 @@ import { Lixo } from "@/assets/icons/Lixo";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import type { Projeto } from "@/interfaces/projeto";
+import { finalizarProjeto } from "@/services/projetoService";
+import useCustomToast from "@/components/ui/use-toast";
 
 interface Modalprops {
   isOpen: boolean;
@@ -13,6 +15,8 @@ interface Modalprops {
 }
 
 function ModalProjetosAndamento({ isOpen, setIsOpen, projeto }: Modalprops) {
+  const { showToast } = useCustomToast();
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -25,6 +29,18 @@ function ModalProjetosAndamento({ isOpen, setIsOpen, projeto }: Modalprops) {
   }, [isOpen]);
 
   if (!isOpen || !projeto) return null;
+
+  const handleFinalizar = async () => {
+    if (projeto) {
+      try {
+        await finalizarProjeto(projeto.id);
+        showToast("Projeto finalizado com sucesso!", "success");
+        setIsOpen(false);
+      } catch (error) {
+        showToast("Erro ao finalizar projeto", "error");
+      }
+    }
+  };
 
   return (
     <div className={style.modal__overlay} onClick={() => setIsOpen(false)}>
@@ -82,6 +98,9 @@ function ModalProjetosAndamento({ isOpen, setIsOpen, projeto }: Modalprops) {
           <button className={` ${style.buttonDelete} ${style.button}`}>
             <Lixo />
             Excluir
+          </button>
+          <button onClick={handleFinalizar} className={` ${style.buttonFinalizar} ${style.button}`}>
+            Finalizar
           </button>
         </div>
       </div>

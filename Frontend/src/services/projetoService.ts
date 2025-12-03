@@ -32,6 +32,10 @@ export const updateProjeto = (id: number, data: any): AxiosPromise<Projeto> => {
   return api.put<Projeto>(`/projetos/${id}`, data);
 };
 
+export const finalizarProjeto = (id: number): AxiosPromise<any> => {
+  return api.put(`/projetos/${id}/finalizar`);
+};
+
 export const getHabilidades = (): AxiosPromise<Habilidade[]> => {
   return api.get<Habilidade[]>("/habilidades");
 };

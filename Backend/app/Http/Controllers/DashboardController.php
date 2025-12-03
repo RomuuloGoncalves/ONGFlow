@@ -19,12 +19,18 @@ class DashboardController extends Controller
         $projetosFinalizadosCount = Projeto::where('id_ong', $ong->id)->where('status', 'finalizado')->count();
         $voluntariosAtivosCount = Convite::where('id_ong', $ong->id)
             ->where('status', 'aceito')
+            ->whereHas('projeto', function ($query) {
+                $query->where('status', 'ativo');
+            })
             ->distinct('id_voluntario')
             ->count('id_voluntario');
 
         // Active Volunteers List (limit 5)
         $voluntariosAtivos = Convite::where('id_ong', $ong->id)
             ->where('status', 'aceito')
+            ->whereHas('projeto', function ($query) {
+                $query->where('status', 'ativo');
+            })
             ->with(['voluntario:id,nome', 'projeto:id,nome'])
             ->orderBy('created_at', 'desc')
             ->take(5)

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/assets/Logo.svg";
 import { Dashboard } from "@/assets/icons/Dashboard";
 import { ProjetosIcone } from "@/assets/icons/ProjetosIcone";
@@ -8,9 +8,11 @@ import { Usuario } from "@/assets/icons/Usuario";
 import { Logout } from "@/assets/icons/Logout";
 import { Menu } from "@/assets/icons/Menu"
 import { Fechar } from "@/assets/icons/Fechar"
+import authService from "@/services/authService";
 const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const links = [
     { to: "/dashboard/ong", label: "Dashboard", icon: <Dashboard /> },
@@ -19,6 +21,11 @@ const Header = () => {
     { to: "/convite/ong", label: "Candidaturas", icon: <Convite /> },
     { to: "/perfil/ong", label: "Perfil", icon: <Usuario /> },
   ];
+
+  const handleLogout = async () => {
+    await authService.logout();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -54,15 +61,15 @@ const Header = () => {
         </nav>
 
         <div className="mt-auto">
-          <Link
-            to="/logout"
-            className="flex items-center gap-4 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors"
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-4 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors w-full"
           >
             <span className="w-7 h-7 flex items-center justify-center">
               <Logout />
             </span>
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
 
@@ -110,16 +117,15 @@ const Header = () => {
           </nav>
 
           <div className="mt-auto">
-            <Link
-              to="/logout"
-              onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-4 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors"
+            <button
+              onClick={() => {handleLogout(); setMenuOpen(false);}}
+              className="flex items-center gap-4 py-3 px-4 text-[var(--secondary-grey-700)] hover:bg-[var(--secondary-grey-300)] rounded-md transition-colors w-full"
             >
               <span className="w-7 h-7 flex items-center justify-center">
                 <Logout />
               </span>
               Sair
-            </Link>
+            </button>
           </div>
         </div>
       </div>

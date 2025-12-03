@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('descricao');
             $table->date('data_inicio');
+            $table->date('data_fim')->nullable();
             $table->integer('quantidade_maxima_voluntarios')->nullable();
             $table->enum('status', ['ativo', 'cancelado', 'finalizado']);
             $table->foreignId('id_ong')->constrained('ongs')->onDelete('cascade');

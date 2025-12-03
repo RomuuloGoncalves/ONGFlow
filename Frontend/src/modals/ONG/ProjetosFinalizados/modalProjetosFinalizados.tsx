@@ -75,7 +75,11 @@ function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
             </div>
 
             <div className={style.voluntarios__body}>
-              {/* Placeholder for volunteers */}
+              {projeto.voluntarios?.map((voluntario) => (
+                <div key={voluntario.id} className={style.voluntario}>
+                  <p>{voluntario.nome}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

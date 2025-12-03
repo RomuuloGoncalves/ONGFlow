@@ -11,11 +11,11 @@ class VoluntarioHabilidadeSeeder extends Seeder
     public function run(): void
     {
         $associacoes = [
-            'Carlos Silva' => ['Desenvolvimento de software', 'Trabalho em equipe'],
-            'Mariana Costa' => ['Design gráfico', 'Comunicação interpessoal'],
-            'João Oliveira' => ['Ensino e tutoria', 'Oratória e apresentação em público'],
-            'Ana Souza' => ['Primeiros socorros', 'Empatia'],
-            'Pedro Santos' => ['Gestão de projetos', 'Liderança de equipes'],
+            'Voluntário' => ['Comunicação e Articulação', 'Trabalho em Equipe e Colaboração', 'Logística e Distribuição'],
+            'Mariana Costa' => ['Divulgação e Marketing Social', 'Organização de Eventos'],
+            'João Oliveira' => ['Ensino e Capacitação', 'Liderança Comunitária'],
+            'Ana Souza' => ['Primeiros Socorros', 'Cuidado e Assistência Social'],
+            'Pedro Santos' => ['Gestão de Projetos Sociais', 'Captação de Recursos'],
         ];
 
         foreach ($associacoes as $nomeVoluntario => $habilidadesDescricao) {

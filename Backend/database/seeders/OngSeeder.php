@@ -19,10 +19,10 @@ class OngSeeder extends Seeder
         $ongs = [
             [
                 'ong' => [
-                    'nome' => 'Associação Anjos da Noite',
-                    'nome_fantasia' => 'Anjos da Noite',
+                    'nome' => 'ONGFlow',
+                    'nome_fantasia' => 'Flow',
                     'cnpj' => '11.222.333/0001-44',
-                    'email' => 'a@a.a',
+                    'email' => 'ongflow@gmail.com',
                     'password' => 'asdasdasd',
                     'data_fundacao' => '2010-01-15',
                 ],

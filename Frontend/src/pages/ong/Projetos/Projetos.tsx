@@ -69,7 +69,7 @@ function Projetos() {
   // --- Ações ---
   const handleCardClick = (projeto: Projeto) => {
     setSelectedProjeto(projeto);
-    if (projeto.status === "concluido") {
+    if (projeto.status === "finalizado") {
       setIsModalProjetosFinalizadosOpen(true);
     } else {
       setIsModalProjetosAndamentoOpen(true);
@@ -90,7 +90,7 @@ function Projetos() {
                 <div className={style.text}>
                   <p>Projetos Ativos</p>
                   <span>
-                    {(projetos || []).filter((p) => p.status === "em andamento").length}
+                    {(projetos || []).filter((p) => p.status === "ativo").length}
                   </span>
                 </div>
               </div>
@@ -100,7 +100,7 @@ function Projetos() {
                 <div className={style.text}>
                   <p>Projetos Finalizados</p>
                   <span>
-                    {(projetos || []).filter((p) => p.status === "concluido").length}
+                    {(projetos || []).filter((p) => p.status === "finalizado").length}
                   </span>
                 </div>
               </div>
@@ -133,7 +133,7 @@ function Projetos() {
               </div>
 
               <div className={style.container__tags}>
-                {["Todos", "em andamento", "concluido"].map((tag) => (
+                {["Todos", "ativo", "Finalizado"].map((tag) => (
                   <button
                     key={tag}
                     onClick={() => {

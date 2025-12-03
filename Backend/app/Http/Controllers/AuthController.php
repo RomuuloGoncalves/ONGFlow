@@ -15,6 +15,11 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email'    => 'required|string|email',
             'password' => 'required|string|min:8'
+        ], [
+            'email.required' => 'O campo e-mail é obrigatório.',
+            'email.email' => 'O formato do e-mail é inválido.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'A senha deve ter no mínimo :min caracteres.'
         ]);
 
         $voluntario = Voluntario::where('email', $credentials['email'])->first();
@@ -37,6 +42,11 @@ class AuthController extends Controller
         $credentials = $request->validate([
             'email'    => 'required|string|email',
             'password' => 'required|string|min:8'
+        ], [
+            'email.required' => 'O campo e-mail é obrigatório.',
+            'email.email' => 'O formato do e-mail é inválido.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'A senha deve ter no mínimo :min caracteres.'
         ]);
 
         $ong = Ong::where('email', $credentials['email'])->first();

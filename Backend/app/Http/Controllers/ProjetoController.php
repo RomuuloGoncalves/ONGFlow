@@ -6,19 +6,20 @@ use App\Models\Projeto;
 use App\Models\Voluntario;
 use App\Models\Convite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 
 class ProjetoController extends Controller
 {
     public function index()
     {
-        $projetos = Projeto::with(['habilidades', 'ong.endereco'])->get();
+        $projetos = Projeto::with(['habilidades', 'ong.endereco', 'voluntarios'])->get();
         return response()->json($projetos);
     }
 
     public function getProjetosPorOng(string $idOng)
     {
-        $projetos = Projeto::with(['habilidades', 'ong.endereco'])->where('id_ong', $idOng)->get();
+        $projetos = Projeto::with(['habilidades', 'ong.endereco', 'voluntarios'])->where('id_ong', $idOng)->get();
         return response()->json($projetos);
     }
 
@@ -40,13 +41,13 @@ class ProjetoController extends Controller
             }
             $projeto->habilidades()->sync($habilidadeIds);
         }
-        $projeto->load(['habilidades', 'ong.endereco']);
+        $projeto->load(['habilidades', 'ong.endereco', 'voluntarios']);
         return response()->json($projeto, 201);
     }
 
     public function show(string $id)
     {
-        $projeto = Projeto::with(['habilidades', 'ong.endereco'])->find($id);
+        $projeto = Projeto::with(['habilidades', 'ong.endereco', 'voluntarios'])->find($id);
         return response()->json($projeto);
     }
 
@@ -65,7 +66,17 @@ class ProjetoController extends Controller
             }
             $projeto->habilidades()->sync($habilidadeIds);
         }
-        $projeto->load(['habilidades', 'ong.endereco']);
+        $projeto->load(['habilidades', 'ong.endereco', 'voluntarios']);
+        return response()->json($projeto);
+    }
+
+    public function finalizar(Request $request, string $id)
+    {
+        $projeto = Projeto::find($id);
+        $projeto->status = 'finalizado';
+        $projeto->data_fim = Date::now();
+        $projeto->save();
+
         return response()->json($projeto);
     }
 
