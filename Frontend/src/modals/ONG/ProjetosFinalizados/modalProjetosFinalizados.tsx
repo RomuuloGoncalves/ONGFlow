@@ -75,11 +75,36 @@ function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
             </div>
 
             <div className={style.voluntarios__body}>
-              {projeto.voluntarios?.map((voluntario) => (
-                <div key={voluntario.id} className={style.voluntario}>
-                  <p>{voluntario.nome}</p>
-                </div>
-              ))}
+              {projeto.voluntarios && projeto.voluntarios.length > 0 ? (
+                projeto.voluntarios.map((voluntario) => (
+                  <div key={voluntario.id} className={style.card}>
+                    <div className={style.card__header}>
+                      <h1>{voluntario.nome}</h1>
+                    </div>
+                    <div className={style.card__body}>
+                      <p>Habilidades:</p>
+                      <div className={style.habilities}>
+                        {(voluntario.habilidades || []).slice(0, 3).map((hab, i) => (
+                          <div
+                            key={i}
+                            className={style.badge}
+                            title={hab.descricao}
+                          >
+                            <span>{hab.descricao}</span>
+                          </div>
+                        ))}
+                        {(voluntario.habilidades?.length || 0) > 3 && (
+                          <div className={style.badge}>
+                            <span>+{(voluntario.habilidades?.length || 0) - 3}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p style={{color:"red"}}>Nenhum candidato nesse projeto.</p>
+              )}
             </div>
           </div>
         </div>

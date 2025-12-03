@@ -93,6 +93,7 @@
 
     .card {
       width: 580px;
+      min-height: 250px;
       display: flex;
       flex-direction: column;
       gap: 20px;
@@ -222,7 +223,6 @@
 
       .container__buttons {
         width: 100%;
-        min-height: 40px;
         display: flex;
         align-items: center;
         gap: 10px;
