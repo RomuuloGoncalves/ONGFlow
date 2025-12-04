@@ -80,6 +80,16 @@ class ProjetoController extends Controller
         return response()->json($projeto);
     }
 
+    public function cancelar(Request $request, string $id)
+    {
+        $projeto = Projeto::find($id);
+        $projeto->status = 'cancelado';
+        $projeto->data_fim = Date::now();
+        $projeto->save();
+
+        return response()->json($projeto);
+    }
+
     public function destroy(string $id)
     {
         Projeto::destroy($id);

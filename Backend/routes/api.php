@@ -59,6 +59,7 @@ Route::prefix('projetos')->group(function () {
     Route::get('/{id}', [ProjetoController::class, 'show']);
     Route::put('/{id}', [ProjetoController::class, 'update']);
     Route::put('/{id}/finalizar', [ProjetoController::class, 'finalizar']);
+    Route::put('/{id}/cancelar', [ProjetoController::class, 'cancelar']);
     Route::delete('/{id}', [ProjetoController::class, 'destroy']);
     Route::get('/{id}/voluntarios', [ProjetoController::class, 'getVoluntarios']);
     Route::get('/{id}/voluntarios-compativeis', [ProjetoController::class, 'getVoluntariosCompativeis']);

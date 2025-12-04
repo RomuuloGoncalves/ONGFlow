@@ -5,7 +5,7 @@ import { Lixo } from "@/assets/icons/Lixo";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import type { Projeto } from "@/interfaces/projeto";
-import { finalizarProjeto } from "@/services/projetoService";
+import { cancelarProjeto, finalizarProjeto } from "@/services/projetoService";
 import useCustomToast from "@/components/ui/use-toast";
 
 interface Modalprops {
@@ -40,6 +40,19 @@ function ModalProjetosAndamento({ isOpen, setIsOpen, projeto, onFinalizar }: Mod
         onFinalizar();
       } catch (error) {
         showToast("Erro ao finalizar projeto", "error");
+      }
+    }
+  };
+
+  const handleCancelar = async () => {
+    if (projeto) {
+      try {
+        await cancelarProjeto(projeto.id);
+        showToast("Projeto cancelado com sucesso!", "success");
+        setIsOpen(false);
+        onFinalizar();
+      } catch (error) {
+        showToast("Erro ao cancelar projeto", "error");
       }
     }
   };
@@ -97,9 +110,9 @@ function ModalProjetosAndamento({ isOpen, setIsOpen, projeto, onFinalizar }: Mod
             <Lapis />
             Editar
           </Link>
-          <button className={` ${style.buttonDelete} ${style.button}`}>
+          <button onClick={handleCancelar} className={` ${style.buttonDelete} ${style.button}`}>
             <Lixo />
-            Excluir
+            Cancelar
           </button>
           <button onClick={handleFinalizar} className={` ${style.buttonFinalizar} ${style.button}`}>
             Finalizar

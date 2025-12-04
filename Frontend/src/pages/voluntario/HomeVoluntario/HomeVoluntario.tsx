@@ -89,28 +89,28 @@ function HomeVoluntario() {
               Todos
             </button>
             <button
-              onClick={() => setFiltro("pendente")}
+              onClick={() => setFiltro("ativo")}
               className={`${style.button} ${
-                filtro === "pendente" ? style.active : ""
+                filtro === "ativo" ? style.active : ""
               }`}
             >
-              Pendentes
+              Ativos
             </button>
             <button
-              onClick={() => setFiltro("aceito")}
+              onClick={() => setFiltro("finalizado")}
               className={`${style.button} ${
-                filtro === "aceito" ? style.active : ""
+                filtro === "finalizado" ? style.active : ""
               }`}
             >
-              Aceitos
+              Finalizados
             </button>
             <button
-              onClick={() => setFiltro("andamento")}
+              onClick={() => setFiltro("cancelado")}
               className={`${style.button} ${
-                filtro === "andamento" ? style.active : ""
+                filtro === "cancelado" ? style.active : ""
               }`}
             >
-              Recusados
+              Cancelados
             </button>
           </div>
         </div>
