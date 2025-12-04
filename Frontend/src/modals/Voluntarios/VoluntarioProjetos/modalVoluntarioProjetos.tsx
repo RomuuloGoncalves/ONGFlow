@@ -65,7 +65,7 @@ function modalVoluntario({ isOpen, setIsOpen, projeto }: ModalProps) {
             <div className={style.ong__phone}>
               <div className={style.ong}>
                 <label>Nome da ONG</label>
-                <p>{projeto.ong.nome_fantasia}</p>
+                <p>{projeto.ong.nome}</p>
               </div>
               <div className={style.phone}>
                 <label>Telefone</label>

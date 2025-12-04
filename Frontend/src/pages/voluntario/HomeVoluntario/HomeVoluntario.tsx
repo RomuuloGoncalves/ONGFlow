@@ -17,6 +17,7 @@ function HomeVoluntario() {
   const [textPesquisa, setTextPesquisa] = useState("");
   const [filtro, setFiltro] = useState("Todos");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProjeto, setSelectedProjeto] = useState<Projeto | null>(null);
   
   const itemsPerPage = 4;
 
@@ -41,6 +42,11 @@ function HomeVoluntario() {
     setCurrentPage(1);
   }, [filtro, textPesquisa]);
 
+  const handleCardClick = (projeto: Projeto) => {
+    setSelectedProjeto(projeto);
+    setIsModalOpen(true);
+  };
+
   // Aplica filtro por status e pesquisa
   const projetosFiltrados = projetos.filter((p) => {
     const pesquisa = textPesquisa.toLowerCase();
@@ -58,7 +64,7 @@ function HomeVoluntario() {
 
   return (
     <>
-      <ModalVoluntario isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <ModalVoluntario isOpen={isModalOpen} setIsOpen={setIsModalOpen} projeto={selectedProjeto}/>
       <Header />
       <div className={style.container__title}>
         <h1>Bem vindo de volta!</h1>
@@ -128,7 +134,7 @@ function HomeVoluntario() {
                 <div
                   key={item.id}
                   className={style.card}
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={() => handleCardClick(item)}
                 >
                   <div className={style.card__title}>
                     <div className={style.card__title_tag}>
@@ -147,19 +153,6 @@ function HomeVoluntario() {
                         : "Localização não informada"}
                     </p>
                   </div>
-                  {/* <div className={style.habilidades}>
-                    {(item.habilidades || []).slice(0, 3).map((hab, i) => (
-                      <div key={i} className={style.badge} title={hab.descricao}>
-                        <p>{hab.descricao}</p>
-                      </div>
-                    ))}
-
-                    {(item.habilidades?.length || 0) > 3 && (
-                      <div className={style.badge}>
-                        <p>+{(item.habilidades?.length || 0) - 3}</p>
-                      </div>
-                    )}
-                  </div> */}
                 </div>
               ))
             )}
