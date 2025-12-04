@@ -183,7 +183,7 @@ function ConviteVoluntario() {
                     <div className={style.card__ong_phone}>
                       <p>
                         <Usuario className={style.icon} />
-                        {item.projeto?.ong?.nome_fantasia}
+                        {item.projeto?.ong?.nome}
                       </p>
                       <p>
                         <Telefone className={style.icon} />
