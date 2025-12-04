@@ -20,7 +20,7 @@ const IconeSigla: React.FC<IconProps> = ({ className }) => (<svg className={clas
 const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => {
   const [dados, setDados] = useState({
     nome: '',
-    login: '',
+    email: '',
     password: '',
     nome_fantasia: '',
     cnpj: '',
@@ -74,9 +74,9 @@ const FormOng: React.FC<FormOngProps> = ({ aoAlterar, styles, errors = {} }) => 
       <div className={styles.grupoInputContainer}>
         <div className={styles.grupoInput}>
           <IconeUsuario className={styles.icone} />
-          <input type="text" name="login" placeholder="Email de acesso" value={dados.login} onChange={manipularMudanca} />
+          <input type="text" name="email" placeholder="Email de acesso" value={dados.email} onChange={manipularMudanca} />
         </div>
-        {errors.login && <span className={styles.mensagemErroCampo}>{errors.login}</span>}
+        {errors.email && <span className={styles.mensagemErroCampo}>{errors.email}</span>}
       </div>
 
       <div className={styles.grupoInputContainer}>
