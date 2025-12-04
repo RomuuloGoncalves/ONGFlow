@@ -12,9 +12,10 @@ interface Modalprops {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   projeto: Projeto | null;
+  onFinalizar: any | null;
 }
 
-function ModalProjetosAndamento({ isOpen, setIsOpen, projeto }: Modalprops) {
+function ModalProjetosAndamento({ isOpen, setIsOpen, projeto, onFinalizar }: Modalprops) {
   const { showToast } = useCustomToast();
 
   useEffect(() => {
@@ -36,6 +37,7 @@ function ModalProjetosAndamento({ isOpen, setIsOpen, projeto }: Modalprops) {
         await finalizarProjeto(projeto.id);
         showToast("Projeto finalizado com sucesso!", "success");
         setIsOpen(false);
+        onFinalizar();
       } catch (error) {
         showToast("Erro ao finalizar projeto", "error");
       }

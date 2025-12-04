@@ -4,16 +4,16 @@ import type { Habilidade } from "../interfaces/habilidade";
 import type { Voluntario } from "../interfaces/voluntario";
 import type { AxiosPromise } from "axios";
 
-interface ProjetosResponse {
-  data: Projeto[];
-}
+// interface ProjetosResponse {
+//   data: Projeto[];
+// }
 
 interface VoluntariosResponse {
   data: Voluntario[];
 }
 
-export const getProjetosPorOng = (idOng: number): AxiosPromise<ProjetosResponse> => {
-  return api.get<ProjetosResponse>(`/ongs/${idOng}/projetos`);
+export const getProjetosPorOng = (idOng: number): AxiosPromise<Projeto[]> => {
+  return api.get<Projeto[]>(`/ongs/${idOng}/projetos`);
 };
 
 export const getProjetos = (): AxiosPromise<Projeto[]> => {

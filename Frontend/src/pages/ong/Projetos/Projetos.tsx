@@ -14,6 +14,7 @@ import { Pagination } from "@/components/Pagination/Pagination";
 import { Mais } from "@/assets/icons/Mais";
 import type { Projeto } from "@/interfaces/projeto";
 import { getProjetosPorOng } from "@/services/projetoService";
+import useCustomToast from "@/components/ui/use-toast";
 
 function Projetos() {
   const [isModalProjetosFinalizadosOpen, setIsModalProjetosFinalizadosOpen] =
@@ -28,6 +29,7 @@ function Projetos() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 4;
+  const { showToast } = useCustomToast();
 
   useEffect(() => {
     const fetchProjetos = async () => {
@@ -75,6 +77,25 @@ function Projetos() {
       setIsModalProjetosAndamentoOpen(true);
     }
   };
+
+const atualizarStatusProjetos = async () => {
+  const userData = localStorage.getItem("user");
+  if (!userData) {
+    console.error("Usuário não encontrado no localStorage");
+    return;
+  }
+  const user = JSON.parse(userData);
+  try {
+    const response = await getProjetosPorOng(Number(user.id));
+    setProjetos(response.data);
+  } catch (error) {
+    showToast("Erro ao atualizar projetos", "error");
+    console.error("Erro ao atualizar projetos:", error);
+  }
+};
+
+
+
   return (
     <>
       <div className={style.main}>
@@ -221,6 +242,7 @@ function Projetos() {
         isOpen={isModalProjetosAndamentoOpen}
         setIsOpen={setIsModalProjetosAndamentoOpen}
         projeto={selectedProjeto}
+        onFinalizar={atualizarStatusProjetos}
       />
     </>
   );
