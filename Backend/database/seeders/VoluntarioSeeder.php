@@ -18,7 +18,7 @@ class VoluntarioSeeder extends Seeder
 
         $voluntarios = [
             [
-                'nome' => 'Voluntário',
+                'nome' => 'Lucas Ramalho Nogueira',
                 'cpf' => '111.222.333-44',
                 'email' => 'voluntario@gmail.com',
                 'password' => 'asdasdasd',
