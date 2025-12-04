@@ -1,9 +1,10 @@
 import { Fechar } from "@/assets/icons/Fechar";
 import style from "./modalProjetosFinalizados.module.css";
 import { Usuario } from "@/assets/icons/Usuario";
-import { Lixo } from "@/assets/icons/Lixo";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Projeto } from "@/interfaces/projeto";
+import voluntarioHabilidadeService from "@/services/voluntarioHabilidade";
+import type { Voluntario } from "@/interfaces/voluntario";
 
 interface Modalprops {
   isOpen: boolean;
@@ -12,7 +13,13 @@ interface Modalprops {
 }
 
 function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
+  const [voluntarios, setVoluntarios] = useState<Voluntario[]>([]);
   useEffect(() => {
+    if (projeto) {
+    carregarVoluntariosComHabilidades(projeto).then((lista) => {
+      setVoluntarios(lista);
+    });
+  }
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -21,16 +28,41 @@ function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
     return () => {
       document.body.style.overflow = "auto";
     };
+    console.log(projeto)
+
+
+
   }, [isOpen]);
 
   if (!isOpen || !projeto) return null;
+
+async function carregarVoluntariosComHabilidades(projeto: Projeto) {
+  if (!projeto.voluntarios || projeto.voluntarios.length === 0) {
+    return [];
+  }
+
+  const voluntariosComHabilidades = await Promise.all(
+    projeto.voluntarios.map(async (v) => {
+      const response = await voluntarioHabilidadeService.getByVoluntario(v.id);
+      const habilidades = response.data.data || [];
+
+      return {
+        ...v,
+        habilidades,
+      };
+    })
+  );
+
+  return voluntariosComHabilidades; // ← FALTAVA ISSO
+}
+
 
   return (
     <div className={style.modal__overlay} onClick={() => setIsOpen(false)}>
       <div className={style.modal} onClick={(e) => e.stopPropagation()}>
         <div className={style.modal__header}>
           <h1>{projeto.nome}</h1>
-          <Fechar onClick={() => setIsOpen(false)} />
+          <Fechar onClick={() => {setIsOpen(false); console.log(projeto)}} />
         </div>
         <div className={style.modal__body}>
           <div className={style.description}>
@@ -75,24 +107,23 @@ function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
             </div>
 
             <div className={style.voluntarios__body}>
-              {projeto.voluntarios && projeto.voluntarios.length > 0 ? (
-                projeto.voluntarios.map((voluntario) => (
+              {voluntarios.length > 0 ? (
+                voluntarios.map((voluntario) => (
                   <div key={voluntario.id} className={style.card}>
                     <div className={style.card__header}>
                       <h1>{voluntario.nome}</h1>
                     </div>
+
                     <div className={style.card__body}>
                       <p>Habilidades:</p>
+
                       <div className={style.habilities}>
                         {(voluntario.habilidades || []).slice(0, 3).map((hab, i) => (
-                          <div
-                            key={i}
-                            className={style.badge}
-                            title={hab.descricao}
-                          >
+                          <div key={i} className={style.badge} title={hab.descricao}>
                             <span>{hab.descricao}</span>
                           </div>
                         ))}
+
                         {(voluntario.habilidades?.length || 0) > 3 && (
                           <div className={style.badge}>
                             <span>+{(voluntario.habilidades?.length || 0) - 3}</span>
@@ -106,6 +137,7 @@ function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
                 <p style={{color:"red"}}>Nenhum candidato nesse projeto.</p>
               )}
             </div>
+
           </div>
         </div>
       </div>

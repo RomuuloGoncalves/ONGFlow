@@ -154,7 +154,7 @@ const atualizarStatusProjetos = async () => {
               </div>
 
               <div className={style.container__tags}>
-                {["Todos", "ativo", "Finalizado"].map((tag) => (
+                {["Todos", "ativo", "finalizado", "cancelado"].map((tag) => (
                   <button
                     key={tag}
                     onClick={() => {
