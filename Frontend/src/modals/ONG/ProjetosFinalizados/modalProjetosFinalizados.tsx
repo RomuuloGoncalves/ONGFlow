@@ -108,12 +108,6 @@ function ModalProjetosFinalizados({ isOpen, setIsOpen, projeto }: Modalprops) {
             </div>
           </div>
         </div>
-        <div className={style.modal__footer}>
-          <button>
-            <Lixo />
-            Excluir
-          </button>
-        </div>
       </div>
     </div>
   );
